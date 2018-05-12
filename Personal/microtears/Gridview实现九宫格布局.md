@@ -1,7 +1,6 @@
 Gridview实现九宫格布局
 ===
-由于GridView只支持指定列数和列宽，所以想要实现宽高一致的九宫格布局就需要在代码中动态修改view的宽度
-假如GridView中ItemView布局如下：
+由于GridView只支持指定列数和列宽，所以想要实现宽高一致的九宫格布局就需要在代码中动态修改view的宽度,假如GridView中ItemView布局如下：
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -67,7 +66,7 @@ param.width = dis - bad
 ```kotlin
 //由于ItemView只有一个简单的ImageView，所以此时的宽度之比即为GridView与Image的宽度之比
 val b = param.width.toDouble() / bitmap.width
-//根据刚才得到的壁纸重新指定GridView高度，这样就不会在现实的时候留有空隙
+//根据刚才得到的壁纸重新指定GridView高度，这样就不会在显示的时候留有空隙
 param.height = (bitmap.height * b + 0.5).toInt() //b== param.height / bitmap.height
 ```
 接下来还需要在GridViewAdapter中做进一步修改，重新设定ItemView的宽高
