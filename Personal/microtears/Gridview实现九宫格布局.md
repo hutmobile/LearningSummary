@@ -97,6 +97,6 @@ override fun getView(position: Int, convertView: View?, parent: ViewGroup?): Vie
     return itemView
 }
 ```
-最终效果图如下：
+最终效果图如下：<br>
 ![](https://s1.ax1x.com/2018/05/12/CBRSRs.png)
 ![](https://s1.ax1x.com/2018/05/12/CB2zGj.png)
