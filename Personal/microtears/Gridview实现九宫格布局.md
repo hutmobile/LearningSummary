@@ -75,7 +75,7 @@ GridViewAdapter中getView方法中实现重新设定：
 override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
     var image = this.arr[position].bitmap
     var inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    //将第二个参数指定为null，表示不使用ItemView中的根部局为父布局
+    //将第二个参数指定为null，表示不使用ItemView中的root Layout
     var itemView = inflater.inflate(R.layout.itemView, null)
     //得到ImageView
     var imageView = itemView.image
