@@ -17,12 +17,6 @@ Gridview实现九宫格布局
         android:layout_centerInParent="true"
         android:clickable="false"></ImageView>
 
-    <TextView
-        android:id="@+id/index"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
 </RelativeLayout>
 ```
 GridView布局文件如下：
