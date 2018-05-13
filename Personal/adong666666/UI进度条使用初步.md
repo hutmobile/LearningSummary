@@ -1,0 +1,22 @@
+这里以类的形式列出，含普通进度条的常用项
+
+class PprogressView: UIProgressView{
+    override init(frame: CGRect){
+        super.init(frame: frame)
+        self.progressViewStyle = UIProgressViewStyle.bar
+        self.progressViewStyle = UIProgressViewStyle.default
+        self.progress = 1
+        self.progressTintColor = UIColor.black
+        self.trackTintColor = UIColor.black
+        self.progressImage = UIImage(named:"a10")
+        self.trackImage = UIImage(named:"a10")
+        self.setProgress(1, animated: true)
+        self.contentMode = .scaleAspectFit
+        self.transform = CGAffineTransform(scaleX: 1.0,y: 10.0)
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = 45
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
