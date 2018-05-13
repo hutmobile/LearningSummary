@@ -1,0 +1,38 @@
+//警告窗口的使用及双按钮的巧妙实现
+//常用func联用
+@objc func buttonTap1(_ button: UIButton)
+    {
+        let Alert : UIAlertController = {
+            let alert = UIAlertController(title: "没开空调(提交后点击屏幕可查看结果)",message:"您确认要提交了吗?",preferredStyle: UIAlertControllerStyle.actionSheet)
+            let Queren: UIAlertAction = {
+                let queren = UIAlertAction(title:"确认",style: UIAlertActionStyle.default,handler: {(alerts: UIAlertAction) -> Void in print ("提交")
+                    let img = UIImage(named:"a8")
+                    let imgView = UIImageView (image: img)
+                    imgView.alpha=1
+                    imgView.frame = CGRect(x:333.fitScreen, y:543.fitScreen, width:25.fitScreen, height:25.fitScreen)
+                    imgView.contentMode = .scaleAspectFit
+                    self.view.addSubview(imgView)
+                    let bt = PowerButton(type: UIButtonType.roundedRect)
+                    bt.frame = CGRect (x:333.fitScreen,y:508.fitScreen,width:25.fitScreen,height:25.fitScreen)
+                    let image = UIImage(named: "a9")
+                    bt.setBackgroundImage(image, for: UIControlState())
+                    bt.alpha = 1
+                    self.view.addSubview(bt)
+                    let bt1 = PowerButton(type: UIButtonType.roundedRect)
+                    bt1.frame = CGRect (x:333.fitScreen,y:543.fitScreen,width:25.fitScreen,height:25.fitScreen)
+                    let image1 = UIImage(named: "a9")
+                    bt1.setBackgroundImage(image1, for: UIControlState())
+                    bt1.alpha = 1
+                    self.view.addSubview(bt1)
+                })
+                return queren
+            }()
+            let quxiao = UIAlertAction(title:"取消",style: UIAlertActionStyle.default,handler: {(alerts: UIAlertAction) -> Void in print ("不提交")})
+            let likai = UIAlertAction(title: "离开",style: UIAlertActionStyle.cancel,handler:{(alerts: UIAlertAction) ->Void in print("离开")})
+            alert.addAction(Queren)
+            alert.addAction(quxiao)
+            alert.addAction(likai)
+            return alert
+        }()
+        self.present(Alert,animated: true, completion: nil)
+    }
