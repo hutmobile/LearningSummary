@@ -20,3 +20,7 @@ class PprogressView: UIProgressView{
         fatalError("init(coder:) has not been implemented")
     }
 }
+    var ProgressView: PprogressView = {
+        let progressView = PprogressView(frame: CGRect(x: 55.fitScreen,y: 619.fitScreen,width: 260.fitScreen,height: 500.fitScreen))
+        return progressView
+    }()
