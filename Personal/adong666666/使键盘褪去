@@ -1,0 +1,2 @@
+//子类编辑结束，键盘消失，就是这么轻松，常用于func中
+self.view.endEditing(true)
