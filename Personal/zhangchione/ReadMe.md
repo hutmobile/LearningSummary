@@ -1,3 +1,15 @@
+//体会心得：在开始做这个之前，完全是什么都不知道，学长交给我们的任务就是做出来，时间还是比较宽松，大概有一两周时间，大概一周左右开始通过百度一些东西，基本已经形成了模样，过了一段时间，交给学长看了，有些问题。
+
+/*主要问题： 1，命名不规范，没有采用正确的规范的命名格式（驼峰式命名法）
+           2，代码没有规范，一些重复代码没有写成类。
+           3，在主代码中，有大量相似代码，没有提前，比如有12个button全部放在了override func viewDidload（）中 
+
+  总结：通过UI入门掌握了 基本的类，函数定义等基本知识点。对于纯代码写UI也有一定掌握。
+*/
+
+
+//关于我的swift UI入门的一个界面（工大助手界面）的源码
+
 //
 //  ViewController.swift
 //  sy
@@ -6,7 +18,7 @@
 //  Copyright © 2018年 张驰. All rights reserved.
 //
 
-//关于我的swift UI入门的一个界面（工大助手界面）的源码
+
 import UIKit
 
 public extension Double {
@@ -253,32 +265,4 @@ class ViewController: UIViewController {
         view.addSubview(blankLa)
         
         let verbBtn = UIButton(type: .custom)
-        verbBtn.frame = CGRect(x: 235.fitScreen, y: 265.fitScreen, width: 200.fitScreen, height: 50.fitScreen)
-        verbBtn.titleLabel?.font = UIFont(name:"#ldcbdb",size:24)
-        verbBtn.setTitle("查看全部通知 >", for: .normal)
-        verbBtn.setTitleColor(UIColor.blue, for: .normal)
-        view.addSubview(verbBtn)
-
-        view.addSubview(libraryBtn)
-        view.addSubview(curriculum1Btn)
-        view.addSubview(examBtn)
-        view.addSubview(scoreBtn)
-        view.addSubview(onlineExerciseBtn)
-        view.addSubview(secondaryMarketBtn)
-        view.addSubview(socialBtn)
-        view.addSubview(electricityQueryBtn)
-        view.addSubview(lostAndFoundBtn)
-        view.addSubview(labBtn)
-        view.addSubview(videoBtn)
-        view.addSubview(moreBtn)
-   
-        
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
-
-}
-
+        verbBtn.frame = CGRect(x: 23
