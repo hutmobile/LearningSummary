@@ -1,0 +1,24 @@
+public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)解析
+
+在写一个Fragment的时候，继承Fragment基类，然后，要重写的其中一个回调方法是onCreateView。如果该Fragment有界面，
+那么，返回的View是非空的；如果该Fragment是没有界面的，返回的是Null。当Fragment所依附的container，从有到无，
+就会导致container为空。空表示，当前Fragment所依附的ViewGroup不存在了(从有到没，一开始是有的)。
+View是绘制在屏幕上的用户能与之交互的一个对象。而ViewGroup则是一个用于存放其他View（和ViewGroup）对象的布局容器！
+
+
+
+LayoutInflater作用及使用 
+作用：
+1.对于一个没有被载入或者想要动态载入的界面, 都需要使用inflate来载入. 
+2、对于一个已经载入的Activity, 就可以使用实现了这个Activiyt的的findViewById方法来获得其中的界面元素. 
+使用：
+通过LayoutInflater inflater = getLayoutInflater();来获得界面.然后使用inflate方法来载入layout的xml。
+
+Bundle savedInstanceState
+onCreate方法的参数是一个Bundle类型的参数，savedInstanceState是保存Activity的状态的。
+ 在实际应用中，当一个Activity结束前，如果需要保存状态，就在onsaveInstanceState中，
+ 将状态数据以key-value的形式放入到savedInstanceState中。这样，当一个Activity被创建时，
+ 就能从onCreate的参数savedInsanceState中获得状态数据。
+
+Toast
+Toast是Android中用来显示显示信息的一种机制，和Dialog不一样的是，Toast是没有焦点的，而且Toast显示的时间有限，过一定的时间就会自动消失
