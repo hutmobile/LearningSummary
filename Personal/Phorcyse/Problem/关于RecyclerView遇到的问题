@@ -26,7 +26,7 @@ It will be removed at the end of 2018. For more information see: http://d.androi
 打开SDK Manager发现了这么一个问题Android SDK tool的版本为26.1.1
 而Android SDK Platfrom-Tools的版本为27.0.1
 
-发现这个问题后我把Android Plafroms的Android 8.1(API Level)卸载后
+发现这个问题后我把Android Plafroms的Android 8.1(API Level 27)卸载后
 
 新开一个项目的
 
