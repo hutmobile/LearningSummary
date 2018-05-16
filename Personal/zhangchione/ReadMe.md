@@ -265,4 +265,31 @@ class ViewController: UIViewController {
         view.addSubview(blankLa)
         
         let verbBtn = UIButton(type: .custom)
-        verbBtn.frame = CGRect(x: 23
+        verbBtn.frame = CGRect(x: 235.fitScreen, y: 265.fitScreen, width: 200.fitScreen, height: 50.fitScreen)
+        verbBtn.titleLabel?.font = UIFont(name:"#ldcbdb",size:24)
+        verbBtn.setTitle("查看全部通知 >", for: .normal)
+        verbBtn.setTitleColor(UIColor.blue, for: .normal)
+        view.addSubview(verbBtn)
+
+        view.addSubview(libraryBtn)
+        view.addSubview(curriculum1Btn)
+        view.addSubview(examBtn)
+        view.addSubview(scoreBtn)
+        view.addSubview(onlineExerciseBtn)
+        view.addSubview(secondaryMarketBtn)
+        view.addSubview(socialBtn)
+        view.addSubview(electricityQueryBtn)
+        view.addSubview(lostAndFoundBtn)
+        view.addSubview(labBtn)
+        view.addSubview(videoBtn)
+        view.addSubview(moreBtn)
+   
+        
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+
+
+}
