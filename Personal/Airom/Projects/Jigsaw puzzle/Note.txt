@@ -10,4 +10,16 @@ FullscreenActivity默认保持屏幕常亮
         <!-- 隐藏标题栏 -->
         <item name="windowNoTitle">true</item>
 
+        <item name="windowActionBar">true</item>
+
     </style>
+
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+        
+        
+如何完美隐藏底部虚拟导航栏
+https://blog.csdn.net/qq_28484355/article/details/78355816
