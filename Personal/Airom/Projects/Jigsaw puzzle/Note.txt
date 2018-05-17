@@ -23,3 +23,5 @@ FullscreenActivity默认保持屏幕常亮
         
 如何完美隐藏底部虚拟导航栏
 https://blog.csdn.net/qq_28484355/article/details/78355816
+透明度与十六进制代码转换
+https://blog.csdn.net/sky1203850702/article/details/44916819
