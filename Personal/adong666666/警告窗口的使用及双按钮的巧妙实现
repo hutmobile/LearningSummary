@@ -1,5 +1,5 @@
 //警告窗口的使用及双按钮的巧妙实现
-//常用func联用
+//常与func联用
 @objc func buttonTap1(_ button: UIButton)
     {
         let Alert : UIAlertController = {
