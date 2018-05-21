@@ -11,13 +11,13 @@
         dialog.setSingleChoiceItems(pattern, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-           if (which >= 0)  //which是索引值
-           {  
-              //如果单击的是列表项，将当前列表项的索引保存在index中。
-              //如果想单击列表项后关闭对话框，可在此处调用dialog.cancel()  
-              //或是用dialog.dismiss()方法。  
-              index = which;  
-           }  
+                if (which >= 0)  //which是索引值
+                {  
+                //如果单击的是列表项，将当前列表项的索引保存在index中。
+                //如果想单击列表项后关闭对话框，可在此处调用dialog.cancel()  
+                //或是用dialog.dismiss()方法。  
+                index = which;  
+                }  
                 Toast.makeText(MainActivity.this,pattern[which],Toast.LENGTH_SHORT).show();
         //                dialog.dismiss();
         //五秒钟后自动关闭。 
