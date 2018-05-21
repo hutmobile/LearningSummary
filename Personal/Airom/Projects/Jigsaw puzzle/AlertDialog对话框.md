@@ -12,6 +12,19 @@ final String[] pattern = new String[] {"3*3", "4*4", "5*5", "6*6" };
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(MainActivity.this,pattern[which],Toast.LENGTH_SHORT).show();
 //                dialog.dismiss();
+//五秒钟后自动关闭。 
+                  Handler hander = new Handler();  
+                  Runnable runnable = new Runnable()  
+                  {  
+   
+                     @Override  
+                     public void run()  
+                     {  
+                         ad.dismiss();  
+                     }  
+                  };  
+                  hander.postDelayed(runnable, 5 * 1000);  //五秒钟后自动关闭。 
+              }  
 
             }
         });
