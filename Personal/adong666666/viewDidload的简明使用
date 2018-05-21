@@ -1,5 +1,6 @@
 //viewDidload的简明使用
 //我认为一下的写代码方式十分出色，没有多的赘余，将核心部分表现得淋漓尽致
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(imgView)
