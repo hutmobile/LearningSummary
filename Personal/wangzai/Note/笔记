@@ -22,3 +22,8 @@ onCreate方法的参数是一个Bundle类型的参数，savedInstanceState是保
 
 Toast
 Toast是Android中用来显示显示信息的一种机制，和Dialog不一样的是，Toast是没有焦点的，而且Toast显示的时间有限，过一定的时间就会自动消失
+
+配置adb环境
+在系统环境变量里找到Path
+编辑 新建
+将platform-tools目录配置进去即可
