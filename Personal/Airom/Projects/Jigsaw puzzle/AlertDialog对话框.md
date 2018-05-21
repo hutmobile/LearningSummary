@@ -6,7 +6,7 @@
 	private int index ;
 	AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
 	dialog.setTitle("选择难度");
-	dialog.setIcon(R.drawable.ic_launcher)  
+	dialog.setIcon(R.drawable.ic_launcher);  
 	//        dialog.setMessage("听说你很厉害？");//setMessage不能与下面的setSingleChoiceItems同时显示
 	dialog.setCancelable(true);
 	dialog.setSingleChoiceItems(pattern, 0, new DialogInterface.OnClickListener() {
