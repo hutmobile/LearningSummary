@@ -1,7 +1,9 @@
 这个排版要疯了
 
 类似RadioButton的AlertDialog
+---
 
+```
 	final String[] pattern = new String[] {"3*3", "4*4", "5*5", "6*6" };
 	private int index ;
 	AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
@@ -30,27 +32,29 @@
 
 	//或者用数组
 		Toast.makeText(MainActivity.this,pattern[which],Toast.LENGTH_SHORT).show();
-	//                dialog.dismiss();
 
 
 	//五秒钟后自动关闭。 
-		  Handler hander = new Handler();  
+		  Handler handler = new Handler();  
 		  Runnable runnable = new Runnable()  
 		  {  
 
 		     @Override  
 		     public void run()  
 		     {  
-			 ad.dismiss();  
+			 dialog.dismiss();  
 		     }  
 		  };  
-		  hander.postDelayed(runnable, 5 * 1000);  //五秒钟后自动关闭。 
-	      }  
+		  handler.postDelayed(runnable, 5 * 1000);  //五秒钟后自动关闭。 
 
 	    }
 	});
-        
+ ```
+ 
 类似ListView的AlertDialog
+---
+
+```
         dialog.setSingleChoiceItems(arrayFruit, 0, new DialogInterface.OnClickListener() {   
     
                     @Override   
@@ -58,9 +62,12 @@
                         selectedFruitIndex = which;   
                     }   
                 });
-                
-类似CheckBox的AlertDialog
+```
 
+类似CheckBox的AlertDialog
+---
+
+```
       dialog.setMultiChoiceItems(arrayFruit, arrayFruitSelected, new DialogInterface.OnMultiChoiceClickListener() {   
                        
                     @Override   
@@ -68,17 +75,20 @@
                         arrayFruitSelected[which] = isChecked;   
                     }   
                 });
-                
+```             
                 
 自定义View的AlertDialog
+---
+
+```
     LayoutInflater layoutInflater = LayoutInflater.from(this);   
         View myLoginView = layoutInflater.inflate(R.layout.login, null); 
         
         dialog.setView(myLoginView);//myLoginView是自己定义的布局
         
+ ```       
         
         
         
         
-        
-        https://blog.csdn.net/flyfight88/article/details/8602162
+> https://blog.csdn.net/flyfight88/article/details/8602162
