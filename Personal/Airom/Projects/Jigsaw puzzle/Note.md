@@ -1,3 +1,6 @@
+---
+
+```
 android:hint
     xml文件EditText中android:hint设置当EditText内容为空时显示的文本，只在EditText为空时显示，输入字符的时候就消失，不影响EditText的文本。
 FullscreenActivity默认保持屏幕常亮
@@ -88,3 +91,4 @@ android 变色状态栏https://blog.csdn.net/fdd11119/article/details/51364740
 
 不确定正确与否https://blog.csdn.net/stevenhu_223/article/details/12428591
 
+```   
