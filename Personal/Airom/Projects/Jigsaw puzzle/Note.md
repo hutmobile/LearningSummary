@@ -36,3 +36,31 @@ SYSTEM_UI_FLAG_IMMERSIVE_STICKY自动隐藏，不会触发任何的监听器
 https://blog.csdn.net/sdvch/article/details/44209959
 https://blog.csdn.net/xiaonaihe/article/details/54929504
 https://www.jianshu.com/p/e27e7f09d1f7
+
+
+状态栏与导航栏的坑
+
+首先学习单词，Translucent：半透明
+
+如果用        <item name="android:windowFullscreen">true</item>
+或者                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+本质一样，都是Activity全屏显示，且状态栏被覆盖掉，状态栏默认隐藏，下拉状态栏会短暂显示，但背景是半透明（透明灰色），
+或者没有全屏，只设置半透明状态栏        <!--<item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>-->
+
+此时调用                window.setStatusBarColor(Color.TRANSPARENT);
+或者        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+本质一样，把状态栏的半透明设置为全透明，都不会起作用！！！！！！！！！！！都不会起作用！！！！！！！！！！！TAT
+
+同理，导航栏
+如果用        <!--<item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">true</item>-->
+把导航栏这职位半透明后
+此时调用                window.setNavigationBarColor(Color.TRANSPARENT);
+或者        <item name="android:navigationBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+本质一样，欲把状态栏的半透明设置为全透明，都不会起作用！！！！！都不会起作用！！！！！！TAT
+
+而且
+如果用        <item name="android:windowFullscreen">true</item>
+或者                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+本质一样，都是Activity全屏显示，但是！！！但是！！！导航栏不自动隐藏，且活动被挤到导航栏上面！！！！！！
+
+
