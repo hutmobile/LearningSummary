@@ -48,14 +48,16 @@ https://www.jianshu.com/p/e27e7f09d1f7
 或者没有全屏，只设置半透明状态栏        <!--<item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>-->
 
 此时调用                window.setStatusBarColor(Color.TRANSPARENT);
-或者        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+或者
+            //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
 本质一样，把状态栏的半透明设置为全透明，都不会起作用！！！！！！！！！！！都不会起作用！！！！！！！！！！！TAT
 
 同理，导航栏
 如果用        <!--<item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">true</item>-->
 把导航栏这职位半透明后
 此时调用                window.setNavigationBarColor(Color.TRANSPARENT);
-或者        <item name="android:navigationBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+或者            <item name="android:navigationBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
 本质一样，欲把状态栏的半透明设置为全透明，都不会起作用！！！！！都不会起作用！！！！！！TAT
 
 而且
@@ -63,4 +65,26 @@ https://www.jianshu.com/p/e27e7f09d1f7
 或者                    | View.SYSTEM_UI_FLAG_FULLSCREEN
 本质一样，都是Activity全屏显示，但是！！！但是！！！导航栏不自动隐藏，且活动被挤到导航栏上面！！！！！！
 
+setSystemUiVisibility(int visibility)传入的实参类型如下：
+1.View.SYSTEM_UI_FLAG_VISIBLE ：状态栏和Activity共存，Activity不全屏显示。也就是应用平常的显示画面
+
+2.View.SYSTEM_UI_FLAG_FULLSCREEN ：Activity全屏显示，使状态栏出现的时候，不会重新调整activity的高度，状态栏覆盖在activity之上。
+
+3. View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN ：Activity全屏显示，但是状态栏不会被覆盖掉，而是正常显示，只是Activity顶端布   局会被覆盖住
+
+4.View.INVISIBLE ： Activity全屏显示，隐藏状态栏
+
+参考：
+https://www.jianshu.com/p/8b3ec46dac39
+https://www.jianshu.com/p/11a2b780fd9b
+https://www.jianshu.com/p/e27e7f09d1f7
+
+https://blog.csdn.net/sdvch/article/details/44209959
+https://blog.csdn.net/guolin_blog/article/details/51763825
+动态状态栏颜色https://www.jianshu.com/p/a44c119d6ef7
+android 变色状态栏https://blog.csdn.net/fdd11119/article/details/51364740
+着色模式https://blog.csdn.net/u013647382/article/details/51603141
+
+
+不确定正确与否https://blog.csdn.net/stevenhu_223/article/details/12428591
 
