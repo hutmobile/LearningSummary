@@ -1,6 +1,7 @@
 getScreenWidth()和getScreenHeight()方法
----
 
+---
+~~~
 以下This works better in my case. No need for context
 
 public static int getScreenWidth() {
@@ -30,4 +31,5 @@ WindowManager windowManager =
         mRealSizeHeight = outPoint.x;
         mRealSizeWidth = outPoint.y;
     }
-    ---
+
+~~~
