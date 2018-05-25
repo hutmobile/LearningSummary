@@ -1,6 +1,6 @@
 getScreenWidth()和getScreenHeight()方法
-
 ---
+
 ~~~
 以下This works better in my case. No need for context
 
