@@ -1,12 +1,12 @@
 利用OkHttp3,Gson和Glide显示Unsplash网站的图片
 ===
-###1. OkHttp简介
+### 1. OkHttp简介
 [OkHttp](https://github.com/square/okhttp)是一个处理网络请求的开源项目，Android 当前最火热网络框架，由移动支付Square公司贡献。
-###2. Glide简介
+### 2. Glide简介
 [Glide](https://github.com/bumptech/glide)是Google推荐的一套快速高效的图片加载框架，作者是bumptech，功能强大且使用方便，实际的android应用开发中，有不少的开发者在使用它。
-###3. Gson简介
+### 3. Gson简介
 [Gson](https://github.com/google/gson)是Google公司发布的一个开源源代码的Java库，主要用途为串行化Java对象为JSON字符串，或反串行化Json字符串成Java对象。    
-###4. Unsplash API申请
+### 4. Unsplash API申请
 [Unsplash developers](https://unsplash.com/developers)<br>
 ![](https://s1.ax1x.com/2018/05/26/CfO7Px.png)<br>
 首先注册Unsplash Developer账号并登陆<br>
@@ -15,7 +15,7 @@
 ![](https://s1.ax1x.com/2018/05/26/CfOfr4.png)
 点击New Application并填写相关信息，然后选择你创建的applications，找到分配的KEY并保存下来<br>
 ![](https://s1.ax1x.com/2018/05/26/CfOhqJ.png)
-###5. 利用OkHttp3向服务器获取数据并利用Gson解析
+### 5. 利用OkHttp3向服务器获取数据并利用Gson解析
 ```kotlin
 private fun getImages() {
         load {
@@ -39,7 +39,7 @@ private fun getImages() {
         }
     }
 ```
-###6. Glide加载图片
+### 6. Glide加载图片
 ```kotlin
 //这里的RecyclerAdapter继承自BRVAH，故实际操作在convert方法中进行
 override fun convert(helper: BaseViewHolder, item: Unsplash) {
@@ -62,5 +62,5 @@ override fun convert(helper: BaseViewHolder, item: Unsplash) {
         Glide.with(mContext).load(item.urls.small).apply(option).into(helper.getView(R.id.image))
     }
 ``` 
-###7. 最终效果
+### 7. 最终效果
 ![](https://s1.ax1x.com/2018/05/26/CfOoI1.png)![](https://s1.ax1x.com/2018/05/26/CfO5Z9.png)
