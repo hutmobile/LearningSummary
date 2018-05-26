@@ -1,0 +1,23 @@
+//制作toast（初始界面的祝福语）
+//首先调用第三方库Toast
+//podfile如下：
+platform :ios,'8.0'
+use_frameworks!
+
+target 'faxian'do
+source 'https://github.com/CocoaPods/Specs.git'
+pod 'Toaster','~> 2.0'
+end
+
+
+//具体使用也就这几行代码足够了
+
+        ToastView.appearance().backgroundColor = UIColor.white
+        ToastView.appearance().textColor = UIColor.cyan
+        ToastView.appearance().font = UIFont(name:"Arial",size: 24)
+        ToastView.appearance().textInsets = UIEdgeInsets(top:16 ,left:20,bottom:16,right:20)
+        ToastView.appearance().cornerRadius = 30
+        ToastView.appearance().bottomOffsetPortrait = 380
+        Toast(text: "欢迎来到校园之光,开始你的奇幻校园之旅吧！").show()
+        //Toast(text: "", duration: Delay.long).show()
+        //Toast(text: "", delay: Delay.short, duration: Delay.long).show()
