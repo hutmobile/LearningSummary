@@ -4,13 +4,22 @@ getScreenWidth()和getScreenHeight()方法
 ~~~
 以下This works better in my case. No need for context
 
-public static int getScreenWidth() {
-    return Resources.getSystem().getDisplayMetrics().widthPixels;
-}
-//此方法不包含导航栏高度
-public static int getScreenHeight() {
-    return Resources.getSystem().getDisplayMetrics().heightPixels;
-}
+    public static int getScreenWidth() {
+        screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+        return screenWidth;
+    }
+    //此方法不包含导航栏高度
+    public static int getScreenHeight() {
+        screenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+        return screenHeight;
+    }
+
+
+或者
+//        DisplayMetrics metrics =new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+//        screenWidth = metrics.widthPixels;
+//        screenHeight = metrics.heightPixels;
 
 如果想获取包含导航栏在内的高度，如下
 WindowManager windowManager =
