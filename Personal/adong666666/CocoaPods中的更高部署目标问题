@@ -1,4 +1,4 @@
-Cocoapods中的更高部署目标问题
+CocoaPods中的更高部署目标问题
 今天在调用第三方库的时候遇到了下面这个问题
 [!] CocoaPods could not find compatible versions for pod "DateTimePicker":
   In Podfile:
