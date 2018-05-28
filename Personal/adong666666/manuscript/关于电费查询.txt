@@ -1,5 +1,5 @@
-//¶Ôµç·Ñ²éÑ¯´úÂëÏêÏ¸½âÊÍ£¬Ö®ºó»áÉáÆú¼¸ºõËùÓĞ×¢½â£¬×ñÑ­´úÂë
-//  Created by 604 on 2018/4/21. Copyright  2018Äê zhangsaidong. All rights reserved.
+//å¯¹ç”µè´¹æŸ¥è¯¢ä»£ç è¯¦ç»†è§£é‡Šï¼Œä¹‹åä¼šèˆå¼ƒå‡ ä¹æ‰€æœ‰æ³¨è§£ï¼Œéµå¾ªä»£ç 
+//  Created by 604 on 2018/4/21. Copyright  2018å¹´ zhangsaidong. All rights reserved.
 
 
 import UIKit
@@ -20,20 +20,20 @@ class PowerLabel: UILabel {
 class PowertextField: UITextField{
     override init(frame: CGRect){
         super.init(frame: frame)
-        //self.borderStyle = UITextBorderStyle.roundedRect//ÎÄ±¾¿òÑùÊ½Ô²½Ç¾ØĞÎ
+        //self.borderStyle = UITextBorderStyle.roundedRect//æ–‡æœ¬æ¡†æ ·å¼åœ†è§’çŸ©å½¢
         //self.text=""
         self.alpha=1
-        self.font = UIFont(name: "Arial",size:18)//×ÖÌåÑùÊ½
+        self.font = UIFont(name: "Arial",size:18)//å­—ä½“æ ·å¼
         self.textColor = UIColor.white
-        self.autocorrectionType = UITextAutocorrectionType.no//¹Ø±ÕÓï·¨´íÎóÌáÊ¾
-        self.returnKeyType = UIReturnKeyType.done//ÉèÖÃ»Ø³µ°´Å¥µÄÀàĞÍ
-        self.clearButtonMode = UITextFieldViewMode.whileEditing//ÉèÖÃÎÄ±¾¿òÓÒ²àµÄÇå³ı°´Å¥,±à¼­×´Ì¬Ê±ÏÔÊ¾
-        //self.keyboardType = UIKeyboardType.emailAddress//ÉèÖÃÎÄ±¾¿ò¶ÔÏóµÄ¼üÅÌÀàĞÍ,ÎªÏµÍ³Ìá¹©µÄÓÊÏäµØÖ·ÀàĞÍ
-        self.keyboardType = UIKeyboardType.numberPad//ÉèÖÃÎªÊı×Ö¼üÅÌ£¬ÉÏÒ»ĞĞÊÇÈ«¼üÅÌ
-        self.keyboardAppearance = UIKeyboardAppearance.light//ÉèÖÃÎÄ±¾¿ò¶ÔÏóµÄ¼üÅÌÀàĞÍÎª°µÉ«Ö÷Ìâ
-        self.delegate = self as? UITextFieldDelegate//ÉèÖÃÎÄ±¾¿ò¶ÔÏóµÄ´úÀíÎªµ±Ç°ÊÓÍ¼¿ØÖÆÆ÷
-        self.textAlignment = NSTextAlignment.center//ÉèÖÃË®Æ½¾ÓÖĞ
-        self.backgroundColor = UIColor.clear//±³¾°ÑÕÉ«
+        self.autocorrectionType = UITextAutocorrectionType.no//å…³é—­è¯­æ³•é”™è¯¯æç¤º
+        self.returnKeyType = UIReturnKeyType.done//è®¾ç½®å›è½¦æŒ‰é’®çš„ç±»å‹
+        self.clearButtonMode = UITextFieldViewMode.whileEditing//è®¾ç½®æ–‡æœ¬æ¡†å³ä¾§çš„æ¸…é™¤æŒ‰é’®,ç¼–è¾‘çŠ¶æ€æ—¶æ˜¾ç¤º
+        //self.keyboardType = UIKeyboardType.emailAddress//è®¾ç½®æ–‡æœ¬æ¡†å¯¹è±¡çš„é”®ç›˜ç±»å‹,ä¸ºç³»ç»Ÿæä¾›çš„é‚®ç®±åœ°å€ç±»å‹
+        self.keyboardType = UIKeyboardType.numberPad//è®¾ç½®ä¸ºæ•°å­—é”®ç›˜ï¼Œä¸Šä¸€è¡Œæ˜¯å…¨é”®ç›˜
+        self.keyboardAppearance = UIKeyboardAppearance.light//è®¾ç½®æ–‡æœ¬æ¡†å¯¹è±¡çš„é”®ç›˜ç±»å‹ä¸ºæš—è‰²ä¸»é¢˜
+        self.delegate = self as? UITextFieldDelegate//è®¾ç½®æ–‡æœ¬æ¡†å¯¹è±¡çš„ä»£ç†ä¸ºå½“å‰è§†å›¾æ§åˆ¶å™¨
+        self.textAlignment = NSTextAlignment.center//è®¾ç½®æ°´å¹³å±…ä¸­
+        self.backgroundColor = UIColor.clear//èƒŒæ™¯é¢œè‰²
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -42,18 +42,18 @@ class PowertextField: UITextField{
 class PprogressView: UIProgressView{
     override init(frame: CGRect){
         super.init(frame: frame)
-        self.progressViewStyle = UIProgressViewStyle.bar//ÉèÖÃ½ø¶ÈÌõµÄ·ç¸ñ
+        self.progressViewStyle = UIProgressViewStyle.bar//è®¾ç½®è¿›åº¦æ¡çš„é£æ ¼
         self.progressViewStyle = UIProgressViewStyle.default
-        self.progress = 1//½ø¶ÈÌõµ±Ç°µÄ½ø¶È
-        self.progressTintColor = UIColor.black//½ø¶ÈÌõ×ß¹ıµÄÑÕÉ«
-        self.trackTintColor = UIColor.black//½ø¶ÈÌõ¹ìµÀµÄÑÕÉ«
-        self.progressImage = UIImage(named:"a10")//½ø¶ÈÌõÇ°½øµÄµÄÍ¼Æ¬
-        self.trackImage = UIImage(named:"a10")//½ø¶ÈÌõ¹ìµÀµÄÍ¼Æ¬
-        self.setProgress(1, animated: true)//ÉèÖÃµ±Ç°½ø¶È
+        self.progress = 1//è¿›åº¦æ¡å½“å‰çš„è¿›åº¦
+        self.progressTintColor = UIColor.black//è¿›åº¦æ¡èµ°è¿‡çš„é¢œè‰²
+        self.trackTintColor = UIColor.black//è¿›åº¦æ¡è½¨é“çš„é¢œè‰²
+        self.progressImage = UIImage(named:"a10")//è¿›åº¦æ¡å‰è¿›çš„çš„å›¾ç‰‡
+        self.trackImage = UIImage(named:"a10")//è¿›åº¦æ¡è½¨é“çš„å›¾ç‰‡
+        self.setProgress(1, animated: true)//è®¾ç½®å½“å‰è¿›åº¦
         self.contentMode = .scaleAspectFit
-        self.transform = CGAffineTransform(scaleX: 1.0,y: 10.0)//·Å´ó½ø¶ÈÌõ  ´ú±íxºÍy·½ÏòÉÏµÄ·Å´ó±¶Êı
+        self.transform = CGAffineTransform(scaleX: 1.0,y: 10.0)//æ”¾å¤§è¿›åº¦æ¡  ä»£è¡¨xå’Œyæ–¹å‘ä¸Šçš„æ”¾å¤§å€æ•°
         self.layer.masksToBounds = true
-        self.layer.cornerRadius = 45 //ÊÖ¶¯ÉèÖÃÔ²½Ç
+        self.layer.cornerRadius = 45 //æ‰‹åŠ¨è®¾ç½®åœ†è§’
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -91,10 +91,10 @@ class ViewController: UIViewController {
         bt.frame = CGRect (x:0.fitScreen, y:0.fitScreen, width:414.fitScreen,height:737.fitScreen)
         let image3 = UIImage(named:"a7.jpg")
         bt.setBackgroundImage(image3,for:UIControlState())
-        bt.setTitle(" ",for: UIControlState())//°´Å¥ÔÚÕı³£Çé¿öÏÂµÄ±êÌâÎÄ×Ö
-        bt.setTitleColor(UIColor.white, for:UIControlState())//°´Å¥ÔÚÕı³£Çé¿öÏÂµÄ±êÌâÑÕÉ«
-        bt.titleLabel?.font = UIFont(name: "Arial",size:24)//°´Å¥ÎÄ×Ö×ÖÌåĞÎ×´Óë´óĞ¡
-        bt.addTarget(self,action: #selector(ViewController.buttonTap4(_:)),for: UIControlEvents.touchUpInside)//Îª°´Å¥Ìí¼Óµã»÷ÊÂ¼ş
+        bt.setTitle(" ",for: UIControlState())//æŒ‰é’®åœ¨æ­£å¸¸æƒ…å†µä¸‹çš„æ ‡é¢˜æ–‡å­—
+        bt.setTitleColor(UIColor.white, for:UIControlState())//æŒ‰é’®åœ¨æ­£å¸¸æƒ…å†µä¸‹çš„æ ‡é¢˜é¢œè‰²
+        bt.titleLabel?.font = UIFont(name: "Arial",size:24)//æŒ‰é’®æ–‡å­—å­—ä½“å½¢çŠ¶ä¸å¤§å°
+        bt.addTarget(self,action: #selector(ViewController.buttonTap4(_:)),for: UIControlEvents.touchUpInside)//ä¸ºæŒ‰é’®æ·»åŠ ç‚¹å‡»äº‹ä»¶
         return bt
     }()
     var btn1: UIButton = {
@@ -135,36 +135,36 @@ class ViewController: UIViewController {
         let bt4 = PowerButton(type: UIButtonType.roundedRect)
         bt4.frame = CGRect (x:95.fitScreen,y:420.fitScreen,width:250.fitScreen,height:30.fitScreen)
         //let image3 = UIImage(named: "a10")
-        //bt4.setBackgroundImage(image3, for: UIControlState())//½«Í¼Æ¬Ö¸¶¨Îª,°´Å¥ÔÚÕı³£Çé¿öÏÂµÄ±³¾°Í¼Æ¬,Ò²¿ÉÒÔ¸ø°´ÏÂ,Ê§Ğ§×´Ì¬ÉèÖÃÏàÓ¦Í¼Æ¬
+        //bt4.setBackgroundImage(image3, for: UIControlState())//å°†å›¾ç‰‡æŒ‡å®šä¸º,æŒ‰é’®åœ¨æ­£å¸¸æƒ…å†µä¸‹çš„èƒŒæ™¯å›¾ç‰‡,ä¹Ÿå¯ä»¥ç»™æŒ‰ä¸‹,å¤±æ•ˆçŠ¶æ€è®¾ç½®ç›¸åº”å›¾ç‰‡
         bt4.backgroundColor = UIColor.clear
-        bt4.setTitle("²éÑ¯",for: UIControlState())//°´Å¥ÔÚÕı³£Çé¿öÏÂµÄ±êÌâÎÄ×Ö
+        bt4.setTitle("æŸ¥è¯¢",for: UIControlState())//æŒ‰é’®åœ¨æ­£å¸¸æƒ…å†µä¸‹çš„æ ‡é¢˜æ–‡å­—
         //bt4.setTitleColor(UIColor.white, for:UIControlState())
-        bt4.titleLabel?.font = UIFont(name: "Arial",size:23)//°´Å¥ÎÄ×Ö×ÖÌåĞÎ×´Óë´óĞ¡
-        bt4.addTarget(self,action: #selector(ViewController.buttonTap3(_:)),for: UIControlEvents.touchUpInside)//Îª°´Å¥Ìí¼Óµã»÷ÊÂ¼ş
-        bt4.layer.masksToBounds = true//¸ø°´Å¥Ìí¼Ó±ß¿òĞ§¹û
-        bt4.layer.cornerRadius = 16//°´Å¥²ãµÄÔ²½Ç°ë¾¶
-        bt4.layer.borderWidth = 2//°´Å¥²ã±ß¿òµÄ¿í¶È
-        bt4.layer.borderColor = UIColor.lightText.cgColor//°´Å¥²ã±ß¿òµÄÑÕÉ«
+        bt4.titleLabel?.font = UIFont(name: "Arial",size:23)//æŒ‰é’®æ–‡å­—å­—ä½“å½¢çŠ¶ä¸å¤§å°
+        bt4.addTarget(self,action: #selector(ViewController.buttonTap3(_:)),for: UIControlEvents.touchUpInside)//ä¸ºæŒ‰é’®æ·»åŠ ç‚¹å‡»äº‹ä»¶
+        bt4.layer.masksToBounds = true//ç»™æŒ‰é’®æ·»åŠ è¾¹æ¡†æ•ˆæœ
+        bt4.layer.cornerRadius = 16//æŒ‰é’®å±‚çš„åœ†è§’åŠå¾„
+        bt4.layer.borderWidth = 2//æŒ‰é’®å±‚è¾¹æ¡†çš„å®½åº¦
+        bt4.layer.borderColor = UIColor.lightText.cgColor//æŒ‰é’®å±‚è¾¹æ¡†çš„é¢œè‰²
         return bt4
     }()
     
     var Label: PowerLabel = {
         let label = PowerLabel(frame: CGRect(x: 160.fitScreen,y: 25.fitScreen,width: 100, height: 40))
-        label.text = "µç·Ñ²éÑ¯"
+        label.text = "ç”µè´¹æŸ¥è¯¢"
         label.alpha = 0.8
         label.font = UIFont (name: "Arial",size: 24)
         return label
     }()
     var Label2: PowerLabel = {
         let label2 = PowerLabel(frame: CGRect(x: 20.fitScreen,y:500.fitScreen,width:100.fitScreen,height:40.fitScreen))
-        label2.text = "½ñÌì"
+        label2.text = "ä»Šå¤©"
         label2.alpha = 0.7
         label2.font = UIFont (name: "Arial",size:20)
         return label2
     }()
     var Label3: PowerLabel = {
         let label3 = PowerLabel (frame:CGRect(x: 20.fitScreen,y: 535.fitScreen,width: 200.fitScreen,height: 40.fitScreen))
-        label3.text = "ËŞÉá¿ª¿Õµ÷ÁËÂğ"
+        label3.text = "å®¿èˆå¼€ç©ºè°ƒäº†å—"
         label3.alpha = 0.7
         label3.font = UIFont (name: "Arial",size:20)
         return label3
@@ -172,28 +172,28 @@ class ViewController: UIViewController {
     
     var Label4: PowerLabel = {
         let label4 = PowerLabel(frame: CGRect(x: 250.fitScreen,y:500.fitScreen,width:100.fitScreen,height:40.fitScreen))
-        label4.text = "¿ªÁË"
+        label4.text = "å¼€äº†"
         label4.alpha = 0.8
         label4.font = UIFont(name: "Arial",size:22)
         return label4
     }()
     var Label5: PowerLabel = {
         let label5 = PowerLabel(frame: CGRect(x: 250.fitScreen,y: 535.fitScreen,width: 100.fitScreen,height: 40.fitScreen))
-        label5.text = "Ã»¿ª"
+        label5.text = "æ²¡å¼€"
         label5.alpha = 0.8
         label5.font = UIFont (name: "Arial",size:22)
         return label5
     }()
     var Label6: PowerLabel = {
         let label6 = PowerLabel(frame: CGRect(x: 20.fitScreen,y:600.fitScreen,width:100.fitScreen,height:40.fitScreen))
-        label6.text = "¿ªÁË"
+        label6.text = "å¼€äº†"
         label6.alpha = 0.8
         label6.font = UIFont (name: "Arial",size:22)
         return label6
     }()
     var Label7: PowerLabel = {
         let label7 = PowerLabel(frame: CGRect(x: 20.fitScreen,y: 635.fitScreen,width: 100.fitScreen,height: 40.fitScreen))
-        label7.text = "Ã»¿ª"
+        label7.text = "æ²¡å¼€"
         label7.alpha = 0.8
         label7.font = UIFont (name: "Arial",size:22)
         return label7
@@ -216,30 +216,30 @@ class ViewController: UIViewController {
     }()
     var TextField: PowertextField = {
         let textField = PowertextField(frame: CGRect(x: 120.fitScreen,y: 280.fitScreen,width: 200.fitScreen,height: 30.fitScreen))
-        //textField.placeholder = "ËŞÉáÂ¥¶°"
-        //let attributes = [NSForegroundColorAttributeName : UIColor.white]//³õÊ¼»¯Ò»¸öÑùÊ½×Öµä¶ÔÏó£¬ÓÃÀ´ÉèÖÃÊäÈë¿òÕ¼Î»·ûµÄÎÄ×ÖÑÕÉ«
-        //let attributedString = NSAttributedString(string: "ËŞÉáÂ¥¶°",attributes: attributes)//³õÊ¼»¯Ò»¸öÊôĞÔ×Ö·û´®³£Á¿
+        //textField.placeholder = "å®¿èˆæ¥¼æ ‹"
+        //let attributes = [NSForegroundColorAttributeName : UIColor.white]//åˆå§‹åŒ–ä¸€ä¸ªæ ·å¼å­—å…¸å¯¹è±¡ï¼Œç”¨æ¥è®¾ç½®è¾“å…¥æ¡†å ä½ç¬¦çš„æ–‡å­—é¢œè‰²
+        //let attributedString = NSAttributedString(string: "å®¿èˆæ¥¼æ ‹",attributes: attributes)//åˆå§‹åŒ–ä¸€ä¸ªå±æ€§å­—ç¬¦ä¸²å¸¸é‡
         //textField.attributedPlaceholder = attributedString
-        textField.attributedPlaceholder = NSAttributedString.init(string:"ËŞÉáÂ¥¶°", attributes: [kCTFontAttributeName as NSAttributedStringKey:UIFont.systemFont(ofSize:15)])
-        textField.attributedPlaceholder = NSAttributedString.init(string:"ËŞÉáÂ¥¶°", attributes: [kCTForegroundColorAttributeName as NSAttributedStringKey: UIColor.white])
+        textField.attributedPlaceholder = NSAttributedString.init(string:"å®¿èˆæ¥¼æ ‹", attributes: [kCTFontAttributeName as NSAttributedStringKey:UIFont.systemFont(ofSize:15)])
+        textField.attributedPlaceholder = NSAttributedString.init(string:"å®¿èˆæ¥¼æ ‹", attributes: [kCTForegroundColorAttributeName as NSAttributedStringKey: UIColor.white])
         textField.setValue(UIColor.white, forKeyPath: "_placeholderLabel.textColor")
        //textField.setValue(NSNumber.init(value :120), forKeyPath: "paddingLeft")
-        textField.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 31))//¹â±êÓÒÒÆ
+        textField.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 31))//å…‰æ ‡å³ç§»
         textField.rightViewMode = .always
         return textField
     }()
     var TextField1: PowertextField = {
         let textField1 = PowertextField(frame: CGRect(x: 120.fitScreen,y: 340.fitScreen,width:200.fitScreen,height:30.fitScreen))
-        //textField1.placeholder = "ÇŞÊÒºÅ"
+        //textField1.placeholder = "å¯å®¤å·"
         //let attributes1 = [NSForegroundColorAttributeName : UIColor.white]
-        //let attributedString1 = NSAttributedString(string: "ÇŞÊÒºÅ",attributes: attributes1)
+        //let attributedString1 = NSAttributedString(string: "å¯å®¤å·",attributes: attributes1)
         //textField1.attributedPlaceholder = attributedString1
-        textField1.attributedPlaceholder = NSAttributedString.init(string:"ÇŞÊÒºÅ", attributes: [kCTFontAttributeName as NSAttributedStringKey:UIFont.systemFont(ofSize:15)])
-        textField1.attributedPlaceholder = NSAttributedString.init(string:"ÇŞÊÒºÅ", attributes: [kCTForegroundColorAttributeName as NSAttributedStringKey:UIColor.white])
+        textField1.attributedPlaceholder = NSAttributedString.init(string:"å¯å®¤å·", attributes: [kCTFontAttributeName as NSAttributedStringKey:UIFont.systemFont(ofSize:15)])
+        textField1.attributedPlaceholder = NSAttributedString.init(string:"å¯å®¤å·", attributes: [kCTForegroundColorAttributeName as NSAttributedStringKey:UIColor.white])
         textField1.setValue(UIColor.white, forKeyPath: "_placeholderLabel.textColor")
         //textField1.setValue(NSNumber.init(value: 160), forKeyPath: "paddingLeft")
         //textField1.alignmentRectInsets = UIEdgeInsets(top: 20,left: 50,bottom: 1,right: 0)
-        textField1.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 31))//¹â±êÓÒÒÆ
+        textField1.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 31))//å…‰æ ‡å³ç§»
         textField1.rightViewMode = .always
         return textField1
     }()
@@ -252,17 +252,17 @@ class ViewController: UIViewController {
         return progressView1
     }()
     var Alert: UIAlertController = {
-        let alert = UIAlertController(title: "ĞÅÏ¢",message: "ÄúÈ·ÈÏÒªÀë¿ª±¾½çÃæÂğ£¿",preferredStyle: UIAlertControllerStyle.alert)
-        let yes = UIAlertAction(title: "È·ÈÏ",style: UIAlertActionStyle.default,handler:{(alerts: UIAlertAction) -> Void in print("Àë¿ª")})
-        let no = UIAlertAction(title: "È¡Ïû",style: UIAlertActionStyle.default,handler:{(alerts: UIAlertAction) -> Void in print("ÁôÏÂ")})
+        let alert = UIAlertController(title: "ä¿¡æ¯",message: "æ‚¨ç¡®è®¤è¦ç¦»å¼€æœ¬ç•Œé¢å—ï¼Ÿ",preferredStyle: UIAlertControllerStyle.alert)
+        let yes = UIAlertAction(title: "ç¡®è®¤",style: UIAlertActionStyle.default,handler:{(alerts: UIAlertAction) -> Void in print("ç¦»å¼€")})
+        let no = UIAlertAction(title: "å–æ¶ˆ",style: UIAlertActionStyle.default,handler:{(alerts: UIAlertAction) -> Void in print("ç•™ä¸‹")})
         
         alert.addAction(yes)
         alert.addAction(no)
         return alert
     }()
     var Alert3: UIAlertController = {
-        let alert = UIAlertController(title: "²éÑ¯Ê§°Ü",message: "ÊäÈëµÄĞÅÏ¢ÓĞÎó",preferredStyle: UIAlertControllerStyle.alert)
-        let OKAction = UIAlertAction(title: "È·ÈÏ",style: UIAlertActionStyle.default, handler: nil)
+        let alert = UIAlertController(title: "æŸ¥è¯¢å¤±è´¥",message: "è¾“å…¥çš„ä¿¡æ¯æœ‰è¯¯",preferredStyle: UIAlertControllerStyle.alert)
+        let OKAction = UIAlertAction(title: "ç¡®è®¤",style: UIAlertActionStyle.default, handler: nil)
         alert.addAction(OKAction)
         return alert
     }()
@@ -288,8 +288,8 @@ class ViewController: UIViewController {
         self.view.addSubview(ProgressView)
         self.view.addSubview(ProgressView1)
     }
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool{//14 °´ÏÂ»Ø³µÊ±µ÷ÓÃ´Ë·½·¨
-        textField.resignFirstResponder()//ÎÄ±¾¿òÊ§È¥½¹µã,¼üÅÌ×Ô¶¯Òş²Ø
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{//14 æŒ‰ä¸‹å›è½¦æ—¶è°ƒç”¨æ­¤æ–¹æ³•
+        textField.resignFirstResponder()//æ–‡æœ¬æ¡†å¤±å»ç„¦ç‚¹,é”®ç›˜è‡ªåŠ¨éšè—
         return true
     }
     
@@ -300,9 +300,9 @@ class ViewController: UIViewController {
     @objc func buttonTap1(_ button: UIButton)
     {
         let Alert : UIAlertController = {
-            let alert = UIAlertController(title: "Ã»¿ª¿Õµ÷(Ìá½»ºóµã»÷ÆÁÄ»¿É²é¿´½á¹û)",message:"ÄúÈ·ÈÏÒªÌá½»ÁËÂğ?",preferredStyle: UIAlertControllerStyle.actionSheet)
+            let alert = UIAlertController(title: "æ²¡å¼€ç©ºè°ƒ(æäº¤åç‚¹å‡»å±å¹•å¯æŸ¥çœ‹ç»“æœ)",message:"æ‚¨ç¡®è®¤è¦æäº¤äº†å—?",preferredStyle: UIAlertControllerStyle.actionSheet)
             let Queren: UIAlertAction = {
-                let queren = UIAlertAction(title:"È·ÈÏ",style: UIAlertActionStyle.default,handler: {(alerts: UIAlertAction) -> Void in print ("Ìá½»")
+                let queren = UIAlertAction(title:"ç¡®è®¤",style: UIAlertActionStyle.default,handler: {(alerts: UIAlertAction) -> Void in print ("æäº¤")
                     let img = UIImage(named:"a8")
                     let imgView = UIImageView (image: img)
                     imgView.alpha=1
@@ -324,8 +324,8 @@ class ViewController: UIViewController {
                 })
                 return queren
             }()
-            let quxiao = UIAlertAction(title:"È¡Ïû",style: UIAlertActionStyle.default,handler: {(alerts: UIAlertAction) -> Void in print ("²»Ìá½»")})
-            let likai = UIAlertAction(title: "Àë¿ª",style: UIAlertActionStyle.cancel,handler:{(alerts: UIAlertAction) ->Void in print("Àë¿ª")})
+            let quxiao = UIAlertAction(title:"å–æ¶ˆ",style: UIAlertActionStyle.default,handler: {(alerts: UIAlertAction) -> Void in print ("ä¸æäº¤")})
+            let likai = UIAlertAction(title: "ç¦»å¼€",style: UIAlertActionStyle.cancel,handler:{(alerts: UIAlertAction) ->Void in print("ç¦»å¼€")})
             alert.addAction(Queren)
             alert.addAction(quxiao)
             alert.addAction(likai)
@@ -336,9 +336,9 @@ class ViewController: UIViewController {
     @objc func buttonTap2(_ button: UIButton)//13
     {
         let Alert1 : UIAlertController = {
-            let alert = UIAlertController(title: "¿ª¿Õµ÷ÁË(Ìá½»ºóµã»÷ÆÁÄ»¿É²é¿´½á¹û)",message:"ÄúÈ·ÈÏÒªÌá½»ÁËÂğ?",preferredStyle: UIAlertControllerStyle.actionSheet)
+            let alert = UIAlertController(title: "å¼€ç©ºè°ƒäº†(æäº¤åç‚¹å‡»å±å¹•å¯æŸ¥çœ‹ç»“æœ)",message:"æ‚¨ç¡®è®¤è¦æäº¤äº†å—?",preferredStyle: UIAlertControllerStyle.actionSheet)
             let Queren: UIAlertAction = {
-                let queren = UIAlertAction(title:"È·ÈÏ",style: UIAlertActionStyle.default,handler: {(alerts: UIAlertAction) -> Void in print ("Ìá½»")
+                let queren = UIAlertAction(title:"ç¡®è®¤",style: UIAlertActionStyle.default,handler: {(alerts: UIAlertAction) -> Void in print ("æäº¤")
                     let img = UIImage(named:"a8")
                     let imgView = UIImageView (image: img)
                     imgView.alpha=1
@@ -360,8 +360,8 @@ class ViewController: UIViewController {
                 })
                 return queren
             }()
-            let quxiao = UIAlertAction(title:"È¡Ïû",style: UIAlertActionStyle.default,handler: {(alerts: UIAlertAction) -> Void in print ("²»Ìá½»")})
-            let likai = UIAlertAction(title: "Àë¿ª",style: UIAlertActionStyle.cancel,handler:{(alerts: UIAlertAction) ->Void in print("Àë¿ª")})
+            let quxiao = UIAlertAction(title:"å–æ¶ˆ",style: UIAlertActionStyle.default,handler: {(alerts: UIAlertAction) -> Void in print ("ä¸æäº¤")})
+            let likai = UIAlertAction(title: "ç¦»å¼€",style: UIAlertActionStyle.cancel,handler:{(alerts: UIAlertAction) ->Void in print("ç¦»å¼€")})
             alert.addAction(Queren)
             alert.addAction(quxiao)
             alert.addAction(likai)
@@ -375,7 +375,7 @@ class ViewController: UIViewController {
     }
     @objc func buttonTap4(_ button: UIButton)
     {
-        self.view.endEditing(true)//Õâ¸ö666£¬ÈÎºÎUIView×ÓÀà½áÊø±à¼­£¬¼üÅÌ±ãÒş²ØÁË
+        self.view.endEditing(true)//è¿™ä¸ª666ï¼Œä»»ä½•UIViewå­ç±»ç»“æŸç¼–è¾‘ï¼Œé”®ç›˜ä¾¿éšè—äº†
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
