@@ -1,0 +1,6 @@
+官方提供了多种ListItem的Layout (R.layout)，以下是较为常用的，更多的请查看API DOC的R.layout http://androidappdocs.appspot.com/reference/android/R.layout.html：
+◾android.R.layout.simple_list_item_1   一行text
+◾android.R.layout.simple_list_item_2   一行title，一行text
+◾android.R.layout.simple_list_item_single_choice   单选按钮
+◾android.R.layout.simple_list_item_multiple_choice   多选按钮
+◾android.R.layout.simple_list_item_checked    checkbox
