@@ -4,8 +4,7 @@ Toolbar
 
 关于错误：android.widget.Toolbar无法转换为android.support.v7.widget.Toolbar
 ---
->
-原因是导入库错误
+>原因是导入库错误
 删掉
 import android.widget.Toolbar;
 增加 
