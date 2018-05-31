@@ -42,6 +42,7 @@ public class ModeAdapter extends ArrayAdapter{
         //将适配器中的数据加载到控件中
         imgSpinner.setAdapter(imgAdapter);
         modeSpinner.setAdapter(modeAdapter);
+        //将最后一个隐藏的选项显示出来
         imgSpinner.setSelection(imgAdapter.getCount(), true);
         modeSpinner.setSelection(modeAdapter.getCount(), true);
 
