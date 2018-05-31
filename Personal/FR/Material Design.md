@@ -13,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 DrawerLayoutt(滑动菜单)
 ===
 >1.layout_gravity属性必须指定
-\<br>2.
+2.
 ```
   ActionBar actionBar = getSupportActionBar();
   if(actionBar != null){
@@ -22,9 +22,9 @@ DrawerLayoutt(滑动菜单)
     actionBar.setHomeAsUpIndicator(R.drawable. ...);
   }
 ```
-\<br>3.关于ActionBar中setDisplayHomeAsUpEnabled(true)等方法的问题
+3.关于ActionBar中setDisplayHomeAsUpEnabled(true)等方法的问题
 ---
-\<br>>(1) actionBar.setDisplayHomeAsUpEnabled(true)    //给左上角图标的左边加上一个返回的图标 
-\<br>>(2) actionBar.setDisplayShowHomeEnabled(true)   //使左上角图标是否显示，如果设成false，则没有程序图标，仅仅就个标题，否则，显示应用程序图标，对应id为Android.R.id.home
-\<br>>(3) actionBar.setDisplayShowCustomEnabled(true)  //使自定义的普通View能在title栏显示，即actionBar.setCustomView能起作用
-\<br>>(4)setHomeButtonEnabled和setDisplayShowHomeEnabled共同起作用，如果setHomeButtonEnabled设成false，即使setDisplayShowHomeEnabled设成true，图标也不能点击
+\<br>(1) actionBar.setDisplayHomeAsUpEnabled(true)    //给左上角图标的左边加上一个返回的图标 
+\<br>(2) actionBar.setDisplayShowHomeEnabled(true)   //使左上角图标是否显示，如果设成false，则没有程序图标，仅仅就个标题，否则，显示应用程序图标，对应id为Android.R.id.home
+\<br>(3) actionBar.setDisplayShowCustomEnabled(true)  //使自定义的普通View能在title栏显示，即actionBar.setCustomView能起作用
+\<br>(4)setHomeButtonEnabled和setDisplayShowHomeEnabled共同起作用，如果setHomeButtonEnabled设成false，即使setDisplayShowHomeEnabled设成true，图标也不能点击
