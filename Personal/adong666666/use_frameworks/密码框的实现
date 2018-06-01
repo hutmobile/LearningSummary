@@ -1,0 +1,88 @@
+密码框的实现
+
+我做修改密码，修改绑定手机时，会用到密码文本框。
+依靠第三方库PasswordTextField,从而使密码框的实现变得格外轻松
+
+platform :ios,'9.0'
+use_frameworks!
+
+target 'faxian'do
+source 'https://github.com/CocoaPods/Specs.git'
+pod 'PasswordTextField'
+end
+
+然后import PasswordTextField,
+你就拥有一个新的类，可以直接调用，也可以在它的基础上新建一个类，同样会带来密码框的效果，它还配有显示和不显示密码的功能
+下面给出我实现密码框的代码
+class PPowerTextField: PasswordTextField{
+    override init(frame: CGRect){
+        super.init(frame: frame)
+        self.alpha=1
+        self.font = UIFont(name: "Arial",size:24)
+        self.textColor = UIColor.white
+        self.autocorrectionType = UITextAutocorrectionType.no
+        self.returnKeyType = UIReturnKeyType.done
+        self.clearButtonMode = UITextFieldViewMode.whileEditing
+        self.keyboardType = UIKeyboardType.numberPad
+        self.keyboardAppearance = UIKeyboardAppearance.light
+        self.delegate = self as? UITextFieldDelegate
+        self.textAlignment = NSTextAlignment.center
+        self.backgroundColor = UIColor.clear
+        self.showButtonWhile = .Always
+        self.customShowSecureTextImage = UIImage(named: "27")
+        self.customHideSecureTextImage = UIImage(named: "28")
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
+
+
+    var TextField: PPowerTextField = {
+        let textField = PPowerTextField(frame: CGRect(x: 60.fitScreen,y: 240.fitScreen,width: 300.fitScreen,height: 60.fitScreen))
+        textField.attributedPlaceholder = NSAttributedString.init(string:"请输入初始密码", attributes: [kCTFontAttributeName as NSAttributedStringKey:UIFont.systemFont(ofSize:15)])
+        textField.attributedPlaceholder = NSAttributedString.init(string:"请输入初始密码", attributes: [kCTForegroundColorAttributeName as NSAttributedStringKey: UIColor.red])
+        textField.setValue(UIColor.red, forKeyPath: "_placeholderLabel.textColor")
+        
+        textField.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 31))
+        textField.rightViewMode = .always
+        textField.textColor = UIColor.brown
+        textField.borderStyle = UITextBorderStyle.roundedRect
+        textField.backgroundColor = UIColor.lightText
+        textField.showButtonWhile = .Always
+        textField.customShowSecureTextImage = UIImage(named: "27")
+        textField.customHideSecureTextImage = UIImage(named: "28")
+        return textField
+    }()
+
+
+
+    var TextField1: PPowerTextField = {
+        let textField1 = PPowerTextField(frame: CGRect(x: 60.fitScreen,y: 300.fitScreen,width:300.fitScreen,height:60.fitScreen))
+        textField1.attributedPlaceholder = NSAttributedString.init(string:"请输入6～16位新密码", attributes: [kCTFontAttributeName as NSAttributedStringKey:UIFont.systemFont(ofSize:15)])
+        textField1.attributedPlaceholder = NSAttributedString.init(string:"请输入6～16位新密码", attributes: [kCTForegroundColorAttributeName as NSAttributedStringKey:UIColor.orange])
+        textField1.setValue(UIColor.orange, forKeyPath: "_placeholderLabel.textColor")
+        textField1.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 31))
+        textField1.rightViewMode = .always
+        textField1.textColor = UIColor.purple
+        textField1.borderStyle = UITextBorderStyle.roundedRect
+        textField1.backgroundColor = UIColor.lightText
+        return textField1
+    }()
+
+
+
+    var TextField2: PPowerTextField = {
+        let textField1 = PPowerTextField(frame: CGRect(x: 60.fitScreen,y: 360.fitScreen,width:300.fitScreen,height:60.fitScreen))
+        textField1.attributedPlaceholder = NSAttributedString.init(string:"请确认6～16位新密码", attributes: [kCTFontAttributeName as NSAttributedStringKey:UIFont.systemFont(ofSize:15)])
+        textField1.attributedPlaceholder = NSAttributedString.init(string:"请确认6～16位新密码", attributes: [kCTForegroundColorAttributeName as NSAttributedStringKey:UIColor.blue])
+        textField1.setValue(UIColor.blue, forKeyPath: "_placeholderLabel.textColor")
+        textField1.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 31))
+        textField1.rightViewMode = .always
+        textField1.textColor = UIColor.magenta
+        textField1.borderStyle = UITextBorderStyle.roundedRect
+        textField1.backgroundColor = UIColor.lightText
+        return textField1
+    }()
