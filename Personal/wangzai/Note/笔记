@@ -127,3 +127,8 @@ Toast是Android中用来显示显示信息的一种机制，和Dialog不一样�
             return compressImage(bitmap);// 压缩好比例大小后再进行质量压缩    
             //return bitmap;    
         }    
+        
+        
+        
+       
+       
