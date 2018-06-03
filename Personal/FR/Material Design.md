@@ -32,3 +32,18 @@ DrawerLayoutt(滑动菜单)
 >(3) actionBar.setDisplayShowCustomEnabled(true)  //使自定义的普通View能在title栏显示，即actionBar.setCustomView能起作用
 
 >(4)setHomeButtonEnabled和setDisplayShowHomeEnabled共同起作用，如果setHomeButtonEnabled设成false，即使setDisplayShowHomeEnabled设成true，图标也不能点击
+
+设置toolbar和系统状态栏颜色一致
+===
+
+>1. 在代码中添加如下代码：
+```
+   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+       WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+       localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+       }
+```
+>2.在toolbar中加入如下代码
+```
+    android:fitsSystemWindows="true"
+```
