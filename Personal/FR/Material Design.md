@@ -35,7 +35,6 @@ DrawerLayoutt(滑动菜单)
 
 设置toolbar和系统状态栏颜色一致
 ===
-
 >1. 在代码中添加如下代码：
 ```
    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -45,5 +44,5 @@ DrawerLayoutt(滑动菜单)
 ```
 >2.在toolbar中加入如下代码
 ```
-    android:fitsSystemWindows="true"
+   android:fitsSystemWindows="true"
 ```
