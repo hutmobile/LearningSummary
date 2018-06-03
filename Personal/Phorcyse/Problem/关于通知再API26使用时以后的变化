@@ -1,0 +1,56 @@
+在android中，关于通知一般使用如下方法创建
+Intent intent = new Intent(this,MainActivity.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                Notification notification = new NotificationCompat.Builder(this)
+                        .setContentTitle("This is content title")
+                        .setContentText("This is context text")
+                        .setWhen(System.currentTimeMillis())
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
+                        .setContentIntent(pendingIntent)
+                        .build();
+                manager.notify(1,notification);
+
+而我分别在API 24 和API 26的虚拟机中运行了一边，发现了API为26的虚拟机无法正常显示通知
+在https://developer.android.google.cn/reference/android/support/v4/app/NotificationCompat.Builder
+查开发者文档发现，在开发文档中其构造函数发现有这么一句话
+This constructor was deprecated in API level 26.1.0. use NotificationCompat.Builder(Context, String) instead. All posted Notifications must specify a NotificationChannel Id.
+翻译后为
+这个构造函数被弃用 在API级别26.1.0。 使用NotificationCompat.Builder(Context, String)代替。 所有发布的通知必须指定一个NotificationChannel Id。
+即该构造函数已被弃用
+
+公共构造函数
+NotificationCompat.Builder(Context context, String channelId)
+构造函数。
+NotificationCompat.Builder(Context context)
+这个构造函数被弃用 在API级别26.1.0。 使用NotificationCompat.Builder(Context, String)代替。 所有发布的通知必须指定一个NotificationChannel Id。
+
+需要使用NotificationCompat.Builder(Context context, String channelId)
+还需要指定通道ID才能使用
+String id = "channel_1";
+        String description = "123";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        NotificationChannel mChannel = new NotificationChannel(id, "123", importance);
+//  mChannel.setDescription(description);
+//  mChannel.enableLights(true);
+//  mChannel.setLightColor(Color.RED);
+//  mChannel.enableVibration(true);
+//  mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+        String group = "my_group_01";
+// 用户可见的通知渠道组名称.
+        CharSequence name = getString(R.string.app_name);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.createNotificationChannelGroup(new NotificationChannelGroup(group, name));
+        mNotificationManager.createNotificationChannel(mChannel);
+        Intent intent = new Intent(this,MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
+        Notification notification = new NotificationCompat.Builder(this,id)
+                .setContentTitle("This is content title ")
+                .setContentText("This is content text")
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
+                .setContentIntent(pendingIntent)
+                .build();
+        startForeground(1,notification);
