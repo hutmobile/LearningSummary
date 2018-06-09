@@ -1,0 +1,1072 @@
+//Coding 管理代码
+//不多说，来看看这些命令行
+
+
+Last login: Fri Jun  1 12:56:14 on console
+Restored session: 2018年 6月 1日 星期五 00时28分19秒 CST
+adong666666deiMac:faxian adong666666$ 
+  [恢复于 2018年6月3日 上午9:16:51]
+Last login: Sun Jun  3 09:16:39 on console
+Restored session: 2018年 6月 1日 星期五 21时32分34秒 CST
+adong666666deiMac:faxian adong666666$ cd /Users/adong666666/Desktop/faxian/Pods/Charts 
+adong666666deiMac:Charts adong666666$ ..
+-bash: ..: command not found
+adong666666deiMac:Charts adong666666$ pod install
+[in /Users/adong666666/Desktop/faxian]
+[!] Command should be run from a directory outside Pods directory.
+
+	Current directory is `Pods/Charts`
+
+adong666666deiMac:Charts adong666666$ cd ..
+adong666666deiMac:Pods adong666666$ cd ..
+adong666666deiMac:faxian adong666666$ pod install
+Analyzing dependencies
+Downloading dependencies
+Using ActiveLabel (0.8.1)
+Using BubbleTransition (3.0.1)
+Using Charts (3.1.1)
+Using DGElasticPullToRefresh (1.1)
+Using DateTimePicker (1.2.1)
+Using GuillotineMenu (3.0.1)
+Using PagingMenuController (2.2.0)
+Using PasswordTextField (1.1.0)
+Installing SwiftLint (0.25.1)
+Using Toaster (2.1.1)
+Using TwicketSegmentedControl (0.1.2)
+Generating Pods project
+Integrating client project
+Sending stats
+Pod installation complete! There are 11 dependencies from the Podfile and 11 total pods installed.
+adong666666deiMac:faxian adong666666$ brew
+-bash: brew: command not found
+adong666666deiMac:faxian adong666666$ ls -a
+.			Podfile			faxian.xcworkspace
+..			Podfile.lock		faxianTests
+.DS_Store		Pods			faxianUITests
+.git			faxian
+Pod			faxian.xcodeproj
+adong666666deiMac:faxian adong666666$ git log
+commit 00e72fd42dcbe8d864a7249825c34778fd13703e (HEAD -> master)
+Author: zhangsaidong <2391141722@qq.com>
+Date:   Sun May 13 05:48:57 2018 -0700
+
+    Initial Commit
+adong666666deiMac:faxian adong666666$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   faxian.xcodeproj/project.pbxproj
+	new file:   faxian.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+	modified:   faxian.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/xcschememanagement.plist
+	modified:   faxian/AppDelegate.swift
+	new file:   faxian/Aschool/1/TwentyfourthViewController.swift
+	new file:   faxian/Aschool/2/TwentyfifthViewController.swift
+	new file:   faxian/Aschool/3/TwentysixthViewController.swift
+	new file:   faxian/Aschool/4/TwentyseventhViewController.swift
+	new file:   faxian/Aschool/Handoff/TwentythirdViewController.swift
+	new file:   faxian/Aschool/Main/SixthViewController.swift
+	new file:   faxian/Aschool/temp/tempViewController.swift
+	new file:   faxian/Aschool/temp2/temp2ViewController.swift
+	new file:   faxian/Aschool/temp3/temp3ViewController.swift
+	new file:   faxian/Aschool/temp4/temp4ViewController.swift
+	new file:   faxian/Aschool/temp5/temp5ViewController.swift
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/1024.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/Contents.json
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/a20pt.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/a20pt2.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/a29pt.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/a29pt2.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/a40pt.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/a40pt2.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/a76pt.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/a76pt2.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/a83.5pt2.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/o20pt2.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/o20pt3.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/o29pt2.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/o29pt3.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/o40pt2.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/o40pt3.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/o60pt2.jpg
+	new file:   faxian/Assets.xcassets/AppIcon.appiconset/o60pt3.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage-2.launchimage/10.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage-2.launchimage/11.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage-2.launchimage/8.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage-2.launchimage/9.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage-2.launchimage/Contents.json
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/1.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/10.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/11.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/12.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/13.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/14.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/15.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/16.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/17.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/18.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/19.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/2.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/20.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/21.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/22.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/3.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/4.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/5.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/6.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/7.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/8.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/9.jpg
+	new file:   faxian/Assets.xcassets/LaunchImage.launchimage/Contents.json
+	new file:   faxian/Assets.xcassets/background/0.imageset/0.jpg
+	new file:   faxian/Assets.xcassets/background/0.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/1.imageset/1.jpg
+	new file:   faxian/Assets.xcassets/background/1.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/10.imageset/10.jpg
+	new file:   faxian/Assets.xcassets/background/10.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/11.imageset/11.jpg
+	new file:   faxian/Assets.xcassets/background/11.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/12.imageset/12.jpg
+	new file:   faxian/Assets.xcassets/background/12.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/13.imageset/13.jpeg
+	new file:   faxian/Assets.xcassets/background/13.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/15.imageset/15.jpeg
+	new file:   faxian/Assets.xcassets/background/15.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/18.imageset/18.jpg
+	new file:   faxian/Assets.xcassets/background/18.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/19.imageset/19.jpg
+	new file:   faxian/Assets.xcassets/background/19.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/2.imageset/2.jpg
+	new file:   faxian/Assets.xcassets/background/2.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/20.imageset/20.jpg
+	new file:   faxian/Assets.xcassets/background/20.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/21.imageset/21.jpg
+	new file:   faxian/Assets.xcassets/background/21.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/22.imageset/22.jpg
+	new file:   faxian/Assets.xcassets/background/22.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/23.imageset/23.jpg
+	new file:   faxian/Assets.xcassets/background/23.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/24.imageset/24.jpg
+	new file:   faxian/Assets.xcassets/background/24.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/25.imageset/25.jpg
+	new file:   faxian/Assets.xcassets/background/25.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/26.imageset/26.jpg
+	new file:   faxian/Assets.xcassets/background/26.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/29.imageset/29.jpg
+	new file:   faxian/Assets.xcassets/background/29.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/30.imageset/30.jpg
+	new file:   faxian/Assets.xcassets/background/30.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/31.imageset/31.jpg
+	new file:   faxian/Assets.xcassets/background/31.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/32.imageset/32.jpg
+	new file:   faxian/Assets.xcassets/background/32.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/33.imageset/33.jpg
+	new file:   faxian/Assets.xcassets/background/33.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/34.imageset/34.jpg
+	new file:   faxian/Assets.xcassets/background/34.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/35.imageset/35.png
+	new file:   faxian/Assets.xcassets/background/35.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/36.imageset/36.jpg
+	new file:   faxian/Assets.xcassets/background/36.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/37.imageset/37.jpg
+	new file:   faxian/Assets.xcassets/background/37.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/38.imageset/38.jpg
+	new file:   faxian/Assets.xcassets/background/38.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/39.imageset/39.jpg
+	new file:   faxian/Assets.xcassets/background/39.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/40.imageset/40.jpg
+	new file:   faxian/Assets.xcassets/background/40.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/41.imageset/41.jpg
+	new file:   faxian/Assets.xcassets/background/41.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/42.imageset/42.jpg
+	new file:   faxian/Assets.xcassets/background/42.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/43.imageset/43.jpg
+	new file:   faxian/Assets.xcassets/background/43.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/44.imageset/44.jpg
+	new file:   faxian/Assets.xcassets/background/44.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/45.imageset/45.jpg
+	new file:   faxian/Assets.xcassets/background/45.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/46.imageset/46.jpg
+	new file:   faxian/Assets.xcassets/background/46.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/47.imageset/47.jpg
+	new file:   faxian/Assets.xcassets/background/47.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/48.imageset/48.jpg
+	new file:   faxian/Assets.xcassets/background/48.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/49.imageset/49.jpg
+	new file:   faxian/Assets.xcassets/background/49.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/5.imageset/5.jpg
+	new file:   faxian/Assets.xcassets/background/5.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/50.imageset/50.jpg
+	new file:   faxian/Assets.xcassets/background/50.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/51.imageset/51.jpg
+	new file:   faxian/Assets.xcassets/background/51.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/52.imageset/52.jpg
+	new file:   faxian/Assets.xcassets/background/52.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/53.imageset/53.jpg
+	new file:   faxian/Assets.xcassets/background/53.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/54.imageset/54.jpg
+	new file:   faxian/Assets.xcassets/background/54.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/8.imageset/8.jpg
+	new file:   faxian/Assets.xcassets/background/8.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/9.imageset/9.jpg
+	new file:   faxian/Assets.xcassets/background/9.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/Contents.json
+	new file:   faxian/Assets.xcassets/background/a7.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/background/a7.imageset/a7.jpg
+	new file:   faxian/Assets.xcassets/control/14.imageset/14.png
+	new file:   faxian/Assets.xcassets/control/14.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/control/27.imageset/27.png
+	new file:   faxian/Assets.xcassets/control/27.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/control/28.imageset/28.png
+	new file:   faxian/Assets.xcassets/control/28.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/control/3.imageset/1.png
+	new file:   faxian/Assets.xcassets/control/3.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/control/4.imageset/2.png
+	new file:   faxian/Assets.xcassets/control/4.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/control/6.imageset/6.png
+	new file:   faxian/Assets.xcassets/control/6.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/control/7.imageset/7.png
+	new file:   faxian/Assets.xcassets/control/7.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/control/Contents.json
+	new file:   faxian/Assets.xcassets/control/b11.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/control/b11.imageset/b11.png
+	new file:   faxian/Assets.xcassets/control/b8.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/control/b8.imageset/b8.png
+	new file:   faxian/Assets.xcassets/control/b9.imageset/Contents.json
+	new file:   faxian/Assets.xcassets/control/b9.imageset/b9.png
+	modified:   faxian/Base.lproj/LaunchScreen.storyboard
+	new file:   faxian/Bschedule/Main/ForthViewController.swift
+	new file:   faxian/Cdiscovery/ChangePassword/EighthViewController.swift
+	new file:   faxian/Cdiscovery/FuturePlan/EighteenthViewController.swift
+	new file:   faxian/Cdiscovery/FuturePlan/External/1/SeventeenthViewController.swift
+	new file:   faxian/Cdiscovery/InitialtingActivities/SixteenthViewController.swift
+	renamed:    faxian/Base.lproj/Main.storyboard -> faxian/Cdiscovery/Main/Base.lproj/Main.storyboard
+	new file:   faxian/Cdiscovery/Main/ViewController.swift
+	new file:   faxian/Cdiscovery/MessageCenter/1/FifteenthViewController.swift
+	new file:   faxian/Cdiscovery/MessageCenter/2/AViewController.swift
+	new file:   faxian/Cdiscovery/MessageCenter/3/BViewController.swift
+	new file:   faxian/Cdiscovery/MessageCenter/4/CViewController.swift
+	new file:   faxian/Cdiscovery/MessageCenter/5/DViewController.swift
+	new file:   faxian/Cdiscovery/MessageCenter/6/EViewController.swift
+	new file:   faxian/Cdiscovery/MessageCenter/7/FViewController.swift
+	new file:   faxian/Cdiscovery/MessageCenter/Main/SeventhViewController.swift
+	new file:   faxian/Cdiscovery/ModifyNumber/FourteenthViewController.swift
+	new file:   faxian/Cdiscovery/electricity fees/ThirdViewController.swift
+	new file:   faxian/Dmine/Achievement/TwentyfirstViewController.swift
+	new file:   faxian/Dmine/ActivityExperience/NinthViewController.swift
+	new file:   faxian/Dmine/Association/NinteenthViewController.swift
+	new file:   faxian/Dmine/Feedback/ThirteenthViewController.swift
+	new file:   faxian/Dmine/Help/TwelvethViewController.swift
+	new file:   faxian/Dmine/Main/SecondViewController.swift
+	new file:   faxian/Dmine/Question/ActivityDetail/Main/TenthViewController.swift
+	new file:   faxian/Dmine/Question/ActivityDetail/detail1/FifthViewController.swift
+	new file:   faxian/Dmine/Question/ActivityDetail/detail2/TwentiethViewController.swift
+	new file:   faxian/Dmine/Question/ElventhViewController.swift
+	new file:   faxian/Eaddition/TwentysecondViewController.swift
+	new file:   faxian/Esidemenu/TwentyfifthTableViewController.swift
+	new file:   faxian/Esidemenu/TwentyfourthViewController.swift
+	new file:   faxian/Esidemenu/TwentysecondViewController.swift
+	new file:   faxian/Esidemenu/TwentysixthViewController.swift
+	new file:   faxian/Esidemenu/TwentythirdViewController.swift
+	new file:   faxian/External/ENSideMenu.swift
+	new file:   faxian/External/ENSideMenuNavigationController.swift
+	new file:   faxian/External/NoteBook.html
+	new file:   faxian/External/SweetAlert.swift
+	modified:   faxian/Info.plist
+	deleted:    faxian/ViewController.swift
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   faxian.xcodeproj/project.pbxproj
+	modified:   faxian.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+	modified:   faxian.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+	modified:   faxian.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+	modified:   faxian.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/xcschememanagement.plist
+	modified:   faxian/AppDelegate.swift
+	modified:   faxian/Aschool/1/TwentyfourthViewController.swift
+	modified:   faxian/Aschool/2/TwentyfifthViewController.swift
+	modified:   faxian/Aschool/3/TwentysixthViewController.swift
+	modified:   faxian/Aschool/4/TwentyseventhViewController.swift
+	modified:   faxian/Aschool/Handoff/TwentythirdViewController.swift
+	modified:   faxian/Aschool/Main/SixthViewController.swift
+	modified:   faxian/Aschool/temp/tempViewController.swift
+	modified:   faxian/Aschool/temp2/temp2ViewController.swift
+	modified:   faxian/Aschool/temp3/temp3ViewController.swift
+	modified:   faxian/Aschool/temp4/temp4ViewController.swift
+	modified:   faxian/Aschool/temp5/temp5ViewController.swift
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/1024.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/Contents.json
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/a20pt.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/a20pt2.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/a29pt.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/a29pt2.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/a40pt.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/a40pt2.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/a76pt.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/a76pt2.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/a83.5pt2.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/o20pt2.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/o20pt3.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/o29pt2.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/o29pt3.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/o40pt2.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/o40pt3.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/o60pt2.jpg
+	modified:   faxian/Assets.xcassets/AppIcon.appiconset/o60pt3.jpg
+	modified:   faxian/Assets.xcassets/Contents.json
+	modified:   faxian/Assets.xcassets/LaunchImage-2.launchimage/10.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage-2.launchimage/11.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage-2.launchimage/8.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage-2.launchimage/9.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage-2.launchimage/Contents.json
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/1.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/10.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/11.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/12.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/13.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/14.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/15.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/16.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/17.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/18.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/19.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/2.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/20.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/21.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/22.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/3.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/4.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/5.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/6.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/7.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/8.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/9.jpg
+	modified:   faxian/Assets.xcassets/LaunchImage.launchimage/Contents.json
+	modified:   faxian/Assets.xcassets/background/0.imageset/0.jpg
+	modified:   faxian/Assets.xcassets/background/0.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/1.imageset/1.jpg
+	modified:   faxian/Assets.xcassets/background/1.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/10.imageset/10.jpg
+	modified:   faxian/Assets.xcassets/background/10.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/11.imageset/11.jpg
+	modified:   faxian/Assets.xcassets/background/11.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/12.imageset/12.jpg
+	modified:   faxian/Assets.xcassets/background/12.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/13.imageset/13.jpeg
+	modified:   faxian/Assets.xcassets/background/13.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/15.imageset/15.jpeg
+	modified:   faxian/Assets.xcassets/background/15.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/18.imageset/18.jpg
+	modified:   faxian/Assets.xcassets/background/18.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/19.imageset/19.jpg
+	modified:   faxian/Assets.xcassets/background/19.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/2.imageset/2.jpg
+	modified:   faxian/Assets.xcassets/background/2.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/20.imageset/20.jpg
+	modified:   faxian/Assets.xcassets/background/20.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/21.imageset/21.jpg
+	modified:   faxian/Assets.xcassets/background/21.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/22.imageset/22.jpg
+	modified:   faxian/Assets.xcassets/background/22.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/23.imageset/23.jpg
+	modified:   faxian/Assets.xcassets/background/23.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/24.imageset/24.jpg
+	modified:   faxian/Assets.xcassets/background/24.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/25.imageset/25.jpg
+	modified:   faxian/Assets.xcassets/background/25.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/26.imageset/26.jpg
+	modified:   faxian/Assets.xcassets/background/26.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/29.imageset/29.jpg
+	modified:   faxian/Assets.xcassets/background/29.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/30.imageset/30.jpg
+	modified:   faxian/Assets.xcassets/background/30.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/31.imageset/31.jpg
+	modified:   faxian/Assets.xcassets/background/31.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/32.imageset/32.jpg
+	modified:   faxian/Assets.xcassets/background/32.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/33.imageset/33.jpg
+	modified:   faxian/Assets.xcassets/background/33.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/34.imageset/34.jpg
+	modified:   faxian/Assets.xcassets/background/34.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/35.imageset/35.png
+	modified:   faxian/Assets.xcassets/background/35.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/36.imageset/36.jpg
+	modified:   faxian/Assets.xcassets/background/36.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/37.imageset/37.jpg
+	modified:   faxian/Assets.xcassets/background/37.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/38.imageset/38.jpg
+	modified:   faxian/Assets.xcassets/background/38.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/39.imageset/39.jpg
+	modified:   faxian/Assets.xcassets/background/39.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/40.imageset/40.jpg
+	modified:   faxian/Assets.xcassets/background/40.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/41.imageset/41.jpg
+	modified:   faxian/Assets.xcassets/background/41.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/42.imageset/42.jpg
+	modified:   faxian/Assets.xcassets/background/42.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/43.imageset/43.jpg
+	modified:   faxian/Assets.xcassets/background/43.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/44.imageset/44.jpg
+	modified:   faxian/Assets.xcassets/background/44.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/45.imageset/45.jpg
+	modified:   faxian/Assets.xcassets/background/45.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/46.imageset/46.jpg
+	modified:   faxian/Assets.xcassets/background/46.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/47.imageset/47.jpg
+	modified:   faxian/Assets.xcassets/background/47.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/48.imageset/48.jpg
+	modified:   faxian/Assets.xcassets/background/48.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/49.imageset/49.jpg
+	modified:   faxian/Assets.xcassets/background/49.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/5.imageset/5.jpg
+	modified:   faxian/Assets.xcassets/background/5.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/50.imageset/50.jpg
+	modified:   faxian/Assets.xcassets/background/50.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/51.imageset/51.jpg
+	modified:   faxian/Assets.xcassets/background/51.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/52.imageset/52.jpg
+	modified:   faxian/Assets.xcassets/background/52.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/53.imageset/53.jpg
+	modified:   faxian/Assets.xcassets/background/53.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/54.imageset/54.jpg
+	modified:   faxian/Assets.xcassets/background/54.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/8.imageset/8.jpg
+	modified:   faxian/Assets.xcassets/background/8.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/9.imageset/9.jpg
+	modified:   faxian/Assets.xcassets/background/9.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/Contents.json
+	modified:   faxian/Assets.xcassets/background/a7.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/background/a7.imageset/a7.jpg
+	modified:   faxian/Assets.xcassets/control/14.imageset/14.png
+	modified:   faxian/Assets.xcassets/control/14.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/control/27.imageset/27.png
+	modified:   faxian/Assets.xcassets/control/27.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/control/28.imageset/28.png
+	modified:   faxian/Assets.xcassets/control/28.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/control/3.imageset/1.png
+	modified:   faxian/Assets.xcassets/control/3.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/control/4.imageset/2.png
+	modified:   faxian/Assets.xcassets/control/4.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/control/6.imageset/6.png
+	modified:   faxian/Assets.xcassets/control/6.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/control/7.imageset/7.png
+	modified:   faxian/Assets.xcassets/control/7.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/control/Contents.json
+	modified:   faxian/Assets.xcassets/control/b11.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/control/b11.imageset/b11.png
+	modified:   faxian/Assets.xcassets/control/b8.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/control/b8.imageset/b8.png
+	modified:   faxian/Assets.xcassets/control/b9.imageset/Contents.json
+	modified:   faxian/Assets.xcassets/control/b9.imageset/b9.png
+	modified:   faxian/Base.lproj/LaunchScreen.storyboard
+	modified:   faxian/Bschedule/Main/ForthViewController.swift
+	modified:   faxian/Cdiscovery/ChangePassword/EighthViewController.swift
+	modified:   faxian/Cdiscovery/FuturePlan/EighteenthViewController.swift
+	modified:   faxian/Cdiscovery/FuturePlan/External/1/SeventeenthViewController.swift
+	modified:   faxian/Cdiscovery/InitialtingActivities/SixteenthViewController.swift
+	modified:   faxian/Cdiscovery/Main/Base.lproj/Main.storyboard
+	modified:   faxian/Cdiscovery/Main/ViewController.swift
+	modified:   faxian/Cdiscovery/MessageCenter/1/FifteenthViewController.swift
+	modified:   faxian/Cdiscovery/MessageCenter/2/AViewController.swift
+	modified:   faxian/Cdiscovery/MessageCenter/3/BViewController.swift
+	modified:   faxian/Cdiscovery/MessageCenter/4/CViewController.swift
+	modified:   faxian/Cdiscovery/MessageCenter/5/DViewController.swift
+	modified:   faxian/Cdiscovery/MessageCenter/6/EViewController.swift
+	modified:   faxian/Cdiscovery/MessageCenter/7/FViewController.swift
+	modified:   faxian/Cdiscovery/MessageCenter/Main/SeventhViewController.swift
+	modified:   faxian/Cdiscovery/ModifyNumber/FourteenthViewController.swift
+	modified:   faxian/Cdiscovery/electricity fees/ThirdViewController.swift
+	modified:   faxian/Dmine/Achievement/TwentyfirstViewController.swift
+	modified:   faxian/Dmine/ActivityExperience/NinthViewController.swift
+	modified:   faxian/Dmine/Association/NinteenthViewController.swift
+	modified:   faxian/Dmine/Feedback/ThirteenthViewController.swift
+	modified:   faxian/Dmine/Help/TwelvethViewController.swift
+	modified:   faxian/Dmine/Main/SecondViewController.swift
+	modified:   faxian/Dmine/Question/ActivityDetail/Main/TenthViewController.swift
+	modified:   faxian/Dmine/Question/ActivityDetail/detail1/FifthViewController.swift
+	modified:   faxian/Dmine/Question/ActivityDetail/detail2/TwentiethViewController.swift
+	modified:   faxian/Dmine/Question/ElventhViewController.swift
+	modified:   faxian/Eaddition/TwentysecondViewController.swift
+	deleted:    faxian/Esidemenu/TwentyfifthTableViewController.swift
+	deleted:    faxian/Esidemenu/TwentyfourthViewController.swift
+	deleted:    faxian/Esidemenu/TwentysecondViewController.swift
+	deleted:    faxian/Esidemenu/TwentysixthViewController.swift
+	deleted:    faxian/Esidemenu/TwentythirdViewController.swift
+	modified:   faxian/External/SweetAlert.swift
+	modified:   faxian/Info.plist
+	modified:   faxianTests/Info.plist
+	modified:   faxianTests/faxianTests.swift
+	modified:   faxianUITests/Info.plist
+	modified:   faxianUITests/faxianUITests.swift
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	Pod
+	Podfile
+	Podfile.lock
+	Pods/
+	faxian.xcworkspace/
+	faxian/Cdiscovery/FuturePlan/External/DemoApp/
+
+adong666666deiMac:faxian adong666666$ git add .
+adong666666deiMac:faxian adong666666$ git commit -m "feature: some function"
+[master 1aebb65] feature: some function
+ 515 files changed, 49949 insertions(+), 81 deletions(-)
+ create mode 100755 Pod
+ create mode 100755 Podfile
+ create mode 100755 Podfile.lock
+ create mode 100755 Pods/ActiveLabel/ActiveLabel/ActiveBuilder.swift
+ create mode 100755 Pods/ActiveLabel/ActiveLabel/ActiveLabel.swift
+ create mode 100755 Pods/ActiveLabel/ActiveLabel/ActiveType.swift
+ create mode 100755 Pods/ActiveLabel/ActiveLabel/RegexParser.swift
+ create mode 100755 Pods/ActiveLabel/ActiveLabel/StringTrimExtension.swift
+ create mode 100755 Pods/ActiveLabel/LICENSE
+ create mode 100755 Pods/ActiveLabel/README.md
+ create mode 100755 Pods/BubbleTransition/LICENSE
+ create mode 100755 Pods/BubbleTransition/README.md
+ create mode 100755 Pods/BubbleTransition/Source/BubbleTransition.swift
+ create mode 100755 Pods/Charts/LICENSE
+ create mode 100755 Pods/Charts/README.md
+ create mode 100755 Pods/Charts/Source/Charts/Animation/Animator.swift
+ create mode 100755 Pods/Charts/Source/Charts/Animation/ChartAnimationEasing.swift
+ create mode 100755 Pods/Charts/Source/Charts/Charts/BarChartView.swift
+ create mode 100755 Pods/Charts/Source/Charts/Charts/BarLineChartViewBase.swift
+ create mode 100755 Pods/Charts/Source/Charts/Charts/BubbleChartView.swift
+ create mode 100755 Pods/Charts/Source/Charts/Charts/CandleStickChartView.swift
+ create mode 100755 Pods/Charts/Source/Charts/Charts/ChartViewBase.swift
+ create mode 100755 Pods/Charts/Source/Charts/Charts/CombinedChartView.swift
+ create mode 100755 Pods/Charts/Source/Charts/Charts/HorizontalBarChartView.swift
+ create mode 100755 Pods/Charts/Source/Charts/Charts/LineChartView.swift
+ create mode 100755 Pods/Charts/Source/Charts/Charts/PieChartView.swift
+ create mode 100755 Pods/Charts/Source/Charts/Charts/PieRadarChartViewBase.swift
+ create mode 100755 Pods/Charts/Source/Charts/Charts/RadarChartView.swift
+ create mode 100755 Pods/Charts/Source/Charts/Charts/ScatterChartView.swift
+ create mode 100755 Pods/Charts/Source/Charts/Components/AxisBase.swift
+ create mode 100755 Pods/Charts/Source/Charts/Components/ChartLimitLine.swift
+ create mode 100755 Pods/Charts/Source/Charts/Components/ComponentBase.swift
+ create mode 100755 Pods/Charts/Source/Charts/Components/Description.swift
+ create mode 100755 Pods/Charts/Source/Charts/Components/IMarker.swift
+ create mode 100755 Pods/Charts/Source/Charts/Components/Legend.swift
+ create mode 100755 Pods/Charts/Source/Charts/Components/LegendEntry.swift
+ create mode 100755 Pods/Charts/Source/Charts/Components/MarkerImage.swift
+ create mode 100755 Pods/Charts/Source/Charts/Components/MarkerView.swift
+ create mode 100755 Pods/Charts/Source/Charts/Components/XAxis.swift
+ create mode 100755 Pods/Charts/Source/Charts/Components/YAxis.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/ChartBaseDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/BarChartData.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/BarChartDataEntry.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/BarChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/BarLineScatterCandleBubbleChartData.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/BarLineScatterCandleBubbleChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/BubbleChartData.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/BubbleChartDataEntry.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/BubbleChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/CandleChartData.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/CandleChartDataEntry.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/CandleChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/ChartData.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/ChartDataEntry.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/ChartDataEntryBase.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/ChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/CombinedChartData.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/LineChartData.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/LineChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/LineRadarChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/LineScatterCandleRadarChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/PieChartData.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/PieChartDataEntry.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/PieChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/RadarChartData.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/RadarChartDataEntry.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/RadarChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/ScatterChartData.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Implementations/Standard/ScatterChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Interfaces/IBarChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Interfaces/IBarLineScatterCandleBubbleChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Interfaces/IBubbleChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Interfaces/ICandleChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Interfaces/IChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Interfaces/ILineChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Interfaces/ILineRadarChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Interfaces/ILineScatterCandleRadarChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Interfaces/IPieChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Interfaces/IRadarChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Data/Interfaces/IScatterChartDataSet.swift
+ create mode 100755 Pods/Charts/Source/Charts/Filters/DataApproximator+N.swift
+ create mode 100755 Pods/Charts/Source/Charts/Filters/DataApproximator.swift
+ create mode 100755 Pods/Charts/Source/Charts/Formatters/DefaultAxisValueFormatter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Formatters/DefaultFillFormatter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Formatters/DefaultValueFormatter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Formatters/IAxisValueFormatter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Formatters/IFillFormatter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Formatters/IValueFormatter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Formatters/IndexAxisValueFormatter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Highlight/BarHighlighter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Highlight/ChartHighlighter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Highlight/CombinedHighlighter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Highlight/Highlight.swift
+ create mode 100755 Pods/Charts/Source/Charts/Highlight/HorizontalBarHighlighter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Highlight/IHighlighter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Highlight/PieHighlighter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Highlight/PieRadarHighlighter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Highlight/RadarHighlighter.swift
+ create mode 100755 Pods/Charts/Source/Charts/Highlight/Range.swift
+ create mode 100755 Pods/Charts/Source/Charts/Interfaces/BarChartDataProvider.swift
+ create mode 100755 Pods/Charts/Source/Charts/Interfaces/BarLineScatterCandleBubbleChartDataProvider.swift
+ create mode 100755 Pods/Charts/Source/Charts/Interfaces/BubbleChartDataProvider.swift
+ create mode 100755 Pods/Charts/Source/Charts/Interfaces/CandleChartDataProvider.swift
+ create mode 100755 Pods/Charts/Source/Charts/Interfaces/ChartDataProvider.swift
+ create mode 100755 Pods/Charts/Source/Charts/Interfaces/CombinedChartDataProvider.swift
+ create mode 100755 Pods/Charts/Source/Charts/Interfaces/LineChartDataProvider.swift
+ create mode 100755 Pods/Charts/Source/Charts/Interfaces/ScatterChartDataProvider.swift
+ create mode 100755 Pods/Charts/Source/Charts/Jobs/AnimatedMoveViewJob.swift
+ create mode 100755 Pods/Charts/Source/Charts/Jobs/AnimatedViewPortJob.swift
+ create mode 100755 Pods/Charts/Source/Charts/Jobs/AnimatedZoomViewJob.swift
+ create mode 100755 Pods/Charts/Source/Charts/Jobs/MoveViewJob.swift
+ create mode 100755 Pods/Charts/Source/Charts/Jobs/ViewPortJob.swift
+ create mode 100755 Pods/Charts/Source/Charts/Jobs/ZoomViewJob.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/AxisRendererBase.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/BarChartRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/BarLineScatterCandleBubbleRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/BubbleChartRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/CandleStickChartRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/ChartDataRendererBase.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/CombinedChartRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/HorizontalBarChartRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/LegendRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/LineChartRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/LineRadarRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/LineScatterCandleRadarRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/PieChartRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/RadarChartRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/Renderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/Scatter/ChevronDownShapeRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/Scatter/ChevronUpShapeRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/Scatter/CircleShapeRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/Scatter/CrossShapeRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/Scatter/IShapeRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/Scatter/SquareShapeRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/Scatter/TriangleShapeRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/Scatter/XShapeRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/ScatterChartRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/XAxisRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/XAxisRendererHorizontalBarChart.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/XAxisRendererRadarChart.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/YAxisRenderer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/YAxisRendererHorizontalBarChart.swift
+ create mode 100755 Pods/Charts/Source/Charts/Renderers/YAxisRendererRadarChart.swift
+ create mode 100755 Pods/Charts/Source/Charts/Utils/ChartColorTemplates.swift
+ create mode 100755 Pods/Charts/Source/Charts/Utils/ChartUtils.swift
+ create mode 100755 Pods/Charts/Source/Charts/Utils/Fill.swift
+ create mode 100755 Pods/Charts/Source/Charts/Utils/Platform.swift
+ create mode 100755 Pods/Charts/Source/Charts/Utils/Transformer.swift
+ create mode 100755 Pods/Charts/Source/Charts/Utils/TransformerHorizontalBarChart.swift
+ create mode 100755 Pods/Charts/Source/Charts/Utils/ViewPortHandler.swift
+ create mode 100755 Pods/DGElasticPullToRefresh/DGElasticPullToRefresh/DGElasticPullToRefreshConstants.swift
+ create mode 100755 Pods/DGElasticPullToRefresh/DGElasticPullToRefresh/DGElasticPullToRefreshExtensions.swift
+ create mode 100755 Pods/DGElasticPullToRefresh/DGElasticPullToRefresh/DGElasticPullToRefreshLoadingView.swift
+ create mode 100755 Pods/DGElasticPullToRefresh/DGElasticPullToRefresh/DGElasticPullToRefreshLoadingViewCircle.swift
+ create mode 100755 Pods/DGElasticPullToRefresh/DGElasticPullToRefresh/DGElasticPullToRefreshView.swift
+ create mode 100755 Pods/DGElasticPullToRefresh/LICENSE
+ create mode 100755 Pods/DGElasticPullToRefresh/README.md
+ create mode 100755 Pods/DateTimePicker/LICENSE
+ create mode 100755 Pods/DateTimePicker/README.md
+ create mode 100755 Pods/DateTimePicker/Source/DateCollectionViewCell.swift
+ create mode 100755 Pods/DateTimePicker/Source/DateTimePicker.swift
+ create mode 100755 Pods/DateTimePicker/Source/FullDateCollectionViewCell.swift
+ create mode 100755 Pods/DateTimePicker/Source/StepCollectionViewFlowLayout.swift
+ create mode 100755 Pods/GuillotineMenu/GuillotineMenu/GuillotineMenuTransitionAnimation.swift
+ create mode 100755 Pods/GuillotineMenu/LICENSE
+ create mode 100755 Pods/GuillotineMenu/README.md
+ create mode 100755 Pods/Manifest.lock
+ create mode 100755 Pods/PagingMenuController/LICENSE
+ create mode 100755 Pods/PagingMenuController/Pod/Classes/MenuItemView.swift
+ create mode 100755 Pods/PagingMenuController/Pod/Classes/MenuView.swift
+ create mode 100755 Pods/PagingMenuController/Pod/Classes/PagingMenuController.swift
+ create mode 100755 Pods/PagingMenuController/Pod/Classes/PagingViewController.swift
+ create mode 100755 Pods/PagingMenuController/Pod/Classes/Protocols/MenuItemViewCustomizable.swift
+ create mode 100755 Pods/PagingMenuController/Pod/Classes/Protocols/MenuViewCustomizable.swift
+ create mode 100755 Pods/PagingMenuController/Pod/Classes/Protocols/Pagable.swift
+ create mode 100755 Pods/PagingMenuController/Pod/Classes/Protocols/PagingMenuControllerCustomizable.swift
+ create mode 100755 Pods/PagingMenuController/README.md
+ create mode 100755 Pods/PasswordTextField/LICENSE
+ create mode 100755 Pods/PasswordTextField/PasswordTextField/BundleUtil.swift
+ create mode 100755 Pods/PasswordTextField/PasswordTextField/Media/visibility_off.png
+ create mode 100755 Pods/PasswordTextField/PasswordTextField/Media/visibility_off@2x.png
+ create mode 100755 Pods/PasswordTextField/PasswordTextField/Media/visibility_off@3x.png
+ create mode 100755 Pods/PasswordTextField/PasswordTextField/Media/visibility_on.png
+ create mode 100755 Pods/PasswordTextField/PasswordTextField/Media/visibility_on@2x.png
+ create mode 100755 Pods/PasswordTextField/PasswordTextField/Media/visibility_on@3x.png
+ create mode 100755 Pods/PasswordTextField/PasswordTextField/PasswordRule.swift
+ create mode 100755 Pods/PasswordTextField/PasswordTextField/PasswordTextField.h
+ create mode 100755 Pods/PasswordTextField/PasswordTextField/PasswordTextField.swift
+ create mode 100755 Pods/PasswordTextField/PasswordTextField/RegexRule.swift
+ create mode 100755 Pods/PasswordTextField/PasswordTextField/Ruleable.swift
+ create mode 100755 Pods/PasswordTextField/PasswordTextField/SecureTextToggleButton.swift
+ create mode 100755 Pods/PasswordTextField/PasswordTextField/StringExtension.swift
+ create mode 100755 Pods/PasswordTextField/README.md
+ create mode 100644 Pods/Pods.xcodeproj/project.pbxproj
+ create mode 100644 Pods/Pods.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/ActiveLabel.xcscheme
+ create mode 100644 Pods/Pods.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/BubbleTransition.xcscheme
+ create mode 100644 Pods/Pods.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/Charts.xcscheme
+ create mode 100644 Pods/Pods.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/DGElasticPullToRefresh.xcscheme
+ create mode 100644 Pods/Pods.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/DateTimePicker.xcscheme
+ create mode 100644 Pods/Pods.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/GuillotineMenu.xcscheme
+ create mode 100644 Pods/Pods.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/PagingMenuController.xcscheme
+ create mode 100644 Pods/Pods.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/PasswordTextField-PasswordTextField.xcscheme
+ create mode 100644 Pods/Pods.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/PasswordTextField.xcscheme
+ create mode 100644 Pods/Pods.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/Pods-faxian.xcscheme
+ create mode 100644 Pods/Pods.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/Toaster.xcscheme
+ create mode 100644 Pods/Pods.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/TwicketSegmentedControl.xcscheme
+ create mode 100644 Pods/Pods.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/xcschememanagement.plist
+ create mode 100644 Pods/SwiftLint/LICENSE
+ create mode 100755 Pods/SwiftLint/swiftlint
+ create mode 100755 Pods/Target Support Files/ActiveLabel/ActiveLabel-dummy.m
+ create mode 100755 Pods/Target Support Files/ActiveLabel/ActiveLabel-prefix.pch
+ create mode 100755 Pods/Target Support Files/ActiveLabel/ActiveLabel-umbrella.h
+ create mode 100755 Pods/Target Support Files/ActiveLabel/ActiveLabel.modulemap
+ create mode 100755 Pods/Target Support Files/ActiveLabel/ActiveLabel.xcconfig
+ create mode 100755 Pods/Target Support Files/ActiveLabel/Info.plist
+ create mode 100755 Pods/Target Support Files/BubbleTransition/BubbleTransition-dummy.m
+ create mode 100755 Pods/Target Support Files/BubbleTransition/BubbleTransition-prefix.pch
+ create mode 100755 Pods/Target Support Files/BubbleTransition/BubbleTransition-umbrella.h
+ create mode 100755 Pods/Target Support Files/BubbleTransition/BubbleTransition.modulemap
+ create mode 100755 Pods/Target Support Files/BubbleTransition/BubbleTransition.xcconfig
+ create mode 100755 Pods/Target Support Files/BubbleTransition/Info.plist
+ create mode 100755 Pods/Target Support Files/Charts/Charts-dummy.m
+ create mode 100755 Pods/Target Support Files/Charts/Charts-prefix.pch
+ create mode 100755 Pods/Target Support Files/Charts/Charts-umbrella.h
+ create mode 100755 Pods/Target Support Files/Charts/Charts.modulemap
+ create mode 100755 Pods/Target Support Files/Charts/Charts.xcconfig
+ create mode 100755 Pods/Target Support Files/Charts/Info.plist
+ create mode 100755 Pods/Target Support Files/DGElasticPullToRefresh/DGElasticPullToRefresh-dummy.m
+ create mode 100755 Pods/Target Support Files/DGElasticPullToRefresh/DGElasticPullToRefresh-prefix.pch
+ create mode 100755 Pods/Target Support Files/DGElasticPullToRefresh/DGElasticPullToRefresh-umbrella.h
+ create mode 100755 Pods/Target Support Files/DGElasticPullToRefresh/DGElasticPullToRefresh.modulemap
+ create mode 100755 Pods/Target Support Files/DGElasticPullToRefresh/DGElasticPullToRefresh.xcconfig
+ create mode 100755 Pods/Target Support Files/DGElasticPullToRefresh/Info.plist
+ create mode 100755 Pods/Target Support Files/DateTimePicker/DateTimePicker-dummy.m
+ create mode 100755 Pods/Target Support Files/DateTimePicker/DateTimePicker-prefix.pch
+ create mode 100755 Pods/Target Support Files/DateTimePicker/DateTimePicker-umbrella.h
+ create mode 100755 Pods/Target Support Files/DateTimePicker/DateTimePicker.modulemap
+ create mode 100755 Pods/Target Support Files/DateTimePicker/DateTimePicker.xcconfig
+ create mode 100755 Pods/Target Support Files/DateTimePicker/Info.plist
+ create mode 100755 Pods/Target Support Files/GuillotineMenu/GuillotineMenu-dummy.m
+ create mode 100755 Pods/Target Support Files/GuillotineMenu/GuillotineMenu-prefix.pch
+ create mode 100755 Pods/Target Support Files/GuillotineMenu/GuillotineMenu-umbrella.h
+ create mode 100755 Pods/Target Support Files/GuillotineMenu/GuillotineMenu.modulemap
+ create mode 100755 Pods/Target Support Files/GuillotineMenu/GuillotineMenu.xcconfig
+ create mode 100755 Pods/Target Support Files/GuillotineMenu/Info.plist
+ create mode 100755 Pods/Target Support Files/PagingMenuController/Info.plist
+ create mode 100755 Pods/Target Support Files/PagingMenuController/PagingMenuController-dummy.m
+ create mode 100755 Pods/Target Support Files/PagingMenuController/PagingMenuController-prefix.pch
+ create mode 100755 Pods/Target Support Files/PagingMenuController/PagingMenuController-umbrella.h
+ create mode 100755 Pods/Target Support Files/PagingMenuController/PagingMenuController.modulemap
+ create mode 100755 Pods/Target Support Files/PagingMenuController/PagingMenuController.xcconfig
+ create mode 100755 Pods/Target Support Files/PasswordTextField/Info.plist
+ create mode 100755 Pods/Target Support Files/PasswordTextField/PasswordTextField-dummy.m
+ create mode 100755 Pods/Target Support Files/PasswordTextField/PasswordTextField-prefix.pch
+ create mode 100755 Pods/Target Support Files/PasswordTextField/PasswordTextField-umbrella.h
+ create mode 100755 Pods/Target Support Files/PasswordTextField/PasswordTextField.modulemap
+ create mode 100755 Pods/Target Support Files/PasswordTextField/PasswordTextField.xcconfig
+ create mode 100755 Pods/Target Support Files/PasswordTextField/ResourceBundle-PasswordTextField-Info.plist
+ create mode 100755 Pods/Target Support Files/Pods-faxian/Info.plist
+ create mode 100644 Pods/Target Support Files/Pods-faxian/Pods-faxian-acknowledgements.markdown
+ create mode 100644 Pods/Target Support Files/Pods-faxian/Pods-faxian-acknowledgements.plist
+ create mode 100755 Pods/Target Support Files/Pods-faxian/Pods-faxian-dummy.m
+ create mode 100755 Pods/Target Support Files/Pods-faxian/Pods-faxian-frameworks.sh
+ create mode 100755 Pods/Target Support Files/Pods-faxian/Pods-faxian-resources.sh
+ create mode 100755 Pods/Target Support Files/Pods-faxian/Pods-faxian-umbrella.h
+ create mode 100755 Pods/Target Support Files/Pods-faxian/Pods-faxian.debug.xcconfig
+ create mode 100755 Pods/Target Support Files/Pods-faxian/Pods-faxian.modulemap
+ create mode 100755 Pods/Target Support Files/Pods-faxian/Pods-faxian.release.xcconfig
+ create mode 100755 Pods/Target Support Files/Toaster/Info.plist
+ create mode 100755 Pods/Target Support Files/Toaster/Toaster-dummy.m
+ create mode 100755 Pods/Target Support Files/Toaster/Toaster-prefix.pch
+ create mode 100755 Pods/Target Support Files/Toaster/Toaster-umbrella.h
+ create mode 100755 Pods/Target Support Files/Toaster/Toaster.modulemap
+ create mode 100755 Pods/Target Support Files/Toaster/Toaster.xcconfig
+ create mode 100755 Pods/Target Support Files/TwicketSegmentedControl/Info.plist
+ create mode 100755 Pods/Target Support Files/TwicketSegmentedControl/TwicketSegmentedControl-dummy.m
+ create mode 100755 Pods/Target Support Files/TwicketSegmentedControl/TwicketSegmentedControl-prefix.pch
+ create mode 100755 Pods/Target Support Files/TwicketSegmentedControl/TwicketSegmentedControl-umbrella.h
+ create mode 100755 Pods/Target Support Files/TwicketSegmentedControl/TwicketSegmentedControl.modulemap
+ create mode 100755 Pods/Target Support Files/TwicketSegmentedControl/TwicketSegmentedControl.xcconfig
+ create mode 100755 Pods/Toaster/LICENSE
+ create mode 100755 Pods/Toaster/README.md
+ create mode 100755 Pods/Toaster/Sources/Toast.swift
+ create mode 100755 Pods/Toaster/Sources/ToastCenter.swift
+ create mode 100755 Pods/Toaster/Sources/ToastView.swift
+ create mode 100755 Pods/Toaster/Sources/ToastWindow.swift
+ create mode 100755 Pods/Toaster/Sources/Toaster.h
+ create mode 100755 Pods/TwicketSegmentedControl/LICENSE
+ create mode 100755 Pods/TwicketSegmentedControl/README.md
+ create mode 100755 Pods/TwicketSegmentedControl/TwicketSegmentedControl/Palette.swift
+ create mode 100755 Pods/TwicketSegmentedControl/TwicketSegmentedControl/TwicketSegmentedControl.swift
+ create mode 100755 Pods/TwicketSegmentedControl/TwicketSegmentedControl/UIViewShadowExtension.swift
+ mode change 100644 => 100755 faxian.xcodeproj/project.pbxproj
+ mode change 100644 => 100755 faxian.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+ mode change 100644 => 100755 faxian.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+ create mode 100755 faxian.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+ mode change 100644 => 100755 faxian.xcodeproj/xcuserdata/adong666666.xcuserdatad/xcschemes/xcschememanagement.plist
+ create mode 100755 faxian.xcworkspace/contents.xcworkspacedata
+ create mode 100755 faxian.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+ create mode 100755 faxian.xcworkspace/xcuserdata/adong666666.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+ rewrite faxian/AppDelegate.swift (65%)
+ mode change 100644 => 100755
+ create mode 100644 faxian/Aschool/1/TwentyfourthViewController.swift
+ create mode 100644 faxian/Aschool/2/TwentyfifthViewController.swift
+ create mode 100644 faxian/Aschool/3/TwentysixthViewController.swift
+ rename faxian/{ViewController.swift => Aschool/4/TwentyseventhViewController.swift} (50%)
+ create mode 100755 faxian/Aschool/Handoff/TwentythirdViewController.swift
+ create mode 100755 faxian/Aschool/Main/SixthViewController.swift
+ create mode 100755 faxian/Aschool/temp/tempViewController.swift
+ create mode 100755 faxian/Aschool/temp2/temp2ViewController.swift
+ create mode 100755 faxian/Aschool/temp3/temp3ViewController.swift
+ create mode 100755 faxian/Aschool/temp4/temp4ViewController.swift
+ create mode 100644 faxian/Aschool/temp5/temp5ViewController.swift
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/1024.jpg
+ mode change 100644 => 100755 faxian/Assets.xcassets/AppIcon.appiconset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/a20pt.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/a20pt2.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/a29pt.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/a29pt2.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/a40pt.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/a40pt2.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/a76pt.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/a76pt2.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/a83.5pt2.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/o20pt2.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/o20pt3.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/o29pt2.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/o29pt3.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/o40pt2.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/o40pt3.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/o60pt2.jpg
+ create mode 100755 faxian/Assets.xcassets/AppIcon.appiconset/o60pt3.jpg
+ mode change 100644 => 100755 faxian/Assets.xcassets/Contents.json
+ create mode 100755 faxian/Assets.xcassets/LaunchImage-2.launchimage/10.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage-2.launchimage/11.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage-2.launchimage/8.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage-2.launchimage/9.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage-2.launchimage/Contents.json
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/1.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/10.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/11.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/12.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/13.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/14.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/15.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/16.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/17.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/18.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/19.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/2.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/20.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/21.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/22.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/3.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/4.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/5.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/6.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/7.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/8.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/9.jpg
+ create mode 100755 faxian/Assets.xcassets/LaunchImage.launchimage/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/0.imageset/0.jpg
+ create mode 100755 faxian/Assets.xcassets/background/0.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/1.imageset/1.jpg
+ create mode 100755 faxian/Assets.xcassets/background/1.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/10.imageset/10.jpg
+ create mode 100755 faxian/Assets.xcassets/background/10.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/11.imageset/11.jpg
+ create mode 100755 faxian/Assets.xcassets/background/11.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/12.imageset/12.jpg
+ create mode 100755 faxian/Assets.xcassets/background/12.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/13.imageset/13.jpeg
+ create mode 100755 faxian/Assets.xcassets/background/13.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/15.imageset/15.jpeg
+ create mode 100755 faxian/Assets.xcassets/background/15.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/18.imageset/18.jpg
+ create mode 100755 faxian/Assets.xcassets/background/18.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/19.imageset/19.jpg
+ create mode 100755 faxian/Assets.xcassets/background/19.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/2.imageset/2.jpg
+ create mode 100755 faxian/Assets.xcassets/background/2.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/20.imageset/20.jpg
+ create mode 100755 faxian/Assets.xcassets/background/20.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/21.imageset/21.jpg
+ create mode 100755 faxian/Assets.xcassets/background/21.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/22.imageset/22.jpg
+ create mode 100755 faxian/Assets.xcassets/background/22.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/23.imageset/23.jpg
+ create mode 100755 faxian/Assets.xcassets/background/23.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/24.imageset/24.jpg
+ create mode 100755 faxian/Assets.xcassets/background/24.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/25.imageset/25.jpg
+ create mode 100755 faxian/Assets.xcassets/background/25.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/26.imageset/26.jpg
+ create mode 100755 faxian/Assets.xcassets/background/26.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/29.imageset/29.jpg
+ create mode 100755 faxian/Assets.xcassets/background/29.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/30.imageset/30.jpg
+ create mode 100755 faxian/Assets.xcassets/background/30.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/31.imageset/31.jpg
+ create mode 100755 faxian/Assets.xcassets/background/31.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/32.imageset/32.jpg
+ create mode 100755 faxian/Assets.xcassets/background/32.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/33.imageset/33.jpg
+ create mode 100755 faxian/Assets.xcassets/background/33.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/34.imageset/34.jpg
+ create mode 100755 faxian/Assets.xcassets/background/34.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/35.imageset/35.png
+ create mode 100755 faxian/Assets.xcassets/background/35.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/36.imageset/36.jpg
+ create mode 100755 faxian/Assets.xcassets/background/36.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/37.imageset/37.jpg
+ create mode 100755 faxian/Assets.xcassets/background/37.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/38.imageset/38.jpg
+ create mode 100755 faxian/Assets.xcassets/background/38.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/39.imageset/39.jpg
+ create mode 100755 faxian/Assets.xcassets/background/39.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/40.imageset/40.jpg
+ create mode 100755 faxian/Assets.xcassets/background/40.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/41.imageset/41.jpg
+ create mode 100755 faxian/Assets.xcassets/background/41.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/42.imageset/42.jpg
+ create mode 100755 faxian/Assets.xcassets/background/42.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/43.imageset/43.jpg
+ create mode 100755 faxian/Assets.xcassets/background/43.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/44.imageset/44.jpg
+ create mode 100755 faxian/Assets.xcassets/background/44.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/45.imageset/45.jpg
+ create mode 100755 faxian/Assets.xcassets/background/45.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/46.imageset/46.jpg
+ create mode 100755 faxian/Assets.xcassets/background/46.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/47.imageset/47.jpg
+ create mode 100755 faxian/Assets.xcassets/background/47.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/48.imageset/48.jpg
+ create mode 100755 faxian/Assets.xcassets/background/48.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/49.imageset/49.jpg
+ create mode 100755 faxian/Assets.xcassets/background/49.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/5.imageset/5.jpg
+ create mode 100755 faxian/Assets.xcassets/background/5.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/50.imageset/50.jpg
+ create mode 100755 faxian/Assets.xcassets/background/50.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/51.imageset/51.jpg
+ create mode 100755 faxian/Assets.xcassets/background/51.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/52.imageset/52.jpg
+ create mode 100755 faxian/Assets.xcassets/background/52.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/53.imageset/53.jpg
+ create mode 100755 faxian/Assets.xcassets/background/53.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/54.imageset/54.jpg
+ create mode 100755 faxian/Assets.xcassets/background/54.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/8.imageset/8.jpg
+ create mode 100755 faxian/Assets.xcassets/background/8.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/9.imageset/9.jpg
+ create mode 100755 faxian/Assets.xcassets/background/9.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/a7.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/background/a7.imageset/a7.jpg
+ create mode 100755 faxian/Assets.xcassets/control/14.imageset/14.png
+ create mode 100755 faxian/Assets.xcassets/control/14.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/control/27.imageset/27.png
+ create mode 100755 faxian/Assets.xcassets/control/27.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/control/28.imageset/28.png
+ create mode 100755 faxian/Assets.xcassets/control/28.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/control/3.imageset/1.png
+ create mode 100755 faxian/Assets.xcassets/control/3.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/control/4.imageset/2.png
+ create mode 100755 faxian/Assets.xcassets/control/4.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/control/6.imageset/6.png
+ create mode 100755 faxian/Assets.xcassets/control/6.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/control/7.imageset/7.png
+ create mode 100755 faxian/Assets.xcassets/control/7.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/control/Contents.json
+ create mode 100755 faxian/Assets.xcassets/control/b11.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/control/b11.imageset/b11.png
+ create mode 100755 faxian/Assets.xcassets/control/b8.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/control/b8.imageset/b8.png
+ create mode 100755 faxian/Assets.xcassets/control/b9.imageset/Contents.json
+ create mode 100755 faxian/Assets.xcassets/control/b9.imageset/b9.png
+ mode change 100644 => 100755 faxian/Base.lproj/LaunchScreen.storyboard
+ create mode 100755 faxian/Bschedule/Main/ForthViewController.swift
+ create mode 100755 faxian/Cdiscovery/ChangePassword/EighthViewController.swift
+ create mode 100755 faxian/Cdiscovery/FuturePlan/EighteenthViewController.swift
+ create mode 100755 faxian/Cdiscovery/FuturePlan/External/1/SeventeenthViewController.swift
+ create mode 100755 faxian/Cdiscovery/FuturePlan/External/DemoApp/ViewController.swift
+ create mode 100755 faxian/Cdiscovery/InitialtingActivities/SixteenthViewController.swift
+ rename faxian/{ => Cdiscovery/Main}/Base.lproj/Main.storyboard (100%)
+ mode change 100644 => 100755
+ create mode 100755 faxian/Cdiscovery/Main/ViewController.swift
+ create mode 100755 faxian/Cdiscovery/MessageCenter/1/FifteenthViewController.swift
+ create mode 100755 faxian/Cdiscovery/MessageCenter/2/AViewController.swift
+ create mode 100755 faxian/Cdiscovery/MessageCenter/3/BViewController.swift
+ create mode 100755 faxian/Cdiscovery/MessageCenter/4/CViewController.swift
+ create mode 100755 faxian/Cdiscovery/MessageCenter/5/DViewController.swift
+ create mode 100755 faxian/Cdiscovery/MessageCenter/6/EViewController.swift
+ create mode 100755 faxian/Cdiscovery/MessageCenter/7/FViewController.swift
+ create mode 100755 faxian/Cdiscovery/MessageCenter/Main/SeventhViewController.swift
+ create mode 100755 faxian/Cdiscovery/ModifyNumber/FourteenthViewController.swift
+ create mode 100755 faxian/Cdiscovery/electricity fees/ThirdViewController.swift
+ create mode 100755 faxian/Dmine/Achievement/TwentyfirstViewController.swift
+ create mode 100755 faxian/Dmine/ActivityExperience/NinthViewController.swift
+ create mode 100755 faxian/Dmine/Association/NinteenthViewController.swift
+ create mode 100755 faxian/Dmine/Feedback/ThirteenthViewController.swift
+ create mode 100755 faxian/Dmine/Help/TwelvethViewController.swift
+ create mode 100755 faxian/Dmine/Main/SecondViewController.swift
+ create mode 100755 faxian/Dmine/Question/ActivityDetail/Main/TenthViewController.swift
+ create mode 100755 faxian/Dmine/Question/ActivityDetail/detail1/FifthViewController.swift
+ create mode 100755 faxian/Dmine/Question/ActivityDetail/detail2/TwentiethViewController.swift
+ create mode 100755 faxian/Dmine/Question/ElventhViewController.swift
+ create mode 100755 faxian/Eaddition/TwentysecondViewController.swift
+ create mode 100755 faxian/External/ENSideMenu.swift
+ create mode 100755 faxian/External/ENSideMenuNavigationController.swift
+ create mode 100755 faxian/External/NoteBook.html
+ create mode 100755 faxian/External/SweetAlert.swift
+ mode change 100644 => 100755 faxian/Info.plist
+ mode change 100644 => 100755 faxianTests/Info.plist
+ mode change 100644 => 100755 faxianTests/faxianTests.swift
+ mode change 100644 => 100755 faxianUITests/Info.plist
+ mode change 100644 => 100755 faxianUITests/faxianUITests.swift
+adong666666deiMac:faxian adong666666$ git log
+commit 1aebb650525e3b44ecde90bb4b2711d7cefd22a3 (HEAD -> master)
+Author: zhangsaidong <2391141722@qq.com>
+Date:   Sun Jun 3 20:43:17 2018 +0800
+
+    feature: some function
+
+commit 00e72fd42dcbe8d864a7249825c34778fd13703e
+Author: zhangsaidong <2391141722@qq.com>
+Date:   Sun May 13 05:48:57 2018 -0700
+
+    Initial Commit
+adong666666deiMac:faxian adong666666$ git remote add origin https://git.coding.net/Zhangsaidong/faxian.git
+git push -u origin master
+adong666666deiMac:faxian adong666666$ git push -u origin master
+Username for 'https://git.coding.net': 15674119605
+Password for 'https://15674119605@git.coding.net': 
+Counting objects: 701, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (685/685), done.
+Writing objects: 100% (701/701), 25.66 MiB | 9.00 KiB/s, done.
+Total 701 (delta 216), reused 0 (delta 0)
+remote: Resolving deltas: 100% (216/216), done.
+To https://git.coding.net/Zhangsaidong/faxian.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+adong666666deiMac:faxian adong666666$ 
+  [恢复于 2018年6月4日 上午9:03:40]
+Last login: Mon Jun  4 08:05:59 on console
+adong666666deiMac:faxian adong666666$ 
+  [恢复于 2018年6月6日 上午11:07:21]
+Last login: Wed Jun  6 11:07:06 on console
+Restored session: 2018年 6月 4日 星期一 21时34分39秒 CST
+adong666666deiMac:faxian adong666666$ 
+  [恢复于 2018年6月8日 上午8:00:03]
+Last login: Fri Jun  8 07:59:59 on console
+Restored session: 2018年 6月 6日 星期三 21时47分50秒 CST
+adong666666deiMac:faxian adong666666$ 
