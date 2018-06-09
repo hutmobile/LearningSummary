@@ -1,0 +1,32 @@
+
+
+//时间拾取器
+platform :ios,'9.0'
+use_frameworks!
+
+target 'faxian'do
+source 'https://github.com/CocoaPods/Specs.git'
+pod 'DateTimePicker','~> 1.2.1'
+end
+
+
+我利用第三方库轻松实现了时间拾取期，可以设定最近的一周，不得不说，几行代码带来了非常强大的功能
+
+
+
+  bt.addTarget(self, action: #selector(EighteenthViewController.showDateTimePicker), for: UIControlEvents.touchUpInside)
+  
+  为按钮添加上面的属性，然后写一个方法设定时间拾取器的样式，以下给出示例
+      @objc func showDateTimePicker() {
+        let min = Date().addingTimeInterval(-60 * 60 * 24 * 4)
+        let max = Date().addingTimeInterval(60 * 60 * 24 * 4)
+        let picker = DateTimePicker.show(minimumDate: min, maximumDate: max)
+        picker.backgroundViewColor = UIColor(red: 51.0/255.0, green: 51.0/255.0, blue: 51.0/255.0, alpha: 0.5)
+        picker.highlightColor = UIColor.orange
+        picker.doneButtonTitle = "确认设定"
+        picker.cancelButtonTitle = "取消"
+        picker.todayButtonTitle = "今天"
+        picker.completionHandler = { date in
+            print(date)
+        }
+    }
