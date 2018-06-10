@@ -1,0 +1,47 @@
+AppIcon和LaunchImage尺寸
+
+1、AppIcon 尺寸
+
+iPhone Notification iOS 7-10 20pt                             2x( 40x40 )  3x( 60x60 )
+
+iPhone、Spotlight iOS 5,6 、Settings iOS 5-10  29pt   2x( 58x58 )  3x( 87x87 )
+
+iPhone Spotlight iOS 7-10 40pt                                 2x( 80x80 )   3x( 120x120 )
+
+iPhone APP iOS 7-10 60pt                                        2x( 120x120 )  3x( 180x180 )
+
+iPad Notifications 7-10 20pt                                      1x( 20x20 )  2x( 40x40 )
+
+iPad Settings 5-10 29pt                                            1x( 29x29 )  2x( 58x58 )
+
+iPad Spotlight iOS 7-10 40pt                                     1x( 40x40 )  2x( 80x80 )
+
+iPad App iOS 7-10 76pt                                            1x( 76x76 )  2x( 152x152 )
+
+iPad Pro App iOS 9-10 83.5                                      2x( 167x167 )
+
+2、LaunchImage尺寸
+
+iPhone X  1125 * 2436  必要
+
+iPhone Portrait  iOS 5,6        1x( 320x480 )  2x( 640x960 ) Retina4( 640x1136 )
+
+iPhone Portrait iOS 8,9         Retina HD 5.5( 1242x2208 )  Retina HD 4.7( 750x1334 )  必要
+
+iPhone Portrait iOS 7-9        2x( 640x960 )  Retina4( 640x1136 )  必要(没有的话 在5上边有问题)
+
+iPhone Landscape iOS 8,9    Retina HD 5.5( 2208x1242 )
+
+ 
+
+iPad Portrait iOS 5,6            1x( 768x1024 )  2x( 1536x2048 )
+
+iPad Portait iOS 7-9            1x( 768x1024 )  2x( 1536x2048 )
+
+iPad Landscape iOS 5,6       1x( 1024x768 )  2x( 2048x1536 )
+
+iPad Landscape 7-9            1x( 1024x768 )  2x( 2048x1536 )
+
+iPad Portrait Without Status Bar iOS 5,6           1x( 768x1004 )  2x( 1536x2008 )
+
+iPad Landscape Without Status Bar iOS 5,6      1x( 1024x748 )  2x( 2048x1496 )
