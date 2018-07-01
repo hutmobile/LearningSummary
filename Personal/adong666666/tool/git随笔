@@ -1,0 +1,89 @@
+Last login: Sun Jul  1 10:56:24 on ttys002
+adong666666deiMac:~ adong666666$ git clone fatal: Authentication failed for 'https://bdgit.trustie.net/p29187640/air.git/'
+fatal: Too many arguments.
+
+usage: git clone [<options>] [--] <repo> [<dir>]
+
+    -v, --verbose         be more verbose
+    -q, --quiet           be more quiet
+    --progress            force progress reporting
+    -n, --no-checkout     don't create a checkout
+    --bare                create a bare repository
+    --mirror              create a mirror repository (implies bare)
+    -l, --local           to clone from a local repository
+    --no-hardlinks        don't use local hardlinks, always copy
+    -s, --shared          setup as shared repository
+    --recurse-submodules[=<pathspec>]
+                          initialize submodules in the clone
+    -j, --jobs <n>        number of submodules cloned in parallel
+    --template <template-directory>
+                          directory from which templates will be used
+    --reference <repo>    reference repository
+    --reference-if-able <repo>
+                          reference repository
+    --dissociate          use --reference only while cloning
+    -o, --origin <name>   use <name> instead of 'origin' to track upstream
+    -b, --branch <branch>
+                          checkout <branch> instead of the remote's HEAD
+    -u, --upload-pack <path>
+                          path to git-upload-pack on the remote
+    --depth <depth>       create a shallow clone of that depth
+    --shallow-since <time>
+                          create a shallow clone since a specific time
+    --shallow-exclude <revision>
+                          deepen history of shallow clone, excluding rev
+    --single-branch       clone only one branch, HEAD or --branch
+    --no-tags             don't clone any tags, and make later fetches not to follow them
+    --shallow-submodules  any cloned submodules will be shallow
+    --separate-git-dir <gitdir>
+                          separate git dir from working tree
+    -c, --config <key=value>
+                          set config inside the new repository
+    -4, --ipv4            use IPv4 addresses only
+    -6, --ipv6            use IPv6 addresses only
+
+adong666666deiMac:~ adong666666$ git clone https://bdgit.trustie.net/p29187640/air.git
+Cloning into 'air'...
+Username for 'https://bdgit.trustie.net': 2391141722@qq.com
+Password for 'https://2391141722@qq.com@bdgit.trustie.net': 
+warning: You appear to have cloned an empty repository.
+adong666666deiMac:~ adong666666$ cd air
+adong666666deiMac:air adong666666$ git remote -v
+origin	https://bdgit.trustie.net/p29187640/air.git (fetch)
+origin	https://bdgit.trustie.net/p29187640/air.git (push)
+adong666666deiMac:air adong666666$ git add
+Nothing specified, nothing added.
+Maybe you wanted to say 'git add .'?
+adong666666deiMac:air adong666666$ git add .
+adong666666deiMac:air adong666666$ git commit -m "first commit"
+On branch master
+
+Initial commit
+
+nothing to commit
+adong666666deiMac:air adong666666$ git add .
+adong666666deiMac:air adong666666$ git commit -m "first commit"
+On branch master
+
+Initial commit
+
+nothing to commit
+adong666666deiMac:air adong666666$ git push origin master
+error: src refspec master does not match any.
+error: failed to push some refs to 'https://bdgit.trustie.net/p29187640/air.git'
+adong666666deiMac:air adong666666$ git add .
+adong666666deiMac:air adong666666$ git commit -m "first commit"
+[master (root-commit) 5077dbb] first commit
+ 3 files changed, 2145 insertions(+)
+ create mode 100644 flight.cpp
+ create mode 100644 main.c
+ create mode 100644 数据结构课程设计说明——计算机1706张赛东.docx
+adong666666deiMac:air adong666666$ git push origin master
+Counting objects: 5, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 9.93 MiB | 90.00 KiB/s, done.
+Total 5 (delta 0), reused 0 (delta 0)
+To https://bdgit.trustie.net/p29187640/air.git
+ * [new branch]      master -> master
+adong666666deiMac:air adong666666$ 
