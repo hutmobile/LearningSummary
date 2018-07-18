@@ -1,0 +1,190 @@
+//  Created by adong666666 on 2018/7/17. Copyright © 2018年 adong666666. All rights reserved.
+
+import UIKit
+
+class baseViewController: UIViewController {
+    var btn: PowerButton = {
+        let bt1 = PowerButton(type: UIButtonType.roundedRect)
+        bt1.frame = CGRect(x: 0.fitScreen, y: 35.fitHeight, width: 20.fitScreen, height: 35.fitHeight)
+        bt1.setBackgroundImage(UIImage(named: "返回"), for: UIControlState())
+        bt1.setTitle(" ", for: UIControlState())
+        bt1.setTitleColor(UIColor.white, for: UIControlState())
+        bt1.addTarget(self, action: #selector(baseViewController.buttonTap(_:)), for: UIControlEvents.touchUpInside)
+        return bt1
+    }()
+    var btn2: PowerButton = {
+        let bt1 = PowerButton(type: UIButtonType.roundedRect)
+        bt1.frame = CGRect(x: 300.fitScreen, y: 35.fitHeight, width: 30.fitScreen, height: 35.fitHeight)
+        bt1.setBackgroundImage(UIImage(named: "收藏2"), for: UIControlState())
+        bt1.setTitle(" ", for: UIControlState())
+        bt1.setTitleColor(UIColor.white, for: UIControlState())
+        bt1.addTarget(self, action: #selector(baseViewController.buttonTap2(_:)), for: UIControlEvents.touchUpInside)
+        return bt1
+    }()
+    var btn3: PowerButton = {
+        let bt1 = PowerButton(type: UIButtonType.roundedRect)
+        bt1.frame = CGRect(x: 360.fitScreen, y: 35.fitHeight, width: 30.fitScreen, height: 35.fitHeight)
+        bt1.setBackgroundImage(UIImage(named: "分享黑"), for: UIControlState())
+        bt1.setTitle(" ", for: UIControlState())
+        bt1.setTitleColor(UIColor.white, for: UIControlState())
+        bt1.addTarget(self, action: #selector(baseViewController.buttonTap3(_:)), for: UIControlEvents.touchUpInside)
+        return bt1
+    }()
+    var imgView: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "1"))
+        view.frame = CGRect(x: 0.fitScreen, y: 20.fitHeight, width: 414.fitScreen, height: 200.fitHeight)
+        return view
+    }()
+    var llabel: PowerLabel = {
+        let frame1 = CGRect (x: 0.fitScreen, y: 220.fitHeight, width: 200.fitScreen, height: 40.fitHeight)
+        let label = PowerLabel(frame: frame1)
+        label.text = "聚龙水世界"
+        label.alpha = 0.8
+        label.font = UIFont (name: "Arial", size: 22)
+        label.textColor = UIColor.black
+        return label
+    }()
+    var llabel3: PowerLabel = {
+        let frame1 = CGRect (x: -55.fitScreen, y: 250.fitHeight, width: 400.fitScreen, height: 40.fitHeight)
+        let label3 = PowerLabel (frame: frame1)
+        label3.text = "套间   单间  独特别墅 距您3.6公里"
+        label3.alpha = 0.7
+        label3.font = UIFont (name: "Arial", size: 12)
+        label3.textColor = UIColor.black
+        return label3
+    }()
+    var llabel5: PowerLabel = {
+        let frame1 = CGRect (x: -40.fitScreen, y: 285.fitHeight, width: 400.fitScreen, height: 40.fitHeight)
+        let label3 = PowerLabel (frame: frame1)
+        label3.text = "1182人收藏"
+        label3.alpha = 0.7
+        label3.font = UIFont (name: "Arial", size: 12)
+        label3.textColor = UIColor.black
+        return label3
+    }()
+    var llabel8: PowerLabel = {
+        let frame1 = CGRect (x: -70.fitScreen, y: 285.fitHeight, width: 200.fitScreen, height: 40.fitHeight)
+        let label3 = PowerLabel (frame: frame1)
+        label3.text = "¥"
+        label3.alpha = 0.7
+        label3.textColor = UIColor.red
+        label3.font = UIFont (name: "Arial", size: 12)
+        return label3
+    }()
+    var llabel9: PowerLabel = {
+        let frame1 = CGRect (x: -50.fitScreen, y: 280.fitHeight, width: 200.fitScreen, height: 40.fitHeight)
+        let label3 = PowerLabel (frame: frame1)
+        label3.text = "   128"
+        label3.alpha = 0.7
+        label3.textColor = UIColor.red
+        label3.font = UIFont (name: "Arial", size: 25)
+        return label3
+    }()
+    var sscroll: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.frame = CGRect(x: 0.fitScreen, y: 0.fitHeight, width: 414.fitScreen, height: 737.fitHeight)
+        scroll.contentSize = CGSize(width: 414.fitScreen, height: 3 * 737.fitHeight)
+        return scroll
+    }()
+    var segmented: UISegmentedControl!
+    //var scrollView: UIScrollView!
+    var firstView: base_room!
+    var secondView: base_location!
+    var thirdView: base_evaluate!
+    var width: CGFloat!
+    var height: CGFloat!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = UIColor.white
+        self.view.addSubview(btn)
+        self.view.backgroundColor = UIColor.white
+        self.view.addSubview(sscroll)
+        self.view.addSubview(btn)
+        self.view.addSubview(btn2)
+        self.view.addSubview(btn3)
+        sscroll.addSubview(imgView)
+        sscroll.addSubview(llabel)
+        sscroll.addSubview(llabel3)
+        sscroll.addSubview(llabel5)
+        sscroll.addSubview(llabel8)
+        sscroll.addSubview(llabel9)
+        sscroll.delegate = self as? UIScrollViewDelegate
+        sscroll.isPagingEnabled = true
+        let tags = ["房间介绍","位置指引","住客评价(110条)"]
+        width = self.view.bounds.size.width
+        height = self.view.bounds.size.height
+        let segmented = UISegmentedControl(items: tags)
+        segmented.layer.position = CGPoint(x: 207.fitScreen, y: 340.fitHeight)
+        segmented.selectedSegmentIndex = 0
+        segmented.addTarget(self, action: #selector(segmentDidchange(_:)), for: .valueChanged)
+        sscroll.addSubview(segmented)
+        firstView = base_room()
+        secondView = base_location()
+        thirdView = base_evaluate()
+    }
+    @objc func buttonTap(_ button: UIButton)
+    {
+        self.dismiss(animated:true,completion: nil)
+    }
+    @objc func buttonTap2(_ button: UIButton)
+    {
+        let btn2: PowerButton = {
+            let bt1 = PowerButton(type: UIButtonType.roundedRect)
+            bt1.frame = CGRect(x: 300.fitScreen, y: 35.fitHeight, width: 30.fitScreen, height: 35.fitHeight)
+            bt1.setBackgroundImage(UIImage(named: "收藏1"), for: UIControlState())
+            bt1.setTitle(" ", for: UIControlState())
+            bt1.setTitleColor(UIColor.white, for: UIControlState())
+            bt1.addTarget(self, action: #selector(baseViewController.buttonTap2(_:)), for: UIControlEvents.touchUpInside)
+            return bt1
+        }()
+        self.view.addSubview(btn2)
+    }
+    @objc func buttonTap3(_ button: UIButton)
+    {
+        let textToShare = "聚龙水世界"
+        let imageToShare = UIImage(named: "1")
+        let urlToShare = URL(string: "http://www.baidu.com")
+        let activityItems = [textToShare, imageToShare, urlToShare] as [Any]
+        let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        //不出现在活动项目
+        activityVC.excludedActivityTypes = [.print, .copyToPasteboard, .assignToContact, .saveToCameraRoll]
+        present(activityVC, animated: true)
+        // 分享之后的回调
+        activityVC.completionWithItemsHandler = { activityType, completed, returnedItems, activityError in
+            if completed {
+                print("completed")
+            } else {
+                print("cancled")
+            }
+        }
+    }
+    @objc func segmentDidchange(_ sender: UISegmentedControl){
+        if sender.selectedSegmentIndex == 0{
+            sscroll.contentOffset.x = 0
+        }else if sender.selectedSegmentIndex == 1{
+            sscroll.contentOffset.x = width
+        }else {sscroll.contentOffset.x = 2 * width}
+    }
+    func scrollViewSillBeginDragging(_ scrollView: UIScrollView){
+        self.view.endEditing(true)
+    }
+    func scrollViewDidEndDeceleration(_ scrollView: UIScrollView){
+        if scrollView.contentOffset.x >= 2 * width {
+            segmented.selectedSegmentIndex = 2
+        }else if scrollView.contentOffset.x >= width{
+            segmented.selectedSegmentIndex = 1
+        }else {segmented.selectedSegmentIndex = 0}
+    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+
+    }
+}
+
+}
+
+在写老来宝时实现分段控件遇到了一个小问题
+想要在scroll中实现控件
+而同样能实现切换，可就是不能将控件合理地固定到scroll中
+也就是说我所命对的问题是两个控件的兼容性问题
+因为赶时间，所以我决定先用第三方库实现高级分段控件，本来想让存储量尽量小的，事到如今又要站到巨人的肩膀上了
