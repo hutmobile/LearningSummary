@@ -1,0 +1,42 @@
+
+
+Object-C
+
+一:默认是左图片右边文字
+
+二:左文字右图片(直接拷贝代码到项目即可)
+
+
+    [btn setTitleEdgeInsets:UIEdgeInsetsMake(0, -btn.imageView.size.width, 0, btn.imageView.size.width)];
+    [btn setImageEdgeInsets:UIEdgeInsetsMake(0, btn.titleLabel.bounds.size.width, 0, -btn.titleLabel.bounds.size.width)];
+
+三:上图片下文字(直接拷贝代码到项目即可)
+
+
+ btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;//使图片和文字水平居中显示  
+    [btn setTitleEdgeInsets:UIEdgeInsetsMake(btn.imageView.frame.size.height ,-btn.imageView.frame.size.width, 0.0,0.0)];//文字距离上边框的距离增加imageView的高度，距离左边框减少imageView的宽度，距离下边框和右边框距离不变  
+    [btn setImageEdgeInsets:UIEdgeInsetsMake(0.0, 0.0,0.0, -btn.titleLabel.bounds.size.width)];//图片距离右边框距离减少图片的宽度，其它不边  
+
+
+
+
+
+
+
+swift
+
+
+
+btn.titleEdgeInsets = UIEdgeInsetsMake(0, -btn.imageView?.size.width, 0, btn.imageView?.size.width)
+btn.imageEdgeInsets = UIEdgeInsetsMake(0, btn.titleLabel?.bounds.size.width, 0, -(btn.titleLabel?.bounds.size.width ?? 0.0))
+
+
+
+
+
+btn.contentHorizontalAlignment = .center
+//使图片和文字水平居中显示  
+btn.titleEdgeInsets = UIEdgeInsetsMake(btn.imageView?.frame.size.height, -(btn.imageView?.frame.size.width ?? 0.0), 0.0, 0.0)
+//文字距离上边框的距离增加imageView的高度，距离左边框减少imageView的宽度，距离下边框和右边框距离不变  
+btn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, -(btn.titleLabel?.bounds.size.width ?? 0.0))
+//图片距离右边框距离减少图片的宽度，其它不变 
