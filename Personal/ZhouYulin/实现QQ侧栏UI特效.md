@@ -1,6 +1,6 @@
 学习了一天属性动画方面的知识，为了能更好理解，我尝试去实现当前QQ的抽屉动画。
 仔细观察，当前QQ滑动拉出侧栏时并不像是拉出抽屉，而像是一个布局覆盖着另一个布局，拉动侧栏只像是把上面的布局推开。
-所以布局如下
+布局大致如下
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout
@@ -29,12 +29,12 @@
         android:layout_gravity="left" />
 </android.support.v4.widget.DrawerLayout>
 ```
-主页面用了RelativeLayout，在里面又定义了2个布局，百度查询得知，在相对布局下，上面的控件会在下面的控件的底部
+思路：主页面用了RelativeLayout，在里面又定义了2个布局，百度查询得知，在相对布局下，上面的控件会在下面的控件的底部
 侧栏用了fragment。
 ```JAVA
 layout.measure(0,0);
-final float width=layout1.getMeasuredWidth()*0.2f;//可以底部获取布局的宽度
-layout.setTranslationX(-width);                  //将底部布局向做移动宽度的0.2倍
+final float width=layout1.getMeasuredWidth()*0.2f;//获取底部布局(侧栏)的宽度
+layout.setTranslationX(-width);                  //将底部布局向左移动宽度的0.2倍
         ```
 接下来只需使用addDrawerListener设置监听抽屉，然后重写onDrawerSlide来移动控件
 ```JAVA
