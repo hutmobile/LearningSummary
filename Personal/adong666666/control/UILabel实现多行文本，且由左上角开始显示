@@ -40,5 +40,6 @@ class PatientInfoCustomLabel: SmallLabel {
         bt1.numberOfLines = 0
         bt1.textAlignment = .left
         bt1.text = "●  Xbed全程自助，不设前台，入住流程：打开微信Xbed/APP办理入住【我的订单】，按提示操作即可获得开门密码哟~"
+        //这里用\n可以换行哦！！！
         return bt1
     }()
