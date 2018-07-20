@@ -898,7 +898,7 @@ class baseViewController: UIViewController, TwicketSegmentedControlDelegate{
             slabelx6.frame = CGRect(x: 20.fitScreen, y: 2365.fitHeight, width: 200.fitScreen, height: 50.fitHeight)
             slabelx7.frame = CGRect(x: 20.fitScreen, y: 2400.fitHeight, width: 200.fitScreen, height: 50.fitHeight)
             btn20.frame = CGRect(x: 170.fitScreen, y: 2368.fitHeight, width: 20.fitScreen, height: 20.fitHeight)
-            call.frame = CGRect(x: 40.fitScreen, y: 676.fitHeight, width: 30.fitScreen, height: 35.fitHeight)
+            call.frame = CGRect(x: 40.fitScreen, y: 2440.fitHeight, width: 30.fitScreen, height: 35.fitHeight)
             sscroll.addSubview(btn4)
             sscroll.addSubview(btn5)
             sscroll.addSubview(btn6)
