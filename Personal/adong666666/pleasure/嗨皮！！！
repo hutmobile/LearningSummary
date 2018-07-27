@@ -1,0 +1,129 @@
+Optional(["show_list_after": [
+    {
+        "room_list" : [
+        {
+        "price" : "240",
+        "room_id" : 5,
+        "info" : "看书看雪山，有景有好眠",
+        "photo" : "https:\/\/api.cloudfox.ltd\/Public\/images\/3.png",
+        "place" : "丽江"
+        },
+        {
+        "price" : "320",
+        "room_id" : 6,
+        "info" : "住在人情里，睡在山海间",
+        "photo" : "https:\/\/api.cloudfox.ltd\/Public\/images\/2.png",
+        "place" : "杭州"
+        }
+        ],
+        "small_title" : "月影下重檐  轻风花满帘",
+        "big_title" : "自然木意"
+    }
+    ], "head_img": [
+        "https:\/\/api.cloudfox.ltd\/Public\/images\/0.png",
+        "https:\/\/api.cloudfox.ltd\/Public\/images\/1.png"
+    ], "show_list_before": [
+        {
+            "room_list" : [
+            {
+            "price" : "200",
+            "room_id" : 1,
+            "info" : "依水而居，以景入梦",
+            "photo" : "https:\/\/api.cloudfox.ltd\/Public\/images\/9.png",
+            "place" : "苏州"
+            },
+            {
+            "price" : "300",
+            "room_id" : 2,
+            "info" : "怡然自得时浅酌，色彩缤纷处挥墨",
+            "photo" : "https:\/\/api.cloudfox.ltd\/Public\/images\/8.png",
+            "place" : "重庆"
+            }
+            ],
+            "small_title" : "依池居住有渔家  兽王摇船到浅沙",
+            "big_title" : "依山而居"
+        },
+        {
+            "room_list" : [
+            {
+            "price" : "320",
+            "room_id" : 3,
+            "info" : "景现明窗玉帘外，跌坐蒲团诵黄老",
+            "photo" : "https:\/\/api.cloudfox.ltd\/Public\/images\/10.png",
+            "place" : "兰州"
+            },
+            {
+            "price" : "1184",
+            "room_id" : 4,
+            "info" : "草木花香间，偷的浮生半日闲",
+            "photo" : "https:\/\/api.cloudfox.ltd\/Public\/images\/7.png",
+            "place" : "大理"
+            }
+            ],
+            "small_title" : "曲径通幽处  禅房花木深",
+            "big_title" : "侘寂之美"
+        }
+    ], "show": {
+        "room_list" : [
+        {
+        "photo" : "https:\/\/api.cloudfox.ltd\/Public\/images\/4.png"
+        },
+        {
+        "photo" : "https:\/\/api.cloudfox.ltd\/Public\/images\/4.png"
+        },
+        {
+        "photo" : "https:\/\/api.cloudfox.ltd\/Public\/images\/4.png"
+        }
+        ],
+        "small_title" : "请到天涯海角来  这里四季常青在",
+        "big_title" : "最新活动"
+    }])
+
+
+
+        Alamofire.request(url).responseJSON
+            { response in
+                debugPrint(response)
+                
+                if let json2 = response.result.value
+                {
+                    print("JSON: \(json2)")
+                    let json = JSON(json2)
+                    //let price = json2["show_list_after"][0]["room_list"][0]["price"]
+                    let aaa = json["show_list_after"][0]["big_title"]
+                    let bbb = json["show_list_after"][0]["small_title"]
+                    let ccc = json["show_list_before"][0]["big_title"]
+                    let ddd = json["show_list_before"][0]["small_title"]
+                    let eee = json["show_list_before"][1]["big_title"]
+                    let fff = json["show_list_before"][1]["small_title"]
+                    let ggg = json["show"]["big_title"]
+                    let hhh = json["show"]["small_title"]
+                    self.label3.text = aaa.rawString()
+                    self.label4.text = bbb.rawString()
+                    self.label1.text = ccc.rawString()
+                    self.label2.text = ddd.rawString()
+                    self.label7.text = eee.rawString()
+                    self.label8.text = fff.rawString()
+                    self.label5.text = ggg.rawString()
+                    self.label6.text = hhh.rawString()
+                    }
+
+        }       
+        }
+        我表示我不能再嗨皮了，太高兴了呀，原来可以这么轻松，注意了，为什么ggg不是json["show"][0]["big_title"]
+        要看到show和show_list_after的区别，show是一个单纯的数组，而show_list_after是多个数组，
+        再看看细节         "show" : {}
+                         "show_list_after" : []
+                         其他的也都是[]
+                         所以一开始有点混淆
+                         不过
+                         我
+                         还是
+                         很
+                         嗨皮呀
+         
+        
+        
+        
+        
+        
