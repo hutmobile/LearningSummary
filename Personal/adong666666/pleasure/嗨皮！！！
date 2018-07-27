@@ -111,7 +111,7 @@ Optional(["show_list_after": [
         }       
         }
         我表示我不能再嗨皮了，太高兴了呀，原来可以这么轻松，注意了，为什么ggg不是json["show"][0]["big_title"]
-        要看到show和show_list_after的区别，show是一个单纯的数组，而show_list_after是多个数组，
+        要看到show和show_list_after的区别，show是一个单纯的元素，甚至都不能看成数组元素，而show_list_after是多个数组多个数组元素的集合，
         再看看细节         "show" : {}
                          "show_list_after" : []
                          其他的也都是[]
