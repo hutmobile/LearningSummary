@@ -3,6 +3,9 @@
 ```
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        
+        //这里写入需要进行定期更新的方法
+        
         AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
         int anHour = 8*60*60*1000;      //8小时的毫秒
         long triggerAtTime = SystemClock.elapsedRealtime() + anHour;
@@ -37,7 +40,7 @@
              AlarmManager.ELAPSED_REALTIME_WAKEUP表示闹钟在睡眠状态下会唤醒系统并执行提示功能，该状态下闹钟也使用相对时间，状态值为2；<Br/>
              AlarmManager.RTC表示闹钟在睡眠状态下不可用，该状态下闹钟使用绝对时间，即当前系统时间，状态值为1；<Br/>       
              AlarmManager.RTC_WAKEUP表示闹钟在睡眠状态下会唤醒系统并执行提示功能，该状态下闹钟使用绝对时间，状态值为0；<Br/>
-             AlarmManager.POWER_OFF_WAKEUP表示闹钟在手机关机状态下也能正常进行提示功能，所以是5个状态中用的最多的状态之一，该状态下闹钟也是用绝对时间，状态值为4；不过本状态好像受SDK版本影响，某些版本并不支持；<Br/>
+             AlarmManager.POWER_OFF_WAKEUP表示闹钟在手机关机状态下也能正常进行提示功能，所以是5个状态中用的最多的状态之一，该状态下闹钟也是用绝对时间，状态值为4；不过本状态好像受SDK版本影响，某些版本并不支持；<Br/>          
          
 >（2）long startTime： 闹钟的第一次执行时间，以毫秒为单位，可以自定义时间，不过一般使用当前时间。需要注意的是，本属性与第一个属性（type）密切相关，<Br/>
 >（3）long intervalTime：对于后两个方法来说，存在本属性，表示两次闹钟执行的间隔时间，也是以毫秒为单位。<Br/>
