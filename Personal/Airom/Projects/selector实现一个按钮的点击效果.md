@@ -5,23 +5,28 @@
 
 
 方法：selector做遮罩，原图做background
+
 建立一个圆形的selector，正常情况下是完全透明的，按下后透明度变小（针对imagebutton和imageview有用）
 
 https://blog.csdn.net/jiankeufo/article/details/73845750
 
 
 实现将文字在disable时置灰且不可点击，而enable时文字点亮且可点击的功能
+
 https://www.jianshu.com/p/46a68f82eaf8
 
 
 在selector中设置了点击效果和初始状态效果时，点击却没有反应，错误效果以及代码如下:
+
 https://www.jianshu.com/p/a0ddba6d7969
 
 
 TextView文字和背景点击效果（针对button和textview有用）
+
 https://blog.csdn.net/lin_dianwei/article/details/79678062
 
 上述文章中Android之drawable state各个属性详解
+
 https://www.cnblogs.com/jenson138/p/4272802.html
 
 
