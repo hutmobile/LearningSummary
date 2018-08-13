@@ -1,0 +1,166 @@
+从中午搞到下午吃饭，github上面的一个开源框架始终搞不好，生气了自己写splash，其实并不难。
+
+
+
+太晚了，先放东西，明早整理思绪
+
+
+以下方法延时进入MainActivity()，new了Runnable像是开启了一个子线程，但是不然，这儿调用的是run方法，而不是start方法，因此并不是子线程，其实还是在主线程中，一般不这样用，并没有多大意义，像是在主线程中给主线程sendmessage，并没有什么意义，主线程是可以直接更新UI的。
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                toMainActivity();
+//            }
+//        }, 3200);
+
+参考：https://blog.csdn.net/u012534831/article/details/52212239
+
+主要参考的代码，有部分改动
+创建一个冷启动后的闪屏页面（Splash 页面） 
+这个页面默认 3s 倒计时，点击倒计时按钮可以跳转并结束倒计时 
+点击图片如果有外链，则跳转应用的 web 页面用来作为活动页面（没错这点和某猫很像）
+https://blog.csdn.net/duoduo_11011/article/details/73648347
+
+别人的综合参考
+https://blog.csdn.net/sinat_38239454/article/details/79032104
+
+让app从后台打开仍然显示splash
+https://blog.csdn.net/s297165331/article/details/52138480
+只显示一次启动页（App没被kill的情况下）
+http://www.apkbus.com/thread-255934-1-1.html
+
+Android实现不重复启动APP的方法
+http://blog.sina.com.cn/s/blog_5de73d0b0102vpai.html
+
+用RxJava实现首次使用APP时的引导页功能。（WelcomeActivity）
+https://www.jianshu.com/p/74f9765c2041
+
+
+贴上自己的代码
+package team.museum.museum.splash;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import qiu.niorgai.StatusBarCompat;
+import team.museum.museum.R;
+import team.museum.museum.base.MvpActivity;
+import team.museum.museum.main.MainActivity;
+import team.museum.museum.util.AntiShakeUtil;
+import team.museum.museum.web.WebActivity;
+
+public class SplashActivity extends MvpActivity<SplashPresenter> implements SplashContract {
+
+
+    @BindView(R.id.iv_splash)
+    ImageView ivSplash;
+    @BindView(R.id.btn_skip)
+    Button btnSkip;
+    @BindView(R.id.iv_web)
+    ImageView ivWeb;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StatusBarCompat.translucentStatusBar(this);
+        setContentView(R.layout.activity_splash);
+        ButterKnife.bind(this);
+        mvpPresenter.attachView(this);
+        showSplashImage();
+    }
+
+    @Override
+    protected SplashPresenter createPresenter() {
+        return new SplashPresenter();
+    }
+
+
+    @Override
+    public void showSplashImage() {
+        Glide.with(this)
+                .load(R.drawable.splash)
+                .into(ivSplash);
+        startClock();
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+////                isLogin();
+//                toMainActivity();
+//            }
+//        }, 3200);
+
+    }
+
+    private CountDownTimer countDownTimer = new CountDownTimer(3200, 1000) {
+        @Override
+        public void onTick(long l) {
+            btnSkip.setText("跳过" + l / 1000 + "s");
+        }
+
+        @Override
+        public void onFinish() {
+            btnSkip.setText("跳过" + 0 + "s");
+            toMainActivity();
+        }
+    };
+
+    private void startClock() {
+        btnSkip.setVisibility(View.VISIBLE);
+        countDownTimer.start();
+    }
+
+    //计时结束跳转到主界面
+    private void toMainActivity() {
+        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    //跳转到点击的网页
+    private void toWebActivity() {
+        Intent intent = new Intent(SplashActivity.this, WebActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
+    @OnClick({R.id.iv_splash, R.id.btn_skip, R.id.iv_web})
+    public void onViewClicked(View view) {
+        if(new AntiShakeUtil().check(view.getId())) return;
+
+        switch (view.getId()) {
+            case R.id.iv_splash:
+                toMainActivity();
+                break;
+            case R.id.btn_skip:
+                toMainActivity();
+                break;
+            case R.id.iv_web:
+                toWebActivity();
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        //按返回键返回桌面
+        moveTaskToBack(true);
+    }
+}
