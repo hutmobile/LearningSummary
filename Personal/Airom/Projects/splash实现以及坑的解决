@@ -123,7 +123,7 @@ public class SplashActivity extends MvpActivity<SplashPresenter> implements Spla
         countDownTimer.start();
     }
 
-    //计时结束跳转到主界面
+    //计时结束跳转到主界面 
     private void toMainActivity() {
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
