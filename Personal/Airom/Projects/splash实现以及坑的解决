@@ -1,4 +1,4 @@
-从中午搞到下午吃饭，github上面的一个开源框架始终搞不好，生气了自己写splash，其实并不难。
+从中午搞到下午吃饭，github上面的一个开源框架react-native-splash-screen地址https://github.com/crazycodeboy/react-native-splash-screen始终搞不好，生气了自己写splash，其实并不难。
 
 可能有一些LAUNCHER，当app的activity将下面的代码更换到另一个activity的时候，桌面上的快捷图标没更新，会打不开app，重启也不行，只有从抽屉里面打开才有效，所以可以删去桌面上原本的快捷图标，从抽屉里面在拉出来放到桌面上。已知微软桌面会出现这样的bug。
             <intent-filter>
