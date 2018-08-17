@@ -1,0 +1,12 @@
+在xcode左上角点击项目，选中edit scheme....,接着找到Evironment Variables
+
+
+添加个配置
+
+Name 设置为OS_ACTIVITY_MODE
+
+value设置为disable
+
+好了，之后运行打印出来的要么是你所print的，要么就是十分重要的信息，如警告信息
+
+![image](https://raw.githubusercontent.com/HutMobileDevelopmentGroup/LearningSummary/master/Personal/adong666666/HabitFormation/关闭杂乱的打印日志.jpg)
