@@ -1,3 +1,4 @@
+//  Created by adong666666 on 2018/8/18. Copyright © 2018年 adong666666. All rights reserved.
 import Foundation
 import Alamofire
 
@@ -73,5 +74,57 @@ class Networktools{
     }
 }
 
+ 
+ 
+ 
+ 
+ 
+ 
+ 而后在需要的地方就能够调用此类方法了，注意到他是个class func ,以便在其他类里也能方便调用
+ 
+ 
+ 
+ extension shouyeViewController{
+    fileprivate func loadData(){
+        Networktools.requestData(URLString: home_url, type: .get){ (result : Any) in
+            print(result)
+        }
+    }
+}
+
+比如在shouyeViewController中写一个函数，用extension的话要用文件私有，即在当前文件中才能访问 ，fileprivate 
+
+
+
+另外 open 是可以跨项目访问的 ，类似于public ,当然public在swift 4 中不常用了，一般是在扩展的时候用，如
+public extension Double{
+}
+如 UIColor,UILabel,UIView......,别以为人家是生来就有， 人家也只是一个类 open class UIColor{}而已，所以我们能调用相应框架内的类和函数，
+这个就是UIKit中的诸多类之一啦
+咱们只是天生要强
+
+
+而 private 是绝对私有，只能在当前类中使用，extension 中都不能调用，想要调用就只能fileprivate
+
+再者就是internal ,这个是默认的哈，我们都用了这么多遍了，却不一定注意到它，它是可以省略的,在项目内私有
     
-    
+最后使用调用loadData()这个函数，就能请求到数据了，记得给home_url 赋值 “”,一个字符串链接，https://.....
+
+
+
+注意了，由于http请求不是很安全，iOS默认关闭了http请求，所以如果要用http请求，你需要在info plist中添加个App Transport Security Settings
+简称atp设置，开发人员基本上人尽皆知，在其中再添加个Allow Arbitrary Loads 将默认的bool值从NO改为YES
+
+
+对了，但是如果你又加个Allow Arbitrary Loads in Web Content ,并且设置为YES，http请求会失败的哦，苹果就是这么会折腾，如果非要用两个的话
+
+可以考虑弄个HTTP证书试试，毕竟也折腾了这么久了
+
+
+
+
+
+
+
+
+
