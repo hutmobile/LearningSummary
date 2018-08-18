@@ -1,0 +1,77 @@
+import Foundation
+import Alamofire
+
+enum MethodType {
+    case get
+    case post
+}
+
+class Networktools{
+    class func requestData(URLString: String, type: MethodType, parameters: [String: Any]? = nil, 
+    finishedCallback: @escaping (_ result: Any)->()) {
+        let method = type == .get ? HTTPMethod.get : HTTPMethod.post
+        
+        Alamofire.request(home_url, method: method, parameters: parameters).responseJSON( completionHandler: {(response) in
+            guard let result = response.result.value else{
+                print(response.result.error ?? 0)
+                return
+            }
+            finishedCallback(result)
+        })
+        
+    }
+}
+
+注意到逃逸闭包（_ result: Any）->()整个是一个参数，由于在 Alamofire.request(home_url, method: method,
+parameters: parameters).responseJSON这个请求中进行调用，而不是在requestData 中直接调用，故此处不能使用普通闭包，
+而要加关键字@escaping  使其成为一个逃逸闭包，可以在其他函数或方法或请求中进行调用，注意到 requestData中所设置的参数都有被使用到
+
+URLString: String, type: MethodType, parameters: [String: Any]? = nil, 
+    finishedCallback: @escaping (_ result: Any)->()
+    
+    可以细细地体会
+    
+    
+    
+{(response) in
+            guard let result = response.result.value else{
+                print(response.result.error ?? 0)
+                return
+            }
+            finishedCallback(result)
+        }
+        
+        
+这一整个就是个闭包， in  相当于 ->   
+
+response 是闭包的参数， 相当于(_ result: Any)，  所以response有一个属性: response.result,
+
+finishedCallback(result)是一个回调函数，
+
+ guard let result = response.result.value else{
+                print(response.result.error ?? 0)
+                return
+            }
+            finishedCallback(result)
+这个就相当于一个（），即void ,无返回值，如果里面有参数，那么我们还需要return所需要的返回值
+
+completionHandeler 是可以省略的， 还可以写成下面这个样子
+
+class Networktools{
+    class func requestData(URLString: String, type: MethodType, parameters: [String: Any]? = nil, 
+    finishedCallback: @escaping (_ result: Any)->()) {
+        let method = type == .get ? HTTPMethod.get : HTTPMethod.post
+        
+        Alamofire.request(home_url, method: method, parameters: parameters).responseJSON {(response) in
+            guard let result = response.result.value else{
+                print(response.result.error ?? 0)
+                return
+            }
+            finishedCallback(result)
+        }
+        
+    }
+}
+
+    
+    
