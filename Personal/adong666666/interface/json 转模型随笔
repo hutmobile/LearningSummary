@@ -1,0 +1,145 @@
+//  Created by adong666 on 2018/8/18.  Copyright © 2018年 adong666666. All rights reserved.
+
+import UIKit
+
+class head_img : NSObject {
+    var slider_url: String = ""
+    init(dict : [String : Any]) {
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forKey key: String) {}
+}
+class show_list_before : NSObject{
+    var title_id : String = ""
+    var headline : String = ""
+    var subhead : String = ""
+    var bindBaseList : BindBaseList?
+    var bind_base_list : [String: NSObject]?{
+        didSet{
+            guard let bind_base_list = bind_base_list else{ return }
+            bindBaseList = BindBaseList(dict: bind_base_list)
+        }
+    }
+    init(dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forKey key: String) {}
+}
+class sshow : NSObject{
+    var location_href : String = ""
+    var img_url : String = ""
+    init(dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forKey key: String) {}
+}
+class show_list_after : NSObject{
+    var title_id : String = ""
+    var headline : String = ""
+    var subhead : String = ""
+    var bindBaseList : BindBaseList?
+    var bind_base_list : [String: NSObject]?{
+        didSet{
+            guard let bind_base_list = bind_base_list else{ return }
+            bindBaseList = BindBaseList(dict: bind_base_list)
+        }
+    }
+    init(dict:[String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forKey key: String) {}
+}
+class vvideo : NSObject{
+    var img_url : String = ""
+    var video_url : String = ""
+    init(dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forKey key: String) {}
+}
+class BindBaseList: NSObject{
+    var subhead : String = ""
+    var base_id : String = ""
+    var base_city : String = ""
+    var img_url : String = ""
+    var min_price : String = ""
+    
+    init (dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forKey key: String) {}
+}
+
+
+//  Created by adong666666 on 2018/8/18. Copyright © 2018年 adong666666. All rights reserved.
+
+extension shouyeViewController{
+    fileprivate func loadData(){
+        Networktools.requestData(URLString: home_url, type: .get){ (result : Any) in
+            print(result)
+            guard let resultDict = result as? [String: Any] else { return }
+            if let dataArray = resultDict["head_img"] as? [[String: NSObject]] {
+            for dict in dataArray{
+                self.headImg.append(head_img(dict: dict))
+            }
+            }
+            print(self.headImg)
+            if let dataArray1 = resultDict["show_list_before"] as? [[String: NSObject]]{
+            for dict in dataArray1{
+                self.showListBefore.append(show_list_before(dict: dict))
+            }
+            }
+            print(self.showListBefore)
+            if let dataArray2 = resultDict["page_show"] as? [[String: NSObject]] {
+            for dict in dataArray2{
+                self.ssshow.append(sshow(dict: dict))
+            }
+            }
+            print(self.ssshow)
+            if let dataArray3 = resultDict["show_list_after"] as? [[String: NSObject]] {
+            for dict in dataArray3{
+                self.showListAfter.append(show_list_after(dict: dict))
+            }
+            }
+            print(self.showListAfter)
+            if let dataArray4 = resultDict["page_video"] as? [String: Any] {
+                self.vvvideo.append(vvideo(dict: dataArray4))
+            }
+            print(self.vvvideo)
+            }
+    }
+}
+
+
+//  Created by adong666666 on 2018/8/18. Copyright © 2018年 adong666666. All rights reserved.
+
+import Foundation
+import Alamofire
+
+
+enum MethodType {
+    case get
+    case post
+}
+
+class Networktools{
+    class func requestData(URLString: String, type: MethodType, parameters: [String: Any]? = nil, finishedCallback: @escaping (_ result: Any)->()) {
+        let method = type == .get ? HTTPMethod.get : HTTPMethod.post
+        
+        Alamofire.request(home_url, method: method, parameters: parameters).responseJSON( completionHandler: {(response) in
+            guard let result = response.result.value else{
+                print(response.result.error ?? 0)
+                return
+            }
+            finishedCallback(result)
+            //print(result)
+        })
+        
+    }
+}
