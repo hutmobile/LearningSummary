@@ -143,3 +143,180 @@ class Networktools{
         
     }
 }
+
+
+
+
+
+张某踩坑无数，今日终于寻得问题所在，痛啊
+
+
+
+
+先来举个例子
+
+
+
+网络请求数据后，解析json数据，得到模型对象 使用Swift4.0，通过setValuesForKeys保存字典数据，无法存储 
+代码如下
+
+class BaseGameModel: NSObject {
+
+
+    // MARK:- 定义属性
+   var tag_name : String = ""
+   var icon_url : String = ""
+
+    // MARK:- 自定义构造函数
+    override init() {
+
+    }
+
+    init(dict : [String : Any]) {
+        super.init()
+        setValuesForKeys(dict)
+    }
+
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {
+        print(key)
+    }
+}
+明明有tag_name、icon_url 属性，依然会走 override func setValue(_ value: Any?, forUndefinedKey key: String) { 
+print(key) 
+}方法，并打印出key，值为tag_name、icon_url
+
+原因
+
+在swift3中，编译器自动推断@objc，换句话说，它自动添加@objc 
+在swift4中，编译器不再自动推断，你必须显式添加@objc
+
+解决
+
+    // MARK:- 定义属性
+   @objc var tag_name : String = ""
+   @objc  var icon_url : String = ""
+
+
+添加@objc ,使其能够调用objc 的特性，所以上面的json转模型是swift3的经典
+
+
+在swift4中使用，我们必须添加@objc
+
+
+代码改成如下
+
+
+
+//  Created by adong666 on 2018/8/18.  Copyright © 2018年 adong666666. All rights reserved.
+
+import UIKit
+
+class head_img : NSObject {
+    @objc var slider_url: String = ""
+    init(dict : [String : Any]) {
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
+}
+class show_list_before : NSObject{
+    @objc var title_id : String = ""
+    @objc var headline : String = ""
+    @objc var subhead : String = ""
+    @objc var bindBaseList : BindBaseList?
+    var bind_base_list : [String: NSObject]?{
+        didSet{
+            guard let bind_base_list = bind_base_list else{ return }
+            bindBaseList = BindBaseList(dict: bind_base_list)
+        }
+    }
+    init(dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
+}
+class sshow : NSObject{
+    @objc var location_href : String = ""
+    @objc var img_url : String = ""
+    init(dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
+}
+class show_list_after : NSObject{
+    @objc var title_id : String = ""
+    @objc var headline : String = ""
+    @objc var subhead : String = ""
+    @objc var bindBaseList : BindBaseList?
+    var bind_base_list : [String: NSObject]?{
+        didSet{
+            guard let bind_base_list = bind_base_list else{ return }
+            bindBaseList = BindBaseList(dict: bind_base_list)
+        }
+    }
+    init(dict:[String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
+}
+class vvideo : NSObject{
+    @objc var img_url : String = ""
+    @objc var video_url : String = ""
+    init(dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forKey key: String) {}
+}
+class BindBaseList: NSObject{
+    @objc var subhead : String = ""
+    @objc var base_id : String = ""
+    @objc var base_city : String = ""
+    @objc var img_url : String = ""
+    @objc var min_price : String = ""
+    
+    init (dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
+}
+
+
+
+好了，终于可以了，多么痛的领悟
+
+
+注意到
+
+    var bind_base_list : [String: NSObject]?{
+        didSet{
+            guard let bind_base_list = bind_base_list else{ return }
+            bindBaseList = BindBaseList(dict: bind_base_list)
+        }
+    }
+    
+这里是一个集合，他有一个子集，如下
+class BindBaseList: NSObject{
+    @objc var subhead : String = ""
+    @objc var base_id : String = ""
+    @objc var base_city : String = ""
+    @objc var img_url : String = ""
+    @objc var min_price : String = ""
+    
+    init (dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
+}
+
+
+其变量都有@objc 
+而我们用到的不是父集合，，另外会显得非常冗余，所以这里就不要@objc 了哈
+  
+
+
