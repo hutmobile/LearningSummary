@@ -20,10 +20,13 @@ iPad App iOS 7-10 76pt                                            1x( 76x76 )  2
 
 iPad Pro App iOS 9-10 83.5                                      2x( 167x167 )
 
+
+最后一个1024x1024
+
 2、LaunchImage尺寸
 
-iPhone X  1125 * 2436  必要
-
+iPhone X  1125 * 2436      必要   2436*1125
+ 
 iPhone Portrait  iOS 5,6        1x( 320x480 )  2x( 640x960 ) Retina4( 640x1136 )
 
 iPhone Portrait iOS 8,9         Retina HD 5.5( 1242x2208 )  Retina HD 4.7( 750x1334 )  必要
