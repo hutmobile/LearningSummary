@@ -123,6 +123,42 @@ public extension Double{
 
 
 
+对了，加点东西哈
+
+   我常用这个来规范代码，而实际上它也是个闭包
+    var btn: PowerButton = {
+        let bt1 = PowerButton(type: UIButtonType.roundedRect)
+        bt1.frame = CGRect(x: 0.fitScreen, y: 35.fitHeight, width: 20.fitScreen, height: 35.fitHeight)
+        bt1.setBackgroundImage(UIImage(named: "返回"), for: UIControlState())
+        bt1.setTitle(" ", for: UIControlState())
+        bt1.setTitleColor(UIColor.white, for: UIControlState())
+        bt1.addTarget(self, action: #selector(histroicalViewController.buttonTap(_:)), for: UIControlEvents.touchUpInside)
+        return bt1
+    }()
+   
+   
+    等价于 
+    
+    var btn: PowerButton = {() in
+        let bt1 = PowerButton(type: UIButtonType.roundedRect)
+        bt1.frame = CGRect(x: 0.fitScreen, y: 35.fitHeight, width: 20.fitScreen, height: 35.fitHeight)
+        bt1.setBackgroundImage(UIImage(named: "返回"), for: UIControlState())
+        bt1.setTitle(" ", for: UIControlState())
+        bt1.setTitleColor(UIColor.white, for: UIControlState())
+        bt1.addTarget(self, action: #selector(histroicalViewController.buttonTap(_:)), for: UIControlEvents.touchUpInside)
+        return bt1
+    }(
+    
+    
+    
+    （）in ()    等价于  ()->()
+    
+     因为()in， () 中没有参数，故可省略， 必须连着in省略
+     
+     所以要有意识，上述的东西实质上是一个闭包
+
+
+
 
 
 
