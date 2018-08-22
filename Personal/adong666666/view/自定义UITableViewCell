@@ -1,0 +1,291 @@
+//  Created by adong666 on 2018/8/21.  Copyright © 2018年 adong666666. All rights reserved.
+
+import UIKit
+
+class TableViewCell: UITableViewCell {
+
+    var img: UIImageView = {
+        let image = UIImageView(image: UIImage(named: "优惠券"))
+        image.frame = CGRect(x: 20.fitScreen, y: 15.fitHeight, width: 380.fitScreen, height : 150.fitHeight)
+        return image
+    }()
+    var llabel: PowerLabel = {
+       let label = PowerLabel()
+        label.text = "￥5"
+        label.font = UIFont(name: "Arial", size: 40)
+        label.frame = CGRect(x: 40.fitScreen, y: 70.fitHeight, width: 100.fitScreen, height: 80.fitHeight)
+        return label
+    }()
+    var llabel1: PatientInfoCustomLabel = {
+       let label = PatientInfoCustomLabel()
+        label.text = "新人券"
+        label.font = UIFont(name: "Arial", size: 25)
+        label.frame = CGRect(x: 150.fitScreen, y: 50.fitHeight, width: 100.fitScreen, height: 40.fitHeight)
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        return label
+    }()
+    var llabel2: PatientInfoCustomLabel = {
+        let label = PatientInfoCustomLabel()
+        label.text = "满50可用"
+        label.font = UIFont(name: "Arial", size: 25)
+        label.frame = CGRect(x: 150.fitScreen, y: 50.fitHeight, width: 150.fitScreen, height: 40.fitHeight)
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        return label
+    }()
+    var llabel3: PatientInfoCustomLabel = {
+        let label = PatientInfoCustomLabel()
+        label.text = "有效期至2018-11-12"
+        label.font = UIFont(name: "Arial", size: 25)
+        label.frame = CGRect(x: 150.fitScreen, y: 50.fitHeight, width: 200.fitScreen, height: 40.fitHeight)
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        return label
+    }()
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        addSubview(img)
+        addSubview(llabel)
+        addSubview(llabel1)
+        addSubview(llabel2)
+        addSubview(llabel3)
+    }
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+
+}
+
+
+
+和平时写的也没什么特别大的区别，就是有一些要注意就是了
+
+
+
+特别有以下几点
+
+1， 注册cell
+
+
+
+private let kHomeCellID = "kHomeCellID"，字符串里随便写些什么，这个是用来作为一些标识，指定是哪个view
+
+
+    fileprivate lazy var tableView : UITableView = {[unowned self] in
+        let tableView = UITableView()
+        tableView.frame = CGRect(x: 0.fitScreen, y: 0.fitHeight, width: 414.fitScreen, height: 450.fitHeight)
+        //tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: kHomeCellID)  //xib
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: kHomeCellID)
+        tableView.separatorColor = UIColor.clear
+        return tableView
+    }()
+    
+    
+  
+        tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: kHomeCellID)  //xib
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: kHomeCellID)
+        
+    特别要注意上面这两句前者是用于xib注册的， 很多开发人员都喜欢用，或许是他们喜欢拖动视图的感觉，并且这也是比较轻松的
+    
+    
+    
+    然后后者是用于代码注册的，是我所习惯的方式。用其中一个就好了
+    kHomeCellID 就是之前所定义的字符串常量，是个标识，别忘了，没了它，视图什么我们玩不起来
+    
+    
+    2.遵守UITabelView的协议和数据源协议， 即 UITableDelegate, UITableViewDataSource 
+    
+    
+    这里举个例子
+    
+extension conponViewController: UITableViewDelegate,UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return activities.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //var cell = tableView.dequeueReusableCell(withIdentifier: kHomeCellID, for: indexPath) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: kHomeCellID) as! TableViewCell
+        cell.awakeFromNib()
+        let rowNum = (indexPath as NSIndexPath).row
+        cell.textLabel?.text = activities[rowNum]
+        cell.imageView?.image = UIImage(named: "51")
+        cell.imageView?.highlightedImage = UIImage(named: "44")
+        cell.backgroundColor = UIColor.clear
+        cell.alpha = 0.1
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt  indexPath: IndexPath) -> CGFloat {
+        return 120
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+
+    务必调用下下面的两个方法，必须调用，没得选，不然这个UITableViewCell的功能强不起来
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+    }
+    
+    因为不调用，人家都不让你遵守数据源协议，网络数据都不好处理，要么你就放弃UITableView,自己写个表视图控件？，能轻松的我们就轻松一点哈
+   
+   
+   
+   
+3. 让当前的视图控制器成为UITableView的代理，数据源代理
+extension conponViewController{
+    func delegate(){
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+    }
+}
+
+没这个，UITableView的数据源协议形同虚设，也没法监听，很尴尬
+
+4. 最后的最后，让你所自定义的cell苏醒，绝对不要落下这句，黄金句
+
+
+cell.awakeFromNib()
+
+
+
+即调用我们这TableViewCell中所重写的方法
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        addSubview(img)
+        addSubview(llabel)
+        addSubview(llabel1)
+        addSubview(llabel2)
+        addSubview(llabel3)
+    }
+    
+  不调用这句，都不算是自定义cell哦，千万注意
+
+
+ 也留下以下代码，让我们有一个整体的感知，这个我还会放到functionalstyle 的 代码抽取
+ 
+ 因为以下代码的书写是很规范的，我特意挑了一个简短的以方便展示
+ 
+ //  Created by adong666 on 2018/8/21. Copyright © 2018年 adong666666. All rights reserved. tableview
+
+
+import UIKit
+
+
+private let kHomeCellID = "kHomeCellID"
+class conponViewController: UIViewController {
+
+    override func viewDidLoad() { allthings()}
+    
+    var btn: PowerButton = {
+        let bt1 = PowerButton(type: UIButtonType.roundedRect)
+        bt1.frame = CGRect(x: 0.fitScreen, y: 35.fitHeight, width: 20.fitScreen, height: 35.fitHeight)
+        bt1.setBackgroundImage(UIImage(named: "返回"), for: UIControlState())
+        bt1.setTitle(" ", for: UIControlState())
+        bt1.setTitleColor(UIColor.white, for: UIControlState())
+        bt1.addTarget(self, action: #selector(conponViewController.buttonTap(_:)), for: UIControlEvents.touchUpInside)
+        return bt1
+    }()
+    var btn2: PowerButton = {
+        let bt1 = PowerButton(type: UIButtonType.roundedRect)
+        bt1.frame = CGRect(x: 350.fitScreen, y: 40.fitHeight, width: 50.fitScreen, height: 35.fitHeight)
+        bt1.setBackgroundImage(UIImage(named: ""), for: UIControlState())
+        bt1.setTitle("兑换", for: UIControlState())
+        bt1.setTitleColor(UIColor.green, for: UIControlState())
+        bt1.addTarget(self, action: #selector(commoncustomerViewController.buttonTap2(_:)), for: UIControlEvents.touchUpInside)
+        return bt1
+    }()
+    var llabel: PowerLabel = {
+        let frame1 = CGRect (x: 103.fitScreen, y: 35.fitHeight, width: 207.fitScreen, height: 40.fitHeight)
+        let label = PowerLabel(frame: frame1)
+        label.text = "优惠券"
+        label.alpha = 0.8
+        label.font = UIFont (name: "Arial", size: 18)
+        label.textColor = UIColor.black
+        label.textAlignment = .center
+        return label
+    }()
+    var sscroll: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.frame = CGRect(x: 0.fitScreen, y: 90.fitHeight, width: 414.fitScreen, height: 737.fitHeight)
+        scroll.contentSize = CGSize(width: 414.fitScreen, height: 647.fitHeight)
+        return scroll
+    }()
+    fileprivate lazy var tableView : UITableView = {[unowned self] in
+        let tableView = UITableView()
+        tableView.frame = CGRect(x: 0.fitScreen, y: 0.fitHeight, width: 414.fitScreen, height: 450.fitHeight)
+        //tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "kHomeCellID")  //xib
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: kHomeCellID)
+        tableView.separatorColor = UIColor.clear
+        return tableView
+    }()
+    var activities = ["123", "456", "789"]
+}
+extension conponViewController{
+    func allthings(){
+        super.viewDidLoad()
+        addSubview()
+        delegate()
+    }
+}
+extension conponViewController{
+    func addSubview(){
+        self.view.backgroundColor = UIColor.white
+        self.view.addSubview(btn)
+        self.view.addSubview(btn2)
+        self.view.addSubview(llabel)
+        self.view.addSubview(sscroll)
+        sscroll.addSubview(tableView)
+    }
+}
+extension conponViewController{
+    func delegate(){
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+    }
+}
+extension conponViewController: UITableViewDelegate,UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return activities.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //var cell = tableView.dequeueReusableCell(withIdentifier: kHomeCellID, for: indexPath) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: kHomeCellID) as! TableViewCell
+        cell.awakeFromNib()
+        let rowNum = (indexPath as NSIndexPath).row
+        cell.textLabel?.text = activities[rowNum]
+        cell.imageView?.image = UIImage(named: "51")
+        cell.imageView?.highlightedImage = UIImage(named: "44")
+        cell.backgroundColor = UIColor.clear
+        cell.alpha = 0.1
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt  indexPath: IndexPath) -> CGFloat {
+        return 120
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+extension conponViewController{
+    @objc func buttonTap(_ button: UIButton)
+    {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
+好啦，很开心，这个UITableView是很常用的，务必掌握哈
+ 
+ 
+ 
+ 
+ 
