@@ -84,6 +84,13 @@ private let kHomeCellID = "kHomeCellID"，字符串里随便写些什么，这�
         return tableView
     }()
     
+    对了，还要提一点就是这里我是用[unowned self]
+    
+    来进行一个弱引用，以防止循环应用，这里是有百分百的把握才用[unowned self] , 推荐大家使用[weak self] 然后代码里面使用可选链， 即 ？，？？，
+    哈哈，  问号的学问可大了，特别注意，视图控制器对tableview一般是强引用的，所以这里我们采取弱引用，当tableview不再使用后，指针会指向nil
+    而不会与控制器互指了哈
+   
+ 
     
   
         tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: kHomeCellID)  //xib
