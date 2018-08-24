@@ -319,3 +319,29 @@ Observable.from(students)
 1. 使用传入的事件对象创建一个 Observable 对象；</Br>
 2. 并不发送这个 Observable, 而是将它激活，于是它开始发送事件；</Br>
 3. 每一个创建出来的 Observable 发送的事件，都被汇入同一个 Observable ，而这个 Observable 负责将这些事件统一交给 Subscriber 的回调方法。这三个步骤，把事件拆成了两级，通过一组新创建的 Observable 将初始的对象『铺平』之后通过统一路径分发了下去。而这个『铺平』就是 flatMap() 所谓的 flat。</Br>
+
+
+扩展：由于可以在嵌套的 Observable 中添加异步代码， flatMap() 也常用于嵌套的异步操作，例如嵌套的网络请求。示例代码（Retrofit + RxJava）：
+---
+```
+networkClient.token() // 返回 Observable<String>，在订阅时请求 token，并在响应后发送 token
+    .flatMap(new Func1<String, Observable<Messages>>() {
+        @Override
+        public Observable<Messages> call(String token) {
+            // 返回 Observable<Messages>，在订阅时请求消息列表，并在响应后发送请求到的消息列表
+            return networkClient.messages();
+        }
+    })
+    .subscribe(new Action1<Messages>() {
+        @Override
+        public void call(Messages messages) {
+            // 处理显示消息列表
+            showMessages(messages);
+        }
+    });
+```
+传统的嵌套请求需要使用嵌套的 Callback 来实现。而通过 flatMap() ，可以把嵌套的请求写在一条链中，从而保持程序逻辑的清晰。</Br>
+● throttleFirst(): 在每次事件触发后的一定时间间隔内丢弃新的事件。常用作去抖动过滤，例如按钮的点击监听器：RxView.clickEvents(button) // RxBinding 代码，后面的文章有解释 .throttleFirst(500, TimeUnit.MILLISECONDS) // 设置防抖间隔为 500ms .subscribe(subscriber);妈妈再也不怕我的用户手抖点开两个重复的界面啦。
+
+
+
