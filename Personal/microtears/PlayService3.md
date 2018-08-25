@@ -6,7 +6,7 @@ MusicPlayService#Exoplayer
 ---
 关于如何在activity和fragment中共享资源查看另一篇文章《在Activity和多个Fragment之间共享资源》
 
-###Todo
+### Todo
 - [ ] 获取音频焦点
 - [ ] 列表加载
 - [ ] 优化加载策略
