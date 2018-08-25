@@ -4,12 +4,12 @@ MusicPlayService#Exoplayer
 ---
 在Activity中初始化MediaBrowser
 ---
-###Todo
+### Todo
 - [ ] 获取音频焦点
 - [ ] 列表加载
 - [ ] 优化加载策略
-###Sources
-####MediaBrowser init
+### Sources
+#### MediaBrowser init
 ```kotlin
  private fun initMediaBrowser() {
     browserSubscriptionCallback = object : MediaBrowserCompat.SubscriptionCallback() {
@@ -87,7 +87,7 @@ MusicPlayService#Exoplayer
   }
 ```
 
-####Activity Complete source code
+#### Activity Complete source code
 ```kotlin
 package com.messy.lingplayer
 
