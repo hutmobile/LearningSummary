@@ -57,7 +57,7 @@ viewModel = ViewModelProviders.of(activity!!).get(SharedViewModel::class.java)
 ```
 那么便可在Activity的整个生命周期之内和多个Fragment共享资源
 
-##原理
+## 原理
 >ViewModel的生命周期依赖于对应的Activity或Fragment的生命周期。通常会在Activity第一次onCreate()时创建ViewModel，ViewModel的生命周期一直持续到Activity最终销毁或Frament最终detached，期间由于屏幕旋转等配置变化引起的Activity销毁重建并不会导致ViewModel重建。借用官方示意图来解释一下：
 
 ![](https://s1.ax1x.com/2018/08/25/PHcjGd.png)
