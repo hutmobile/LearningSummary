@@ -1,0 +1,12 @@
+实在不能再简单了，性价比还算挺高的，下面这些基本上够了
+
+
+    func web(){
+        self.view.backgroundColor = UIColor.white
+        let rect = CGRect(x: 0.fitScreen, y: 30.fitHeight, width: 414.fitScreen, height: 707.fitHeight)
+        let webView = UIWebView(frame: rect)
+        let url = URL(string: "https://www.jd.com")
+        let request = URLRequest(url: url!)
+        webView.loadRequest(request)
+        self.view.addSubview(webView)
+    }

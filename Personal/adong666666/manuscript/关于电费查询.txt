@@ -1,0 +1,383 @@
+//对电费查询代码详细解释，之后会舍弃几乎所有注解，遵循代码
+//  Created by 604 on 2018/4/21. Copyright  2018年 zhangsaidong. All rights reserved.
+
+
+import UIKit
+
+class PowerLabel: UILabel {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.shadowColor = UIColor.lightGray
+        self.shadowOffset = CGSize(width: 1,height:1)
+        self.textAlignment = NSTextAlignment.center
+        self.textColor = UIColor.white
+        self.backgroundColor = UIColor.clear
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+class PowertextField: UITextField{
+    override init(frame: CGRect){
+        super.init(frame: frame)
+        //self.borderStyle = UITextBorderStyle.roundedRect//文本框样式圆角矩形
+        //self.text=""
+        self.alpha=1
+        self.font = UIFont(name: "Arial",size:18)//字体样式
+        self.textColor = UIColor.white
+        self.autocorrectionType = UITextAutocorrectionType.no//关闭语法错误提示
+        self.returnKeyType = UIReturnKeyType.done//设置回车按钮的类型
+        self.clearButtonMode = UITextFieldViewMode.whileEditing//设置文本框右侧的清除按钮,编辑状态时显示
+        //self.keyboardType = UIKeyboardType.emailAddress//设置文本框对象的键盘类型,为系统提供的邮箱地址类型
+        self.keyboardType = UIKeyboardType.numberPad//设置为数字键盘，上一行是全键盘
+        self.keyboardAppearance = UIKeyboardAppearance.light//设置文本框对象的键盘类型为暗色主题
+        self.delegate = self as? UITextFieldDelegate//设置文本框对象的代理为当前视图控制器
+        self.textAlignment = NSTextAlignment.center//设置水平居中
+        self.backgroundColor = UIColor.clear//背景颜色
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+class PprogressView: UIProgressView{
+    override init(frame: CGRect){
+        super.init(frame: frame)
+        self.progressViewStyle = UIProgressViewStyle.bar//设置进度条的风格
+        self.progressViewStyle = UIProgressViewStyle.default
+        self.progress = 1//进度条当前的进度
+        self.progressTintColor = UIColor.black//进度条走过的颜色
+        self.trackTintColor = UIColor.black//进度条轨道的颜色
+        self.progressImage = UIImage(named:"a10")//进度条前进的的图片
+        self.trackImage = UIImage(named:"a10")//进度条轨道的图片
+        self.setProgress(1, animated: true)//设置当前进度
+        self.contentMode = .scaleAspectFit
+        self.transform = CGAffineTransform(scaleX: 1.0,y: 10.0)//放大进度条  代表x和y方向上的放大倍数
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = 45 //手动设置圆角
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+class PowerButton: UIButton  {
+    override init(frame: CGRect){
+        super.init(frame:frame)
+        // let bt = UIButton(type: UIButtonType.roundedRect)
+        //bt.setBackgroundImage(UIImage(named: "a11"), for: UIControlState())
+        //bt.setTitle(" ",for: UIControlState())
+        self.setTitleColor(UIColor.white, for:UIControlState())
+        self.titleLabel?.font = UIFont(name: "Arial",size:24)
+        // bt.addTarget(self,action: #selector(ViewController.buttonTap(_:)),for: UIControlEvents.touchUpInside)
+        //return bt
+    }
+    required init?(coder aDecoder: NSCoder){
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+public extension Double {
+    var fitScreen: Double {
+        return self/414.0 * Double(UIScreen.main.bounds.size.width)
+    }
+}
+class ViewController: UIViewController {
+    var imgView: UIImageView = {
+        let v = UIImageView(image: UIImage(named:"a7.jpg"))
+        v.frame = CGRect(x:0.fitScreen, y:0.fitScreen, width:414.fitScreen, height:737.fitScreen)
+        //v.contentMode = .scaleAspectFit
+        return v
+    }()
+    var btn: PowerButton = {
+        let bt = PowerButton(type:UIButtonType.roundedRect)//20
+        bt.frame = CGRect (x:0.fitScreen, y:0.fitScreen, width:414.fitScreen,height:737.fitScreen)
+        let image3 = UIImage(named:"a7.jpg")
+        bt.setBackgroundImage(image3,for:UIControlState())
+        bt.setTitle(" ",for: UIControlState())//按钮在正常情况下的标题文字
+        bt.setTitleColor(UIColor.white, for:UIControlState())//按钮在正常情况下的标题颜色
+        bt.titleLabel?.font = UIFont(name: "Arial",size:24)//按钮文字字体形状与大小
+        bt.addTarget(self,action: #selector(ViewController.buttonTap4(_:)),for: UIControlEvents.touchUpInside)//为按钮添加点击事件
+        return bt
+    }()
+    var btn1: UIButton = {
+        let bt1 = UIButton(type: UIButtonType.roundedRect)
+        bt1.frame = CGRect(x:0.fitScreen,y:30.fitScreen,width:20.fitScreen,height:25.fitScreen)
+        bt1.setBackgroundImage(UIImage(named: "a11"), for: UIControlState())
+        bt1.setTitle(" ",for: UIControlState())
+        bt1.setTitleColor(UIColor.white, for:UIControlState())
+        bt1.titleLabel?.font = UIFont(name: "Arial",size:24)
+        bt1.addTarget(self,action: #selector(ViewController.buttonTap(_:)),for: UIControlEvents.touchUpInside)
+        return bt1
+    }()
+    var btn2: PowerButton = {
+        let bt2 = PowerButton(type: UIButtonType.roundedRect)//10
+        let rect8 = CGRect (x:333.fitScreen,y:543.fitScreen,width:25.fitScreen,height:25.fitScreen)
+        bt2.frame = rect8
+        let image1 = UIImage(named: "a9")
+        bt2.setBackgroundImage(image1, for: UIControlState())
+        bt2.setTitle(" ",for: UIControlState())
+        bt2.setTitleColor(UIColor.white, for:UIControlState())
+        bt2.titleLabel?.font = UIFont(name: "Arial",size:22)
+        bt2.addTarget(self,action: #selector(ViewController.buttonTap1(_:)),for: UIControlEvents.touchUpInside)
+        return bt2
+    }()
+    var btn3: PowerButton = {
+        let bt3 = PowerButton(type: UIButtonType.roundedRect)//11
+        
+        bt3.frame = CGRect (x:333.fitScreen,y:508.fitScreen,width:25.fitScreen,height:25.fitScreen)
+        let image2 = UIImage(named: "a9")
+        bt3.setBackgroundImage(image2, for: UIControlState())
+        bt3.setTitle(" ",for: UIControlState())
+        //bt3.setTitleColor(UIColor.white, for:UIControlState())
+        bt3.titleLabel?.font = UIFont(name: "Arial",size:22)
+        bt3.addTarget(self,action: #selector(ViewController.buttonTap2(_:)),for: UIControlEvents.touchUpInside)
+        return bt3
+    }()
+    var btn4: PowerButton = {
+        let bt4 = PowerButton(type: UIButtonType.roundedRect)
+        bt4.frame = CGRect (x:95.fitScreen,y:420.fitScreen,width:250.fitScreen,height:30.fitScreen)
+        //let image3 = UIImage(named: "a10")
+        //bt4.setBackgroundImage(image3, for: UIControlState())//将图片指定为,按钮在正常情况下的背景图片,也可以给按下,失效状态设置相应图片
+        bt4.backgroundColor = UIColor.clear
+        bt4.setTitle("查询",for: UIControlState())//按钮在正常情况下的标题文字
+        //bt4.setTitleColor(UIColor.white, for:UIControlState())
+        bt4.titleLabel?.font = UIFont(name: "Arial",size:23)//按钮文字字体形状与大小
+        bt4.addTarget(self,action: #selector(ViewController.buttonTap3(_:)),for: UIControlEvents.touchUpInside)//为按钮添加点击事件
+        bt4.layer.masksToBounds = true//给按钮添加边框效果
+        bt4.layer.cornerRadius = 16//按钮层的圆角半径
+        bt4.layer.borderWidth = 2//按钮层边框的宽度
+        bt4.layer.borderColor = UIColor.lightText.cgColor//按钮层边框的颜色
+        return bt4
+    }()
+    
+    var Label: PowerLabel = {
+        let label = PowerLabel(frame: CGRect(x: 160.fitScreen,y: 25.fitScreen,width: 100, height: 40))
+        label.text = "电费查询"
+        label.alpha = 0.8
+        label.font = UIFont (name: "Arial",size: 24)
+        return label
+    }()
+    var Label2: PowerLabel = {
+        let label2 = PowerLabel(frame: CGRect(x: 20.fitScreen,y:500.fitScreen,width:100.fitScreen,height:40.fitScreen))
+        label2.text = "今天"
+        label2.alpha = 0.7
+        label2.font = UIFont (name: "Arial",size:20)
+        return label2
+    }()
+    var Label3: PowerLabel = {
+        let label3 = PowerLabel (frame:CGRect(x: 20.fitScreen,y: 535.fitScreen,width: 200.fitScreen,height: 40.fitScreen))
+        label3.text = "宿舍开空调了吗"
+        label3.alpha = 0.7
+        label3.font = UIFont (name: "Arial",size:20)
+        return label3
+    }()
+    
+    var Label4: PowerLabel = {
+        let label4 = PowerLabel(frame: CGRect(x: 250.fitScreen,y:500.fitScreen,width:100.fitScreen,height:40.fitScreen))
+        label4.text = "开了"
+        label4.alpha = 0.8
+        label4.font = UIFont(name: "Arial",size:22)
+        return label4
+    }()
+    var Label5: PowerLabel = {
+        let label5 = PowerLabel(frame: CGRect(x: 250.fitScreen,y: 535.fitScreen,width: 100.fitScreen,height: 40.fitScreen))
+        label5.text = "没开"
+        label5.alpha = 0.8
+        label5.font = UIFont (name: "Arial",size:22)
+        return label5
+    }()
+    var Label6: PowerLabel = {
+        let label6 = PowerLabel(frame: CGRect(x: 20.fitScreen,y:600.fitScreen,width:100.fitScreen,height:40.fitScreen))
+        label6.text = "开了"
+        label6.alpha = 0.8
+        label6.font = UIFont (name: "Arial",size:22)
+        return label6
+    }()
+    var Label7: PowerLabel = {
+        let label7 = PowerLabel(frame: CGRect(x: 20.fitScreen,y: 635.fitScreen,width: 100.fitScreen,height: 40.fitScreen))
+        label7.text = "没开"
+        label7.alpha = 0.8
+        label7.font = UIFont (name: "Arial",size:22)
+        return label7
+    }()
+    var Label8: PowerLabel = {
+        let label8 = PowerLabel(frame: CGRect(x: 95.fitScreen,y: 294.fitScreen,width: 250.fitScreen, height: 30.fitScreen))
+        label8.text = "______________"
+        label8.alpha = 0.7
+        label8.font = UIFont (name: "Arial",size: 24)
+        label8.shadowColor = UIColor.white
+        return label8
+    }()
+    var Label9: PowerLabel = {
+        let label9 = PowerLabel(frame: CGRect(x: 95.fitScreen,y: 350.fitScreen,width: 250.fitScreen, height: 30.fitScreen))
+        label9.text = "______________"
+        label9.alpha = 0.7
+        label9.font = UIFont (name: "Arial",size: 24)
+        label9.shadowColor = UIColor.white
+        return label9
+    }()
+    var TextField: PowertextField = {
+        let textField = PowertextField(frame: CGRect(x: 120.fitScreen,y: 280.fitScreen,width: 200.fitScreen,height: 30.fitScreen))
+        //textField.placeholder = "宿舍楼栋"
+        //let attributes = [NSForegroundColorAttributeName : UIColor.white]//初始化一个样式字典对象，用来设置输入框占位符的文字颜色
+        //let attributedString = NSAttributedString(string: "宿舍楼栋",attributes: attributes)//初始化一个属性字符串常量
+        //textField.attributedPlaceholder = attributedString
+        textField.attributedPlaceholder = NSAttributedString.init(string:"宿舍楼栋", attributes: [kCTFontAttributeName as NSAttributedStringKey:UIFont.systemFont(ofSize:15)])
+        textField.attributedPlaceholder = NSAttributedString.init(string:"宿舍楼栋", attributes: [kCTForegroundColorAttributeName as NSAttributedStringKey: UIColor.white])
+        textField.setValue(UIColor.white, forKeyPath: "_placeholderLabel.textColor")
+       //textField.setValue(NSNumber.init(value :120), forKeyPath: "paddingLeft")
+        textField.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 31))//光标右移
+        textField.rightViewMode = .always
+        return textField
+    }()
+    var TextField1: PowertextField = {
+        let textField1 = PowertextField(frame: CGRect(x: 120.fitScreen,y: 340.fitScreen,width:200.fitScreen,height:30.fitScreen))
+        //textField1.placeholder = "寝室号"
+        //let attributes1 = [NSForegroundColorAttributeName : UIColor.white]
+        //let attributedString1 = NSAttributedString(string: "寝室号",attributes: attributes1)
+        //textField1.attributedPlaceholder = attributedString1
+        textField1.attributedPlaceholder = NSAttributedString.init(string:"寝室号", attributes: [kCTFontAttributeName as NSAttributedStringKey:UIFont.systemFont(ofSize:15)])
+        textField1.attributedPlaceholder = NSAttributedString.init(string:"寝室号", attributes: [kCTForegroundColorAttributeName as NSAttributedStringKey:UIColor.white])
+        textField1.setValue(UIColor.white, forKeyPath: "_placeholderLabel.textColor")
+        //textField1.setValue(NSNumber.init(value: 160), forKeyPath: "paddingLeft")
+        //textField1.alignmentRectInsets = UIEdgeInsets(top: 20,left: 50,bottom: 1,right: 0)
+        textField1.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 31))//光标右移
+        textField1.rightViewMode = .always
+        return textField1
+    }()
+    var ProgressView: PprogressView = {
+        let progressView = PprogressView(frame: CGRect(x: 55.fitScreen,y: 619.fitScreen,width: 260.fitScreen,height: 500.fitScreen))
+        return progressView
+    }()
+    var ProgressView1: PprogressView = {
+        let progressView1 = PprogressView(frame: CGRect(x: 55.fitScreen,y: 654.fitScreen,width: 260.fitScreen,height: 500.fitScreen))
+        return progressView1
+    }()
+    var Alert: UIAlertController = {
+        let alert = UIAlertController(title: "信息",message: "您确认要离开本界面吗？",preferredStyle: UIAlertControllerStyle.alert)
+        let yes = UIAlertAction(title: "确认",style: UIAlertActionStyle.default,handler:{(alerts: UIAlertAction) -> Void in print("离开")})
+        let no = UIAlertAction(title: "取消",style: UIAlertActionStyle.default,handler:{(alerts: UIAlertAction) -> Void in print("留下")})
+        
+        alert.addAction(yes)
+        alert.addAction(no)
+        return alert
+    }()
+    var Alert3: UIAlertController = {
+        let alert = UIAlertController(title: "查询失败",message: "输入的信息有误",preferredStyle: UIAlertControllerStyle.alert)
+        let OKAction = UIAlertAction(title: "确认",style: UIAlertActionStyle.default, handler: nil)
+        alert.addAction(OKAction)
+        return alert
+    }()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.addSubview(imgView)
+        self.view.addSubview(btn)
+        self.view.addSubview(btn1)
+        self.view.addSubview(btn2)
+        self.view.addSubview(btn3)
+        self.view.addSubview(btn4)
+        self.view.addSubview(Label)
+        self.view.addSubview(Label2)
+        self.view.addSubview(Label3)
+        self.view.addSubview(Label4)
+        self.view.addSubview(Label5)
+        self.view.addSubview(Label6)
+        self.view.addSubview(Label7)
+        self.view.addSubview(Label8)
+        self.view.addSubview(Label9)
+        self.view.addSubview(TextField)
+        self.view.addSubview(TextField1)
+        self.view.addSubview(ProgressView)
+        self.view.addSubview(ProgressView1)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{//14 按下回车时调用此方法
+        textField.resignFirstResponder()//文本框失去焦点,键盘自动隐藏
+        return true
+    }
+    
+    @objc func buttonTap(_ button:UIButton)//2
+    {
+        self.present(Alert, animated: true, completion: nil)
+    }
+    @objc func buttonTap1(_ button: UIButton)
+    {
+        let Alert : UIAlertController = {
+            let alert = UIAlertController(title: "没开空调(提交后点击屏幕可查看结果)",message:"您确认要提交了吗?",preferredStyle: UIAlertControllerStyle.actionSheet)
+            let Queren: UIAlertAction = {
+                let queren = UIAlertAction(title:"确认",style: UIAlertActionStyle.default,handler: {(alerts: UIAlertAction) -> Void in print ("提交")
+                    let img = UIImage(named:"a8")
+                    let imgView = UIImageView (image: img)
+                    imgView.alpha=1
+                    imgView.frame = CGRect(x:333.fitScreen, y:543.fitScreen, width:25.fitScreen, height:25.fitScreen)
+                    imgView.contentMode = .scaleAspectFit
+                    self.view.addSubview(imgView)
+                    let bt = PowerButton(type: UIButtonType.roundedRect)
+                    bt.frame = CGRect (x:333.fitScreen,y:508.fitScreen,width:25.fitScreen,height:25.fitScreen)
+                    let image = UIImage(named: "a9")
+                    bt.setBackgroundImage(image, for: UIControlState())
+                    bt.alpha = 1
+                    self.view.addSubview(bt)
+                    let bt1 = PowerButton(type: UIButtonType.roundedRect)
+                    bt1.frame = CGRect (x:333.fitScreen,y:543.fitScreen,width:25.fitScreen,height:25.fitScreen)
+                    let image1 = UIImage(named: "a9")
+                    bt1.setBackgroundImage(image1, for: UIControlState())
+                    bt1.alpha = 1
+                    self.view.addSubview(bt1)
+                })
+                return queren
+            }()
+            let quxiao = UIAlertAction(title:"取消",style: UIAlertActionStyle.default,handler: {(alerts: UIAlertAction) -> Void in print ("不提交")})
+            let likai = UIAlertAction(title: "离开",style: UIAlertActionStyle.cancel,handler:{(alerts: UIAlertAction) ->Void in print("离开")})
+            alert.addAction(Queren)
+            alert.addAction(quxiao)
+            alert.addAction(likai)
+            return alert
+        }()
+        self.present(Alert,animated: true, completion: nil)
+    }
+    @objc func buttonTap2(_ button: UIButton)//13
+    {
+        let Alert1 : UIAlertController = {
+            let alert = UIAlertController(title: "开空调了(提交后点击屏幕可查看结果)",message:"您确认要提交了吗?",preferredStyle: UIAlertControllerStyle.actionSheet)
+            let Queren: UIAlertAction = {
+                let queren = UIAlertAction(title:"确认",style: UIAlertActionStyle.default,handler: {(alerts: UIAlertAction) -> Void in print ("提交")
+                    let img = UIImage(named:"a8")
+                    let imgView = UIImageView (image: img)
+                    imgView.alpha=1
+                    imgView.frame = CGRect(x:333.fitScreen, y:508.fitScreen, width:25.fitScreen, height:25.fitScreen)
+                    imgView.contentMode = .scaleAspectFit
+                    self.view.addSubview(imgView)
+                    let bt = PowerButton(type: UIButtonType.roundedRect)
+                    bt.frame = CGRect (x:333.fitScreen,y:508.fitScreen,width:25.fitScreen,height:25.fitScreen)
+                    let image = UIImage(named: "a9")
+                    bt.setBackgroundImage(image, for: UIControlState())
+                    bt.alpha = 1
+                    self.view.addSubview(bt)
+                    let bt1 = PowerButton(type: UIButtonType.roundedRect)
+                    bt1.frame = CGRect (x:333.fitScreen,y:543.fitScreen,width:25.fitScreen,height:25.fitScreen)
+                    let image1 = UIImage(named: "a9")
+                    bt1.setBackgroundImage(image1, for: UIControlState())
+                    bt1.alpha = 1
+                    self.view.addSubview(bt1)
+                })
+                return queren
+            }()
+            let quxiao = UIAlertAction(title:"取消",style: UIAlertActionStyle.default,handler: {(alerts: UIAlertAction) -> Void in print ("不提交")})
+            let likai = UIAlertAction(title: "离开",style: UIAlertActionStyle.cancel,handler:{(alerts: UIAlertAction) ->Void in print("离开")})
+            alert.addAction(Queren)
+            alert.addAction(quxiao)
+            alert.addAction(likai)
+            return alert
+        }()
+        self.present(Alert1,animated: true, completion: nil)
+    }
+    @objc func buttonTap3(_ button: UIButton)
+    {
+        self.present(Alert3,animated:true,completion:nil)
+    }
+    @objc func buttonTap4(_ button: UIButton)
+    {
+        self.view.endEditing(true)//这个666，任何UIView子类结束编辑，键盘便隐藏了
+    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+}

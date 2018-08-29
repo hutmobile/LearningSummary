@@ -1,0 +1,11 @@
+
+pod install 个 Kingfisher
+
+import Kingfisher
+
+
+let imgurl = URL(string: "https:\/\/api.cloudfox.ltd\/Public\/upload\/2018-08-11\/5b6e9e25435f8.png")
+self.img5.kf.setImage(with: imgurl)
+
+
+搞定，就是这么方便，图片的frame等属性自己设置一下就好了

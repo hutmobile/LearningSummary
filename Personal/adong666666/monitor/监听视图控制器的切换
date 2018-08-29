@@ -1,0 +1,45 @@
+   override func transition(from fromViewController: UIViewController, to toViewController: UIViewController, duration: TimeInterval, options: UIViewAnimationOptions = [], animations: (() -> Void)?, completion: ((Bool) -> Void)? = nil) {
+        player?.releasePlayer()
+    }
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        player?.releasePlayer()
+    }
+    override func endAppearanceTransition() {
+        player?.releasePlayer()
+    }
+    override func beginAppearanceTransition(_ isAppearing: Bool, animated: Bool) {
+        player?.releasePlayer()
+    }
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        player?.releasePlayer()
+    }
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        player?.releasePlayer()
+    }
+    func animationController(forDismissed dismissed: UIViewController) {
+        player?.releasePlayer()
+    }
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning)  {
+        player?.releasePlayer()
+    }
+    func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning)  {
+        player?.releasePlayer()
+    }
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController)  {
+        player?.releasePlayer()
+    }
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        player?.releasePlayer()
+    }
+    
+    
+    记得设置代理协议哈
+    
+    视图控制器遵守这个  UIViewControllerTransitioningDelegate  协议
+    接着设置代理
+    self.transitioningDelegate = self
+    
+    OK，搞定，只要页面切换，就能引起相关的反应，这里我是设置只要页面切换，就销毁视频播放器
+    
+    
+ 

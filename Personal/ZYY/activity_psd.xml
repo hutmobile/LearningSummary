@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PsdActivity"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:layout_width="332dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="49dp"
+        android:src="@drawable/image00"
+        />
+
+    <EditText
+        android:id="@+id/text_id"
+        android:layout_width="251dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/text_psd"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/label_id"
+        />
+
+    <EditText
+        android:id="@+id/text_psd"
+        android:layout_width="251dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:hint="@string/label_psd"
+        android:inputType="textPassword"
+        />
+
+    <!--登录按钮-->
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="251dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_psd"
+        android:layout_centerHorizontal="true"
+        android:text="@string/button_login" />
+
+    <!--注册按钮-->
+    <Button
+        android:id="@+id/button_register"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_id"
+        android:layout_below="@+id/button_login"
+        android:text="@string/button_register" />
+
+    <!--忘记密码按钮-->
+    <Button
+        android:id="@+id/button_forgetpsd"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/text_id"
+        android:layout_below="@+id/button_login"
+        android:text="@string/button_forgetpsd" />
+</RelativeLayout>

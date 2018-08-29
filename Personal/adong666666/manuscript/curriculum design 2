@@ -1,0 +1,1431 @@
+数据结构
+  课程设计说明
+
+
+
+
+
+
+
+计算机学院
+2018年 6 月 29 日
+
+
+
+
+序 言
+
+   图形数据结构主要研究形状和图形数据元素之间的关系，它主要谈论几何形体在计算机内部的表示以及期间进行运算的基本方法。
+图形数据结构与一般数据结构不同，它必须要反映数据所对应元素之间的几何关系和拓扑关系。
+对数据结构的要求：
+（1）具有尽可能完善的形状及图形描述能力；
+（2）具有对图形及形状信息进行各种基本操作的能力；
+（3）具有较小的存贮空间和较快的处理速度。 
+对图形信息的主要操作包括：性提货图形的生成、变换、修改、输出等。
+图形数据结构通常是指由若干个图形数据元素按一定关系所组成的有序集，一般称为表。如果这些数据元素之间具有邻接关系，成为线性表，否则称为非线性表。
+线性表是由若干个节点组成的有序组合。
+在具体结构中，实现连接关系的方法主要有：顺序实现和链接实现。
+关系的顺序实现是指图形数据中的每一个数据项的存放都是按一定的规则来实现的，可以按序求得。
+关系的链接实现是指图形数据中的每一个数据项的存放是无规则的，其间的连接是通过数据元素中指示连接单元的指针来实现的。
+数据结构中的图在计算机领域应用十分广泛，在计算机图形学（CG）、计算机辅助设计（CAD）等学科中应用尤为突出。
+在此课程设计说明书中，本人将带来一个图的相关设计“航班换乘服务系统”，很高兴你能参观本服务系统，希望本系统能带你走近图的美妙！
+
+
+
+
+
+
+
+
+
+
+
+
+内 容 摘 要
+ 
+ 
+本课程设计说明书主要包含以下几个方面：选择此课题的原因，课程设计的目的，课程设计的内容，关于航班换乘，航班换乘原因，程序流程图，数据结构设计，
+功能模块，对程序的具体功能及操作的说明，对程序运行结果的分析并附上了相应的截图，对程序运行结果的总结，本篇课程设计说明完成后的总结，
+附上所用到的C语言程序源代码，参考文献。
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+关 键 词： 
+ 
+航班换乘服务系统    机场   航线    航行时长  系统管理
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+目 录
+ 
+一、课题选择	………………………………………………………………………………….-5 -
+（一）缘由	- ………………………………………………………………………………………5 -
+二、课程设计简介…………………………………………………………………………………5 -
+（一）课程设计目的………………………………………………………………………… ..5-
+（二）课程设计内容 …………………………………………………………………………....5 -
+三、航班换乘服务系统……...……………………………………………………………………...6 -
+（一）关于航班换乘	- …………………………………………………………………………..6–
+（二）程序流程图	-………………………………………………………………………….. 7 -
+（三）数据结构设计	-………………………………………………………………………….. 8 -
+（四）功能模块	- …………………………………………………………………………..........9 -
+（五）具体功能及操作	-……………………………………………………………………. 10 –
+（六）程序的运行	-…………………………………………………………………………. 10 -
+（七）对程序运行结果的总结	………………………………………………………………..33 –
+四、结论	- …………………………………………………………………………………………..33 –
+所设计的C语言程序源代码……………………………………………………………………….34 -
+参考文献	-…………………………………………………………………………………………...60 -
+
+
+
+课题选择
+
+缘由
+
+      本人查阅过许多相关资料后，明白了地点路线等与图联系十分紧密，意识到了图的功能是很强大的，决定做一份图的相关设计，也是对图的实践，
+      在参考了许多图的相关设计后，我决定设计一个航班换乘服务系统，因为从小对飞艇飞机飞船等飞行器很是着迷吧！
+
+
+课程设计简介
+
+课程设计目的
+
+本课程设计旨在提高本人数据结构的水平，加强对数据结构与算法的认识，多将数据结构和算法付诸实践，增强自己的创新能力，以期提高自己的整体编程水平，
+当然，此系统如被应用到实际生活中，亦可对经常乘坐飞机乃至使用各种交通工具的人有所帮助，能够帮用户减少决策时间，提高决策效率。 
+
+
+课程设计内容
+
+ 本航班换乘服务系统具备如下功能：
+（在计算机的承受范围内，用户或管理员可任意输入航班与航线的信息）
+ 1   显示所有机场和航线   将系统中所有的机场和航线信息非常有条理地展示给用户
+
+2   两机场之间的所有航线   将系统中用户所指定的两个机场之间的所有航线展示出来
+
+3   最佳换乘航线查询    用户输入一个起始机场后，以该机场为起点，最节省时间的遍历所有系统中机场的换乘方式将映入眼帘。
+
+
+
+
+4  最佳航程查询     用户输入任意系统中的一个机场，注意虽然有一部分可直达其他，但是很多情况下并不能保证直达，需要换乘，就像我们坐公交车坐地铁似的，
+用户输入完一个机场之后，所有到其他机场的最省时省力省心的换乘方式就井井有条地被罗列而出，
+用户就像查字典似的找到自己理想的目的地机场就能够获得对应的最佳换乘方式。
+
+5  系统管理   顾名思义，就是管理本系统。其下又有诸多功能，这些功能看见名字就知道怎么用了，不多赘述，列于下方。
+
+增加机场
+删除机场
+8  修改机场名称
+9  修改机场安全系数
+10 修改机场叙述
+11 增加航线
+12 删除航线
+13 修改航线名称
+14 修改航线时长
+15 重新初始化
+
+航班换乘服务系统
+
+
+关于航班换乘
+
+   
+  日常生活中，我们换乘公交车、换乘地铁、换乘轮船。我比较在意的还有航班换乘，航班换乘的原因也很简单，从起点机场到目的地机场，并没有直达的航线，
+  这个时候就需要中间站来为我们提供方便了，从起点机场通过若干个中间站进而到达目的地是很明智的。
+
+
+
+
+
+
+程序流程图
+
+
+
+
+
+
+
+
+是不是感觉它很像一架飞机？
+
+
+
+
+
+
+
+
+
+
+
+数据结构设计
+
+为了提高程序的可读性，设计结构体时使用了很多英文译名，让结构体的内容一目了然，当然就算英文水平一般，旁边还添加了很多注释，方便大家阅读
+typedef struct
+{
+    int stack[maxsize];
+    int top;
+}SeqStack;
+
+
+typedef struct arcnode//邻接表结构体
+{
+    char routename[20];/*航线名*/
+    int serialnum;/*下一站机场序号*/
+    int timelength;/*飞行所需时长(分),这里把时间作为权重*/
+    struct arcnode *next;
+}anode;
+
+typedef struct vertexnode
+{
+    int visit;/*访问标志*/
+    int in;/*入度*/
+    int out;/*出度*/
+    char airportname[20];/*机场名称*/
+    char safelevel[10];/*机场安全系数*/
+    char narration[100];/*机场叙述*/
+    anode *head;
+}vnode;
+
+typedef struct
+{
+    vnode vertex[maxsize];
+    int portnum;/*机场数*/
+    int airlinenum;/*航线数*/
+}adjlist;
+
+typedef struct
+{
+    int routes[maxsize][maxsize];
+    int portnum;//机场数
+    char airpotname[maxsize][100];//机场名称
+}adjmartrix;
+功能模块
+
+
+
+总代码较长，将会附于课程设计说明书末尾，为不显赘余，这里将其主要的功能模块展示出来以供读者了解，通过其中的关键字如establish，
+就能迅速在所附代码中找到相关代码。
+
+
+（1）void establish(adjlist *a)//把创建的图写入文件，放到creategraph(adjlist *a)中
+（2）void churudu(adjlist *a)/*计算出度和入度*/
+（3）void creategraph(adjlist *a)/*创建图*/
+（4）void readfile(adjlist *a,FILE *sfp,FILE *rfp)/*读文件*/
+（5）void show(adjlist *a)/*显示所有机场和航线信息，管理界面显示*/
+（6）void add(int s,adjlist *a)/*增加机场和航线*/
+（7）void modify(int s,adjlist *a)/*修改机场信息*/
+（8）void modifyroute(int s,adjlist *a)/*修改航线信息*/
+（9）void del(int s,adjlist *a)/*删除机场和航线*/
+（10）adjmartrix Exchange(adjlist *a)//邻接表转化为带权图邻接矩阵
+（11）void Dijkstra(adjlist *a,adjmartrix *b,int start,int *dist,int (*path)[maxsize])//最短航线算法 （Dijkstra算法）
+（12）void bestvoyage(adjlist *a)//寻找最短航线
+（13）void showall(adjlist *a)/*在用户界面显示所有机场和航线信息*/
+（14）SeqStack *init_SeqStack()//置空栈
+（15）void push(SeqStack *s,int x,int *visit)//入栈
+（16）void pop(SeqStack *s,int *visit)//出栈
+（17）int Adjvex(adjmartrix *b,int v,int w)//辅助深度遍历搜索
+（18）void DFS(adjmartrix *b,int start,int end,int *visit,SeqStack *s,adjlist *a)//深度遍历搜索
+（19）void allroute(adjlist *a)//两机场之间所有航线
+（20）void prim(adjmartrix *b,int start)//prim算法求最佳换乘航线
+（21）void bestroute(adjlist *a)//最佳换乘航线查询
+（22）int key()//管理密码
+（23）void System(adjlist *a)//系统管理
+（24）system("cls");//清屏
+（25）int main()//主函数
+
+
+
+
+
+
+
+
+
+
+
+具体功能及操作
+
+接下来让我们了解一下文章下方所给代码的具体功能，首先要求我们输入一些机场和航线的信息，输入完之后，我们就能够享受到航班换乘服务系统所带来的便利，
+而且可以随时更改机场和航线的信息，也就是说用“生龙活虎”来形容这个系统也不为过，只要计算机的能力允许，它能接受任何复杂的图形，而且图形可以随时更改。
+
+
+
+
+
+
+程序的运行
+
+
+那么接下来，我就进行实际的操作了，为了方便演示，我暂时关闭了程序的清屏功能，以让大家更为直观地了解本系统。所以让我们一起来看看这个程序的运行效果吧！
+ 很精彩，我将程序运行的过程截图置于下方，大家可以试着在稿纸上描绘相应的机场和航线，并模拟我在程序中进行的一些操作，来加以检验本系统所给出方案的合理性
+ ，希望这些能方便大家直观地了解到本系统的奇妙之处！
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+对程序运行结果的总结
+
+
+此系统算是本人对数据结构的小小实践，希望日后能够更多地使用数据结构与一些出色的算法，以丰富编程经验，提高自身的能力。本系统的功能还是比较完整的，
+如果信息足够的话，本系统的确可以被运用于生活实践中。
+当然啦，这个系统是用C语言编写的，这也就意味着可以用其他语言编写类似的航班换乘服务系统乃至于各种交通工具混合换乘系统，而其他语言又能用较短的代码
+实现非常出彩的效果，对于本系统或者更为优秀的类似系统，如其实用性能够经得起考验，本人会考虑用其他编程语言来升级此系统的。
+
+结论
+
+图形数据结构的应用是非常广泛的，不仅仅只是和计算机有关系，其实是可以和日常生活联系起来的。
+就拿此航班换乘服务系统来说，所谓航班换乘，只不过是为本系统起了这样一个名字，目的是吸引用户眼球，实际上，只要掌握了地点路线时长距离等信息，
+用户可以将火车、轮船、公交车等任意交通工具的相关信息输入本系统，从而得到最佳的换乘方案，绝对不会局限于一个航班换乘，使用得当的话
+，即便是步行最佳方案亦能由本系统给出。
+ 数据结构本身并不复杂，但将它巧妙运用的话，便会带给人们非同一般的惊喜，希望大家好好使用数据结构这一堆绝佳的建材，来成就自己独具特色的万里长城！
+
+
+
+所设计的C语言程序源代码
+
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#define infinity 32767
+#define maxsize 50
+
+typedef struct
+{
+    int stack[maxsize];
+    int top;
+}SeqStack;
+
+
+typedef struct arcnode//邻接表结构体
+{
+    char routename[20];/*航线名*/
+    int serialnum;/*下一站机场序号*/
+    int timelength;/*飞行所需时长(分),这里把时间作为权重*/
+    struct arcnode *next;
+}anode;
+
+typedef struct vertexnode
+{
+    int visit;/*访问标志*/
+    int in;/*入度*/
+    int out;/*出度*/
+    char airportname[20];/*机场名称*/
+    char safelevel[10];/*机场安全系数*/
+    char narration[100];/*机场叙述*/
+    anode *head;
+}vnode;
+
+typedef struct
+{
+    vnode vertex[maxsize];
+    int portnum;/*机场数*/
+    int airlinenum;/*航线数*/
+}adjlist;
+
+
+
+typedef struct
+{
+    int routes[maxsize][maxsize];
+    int portnum;//机场数
+    char airpotname[maxsize][100];//机场名称
+}adjmartrix;
+
+
+
+void establish(adjlist *a)//把创建的图写入文件，放到creategraph(adjlist *a)中
+{
+    int i,j;
+    anode *p;
+    
+    FILE *sfp,*rfp;
+    sfp=fopen("air.txt","wt");//创建新机场文件
+    rfp=fopen("route.txt","wt");
+    fprintf(sfp,"%d %d\n",a->portnum,a->airlinenum);/*机场数和航线数写到air中*/
+    for(i=1;i<=a->portnum;i++)
+        fprintf(sfp,"%s %s %s %d %d\n",a->vertex[i].airportname,a->vertex[i].safelevel,a->vertex[i].narration,a->vertex[i].out,a->vertex[i].in);
+    for(i=1;i<=a->portnum;i++)/*航线信息写到route中*/
+    {
+        p=a->vertex[i].head;
+        if(a->vertex[i].out!=0)
+        {
+            fprintf(rfp,"%s %d %d\n",p->routename,p->serialnum,p->timelength);
+            p=p->next;
+        }
+        for(j=1;j<a->vertex[i].out;j++)
+        {
+            fprintf(rfp,"%s %d %d\n",p->routename,p->serialnum,p->timelength);
+            p=p->next;
+        }
+    }
+    fclose(sfp);//关闭文件
+    fclose(rfp);//关闭文件
+}
+
+
+
+
+void churudu(adjlist *a)/*计算出度和入度*/
+{
+    int i,n;
+    anode *p;
+    for(i=1;i<=a->portnum;i++)/*计算出度*///问题
+    {
+        p=a->vertex[i].head;
+        if(p!=NULL)
+        {
+            n=1;
+            p=p->next;
+        }
+        else
+            n=0;
+        while(p!=NULL)
+        {
+            n++;
+            p=p->next;
+        }
+        a->vertex[i].out=n;
+    }
+    for(i=1;i<=a->portnum;i++)
+        a->vertex[i].in=0;/*在调用churudu()之前，原有机场入度变为0*/
+    for(i=1;i<=a->portnum;i++)/*计算入度*/
+    {
+        p=a->vertex[i].head;
+        while(p!=NULL)
+        {
+            a->vertex[p->serialnum].in=a->vertex[p->serialnum].in+1;/*入度自增1*/
+            p=p->next;
+        }
+    }
+}
+
+
+
+
+
+
+void creategraph(adjlist *a)/*创建图*/
+{
+    int i,n,j;
+    int flag=1;
+    anode *p = NULL,*q;
+    while(flag)
+    {
+        printf("请输入机场数，航线数:\n");
+        printf("(默认所输入的第n个机场的序号为n)\n");
+        scanf("%d %d",&a->portnum,&a->airlinenum);
+        if(a->airlinenum > (a->portnum-1)*a->portnum/2||a->airlinenum==0)/*判断输入的机场数和航线数是否能构成一个图*/
+            printf("输入有误，请重新输入:\n");
+        else
+            flag=0;
+    }
+    flag=1;
+    getchar();
+    for(i=1;i<=a->portnum;i++)/*输入机场*/
+    {
+        printf("请输入第%d个机场名称:\n",i);
+        scanf("%s",a->vertex[i].airportname);
+        printf("请输入该机场安全系数:\n");
+        scanf("%s",a->vertex[i].safelevel);
+        printf("请叙述机场:\n");
+        scanf("%s",a->vertex[i].narration);
+        a->vertex[i].head=NULL;/*头结点置空*/
+        a->vertex[i].out=0;/*出度初始为0*/
+    }
+    for(i=1;i<=a->portnum;i++)/*输入下一站机场*/
+    {
+        getchar();
+        printf("请输入剩余的%s的下一站机场个数:\n",a->vertex[i].airportname);
+        scanf("%d",&n);
+        if(n>0)
+        {
+            p=a->vertex[i].head;
+            if(p==NULL)
+            {
+                p=a->vertex[i].head=(anode *)malloc(sizeof(anode));/*第一次要把邻接点和头结点链接*/
+                while(flag)
+                {
+                    printf("请输入第1个下一站机场序号和航行时长:\n");
+                    printf("(默认所输入的第n个机场的序号为n)\n");
+                    scanf("%d %d",&p->serialnum,&p->timelength);
+                    if(p->serialnum==i)
+                        printf("输入有误，请重新输入\n");
+                    else
+                        flag=0;
+                }
+                flag=1;
+                printf("请输入航线名:\n");
+                scanf("%s",p->routename);
+                p->next=NULL;
+            }
+            else
+            {
+                for(;p->next!=NULL;p=p->next)//如果头结点不为空，则p向后移动，防止在邻接表中相互指向时头结点被篡改
+                {;}
+                n=n+1;//因为下面的for只适用于if完成之后的操作，为了适应else完成之后的操作，需要n自增1
+                flag=0;
+            }
+        }
+        for(j=1;j<n;j++)
+        {
+            q=(anode *)malloc(sizeof(anode));
+            q->next=NULL;
+            p->next=q;
+            p=q;
+            if(flag==1)
+                printf("请输入第%d个下一站机场序号和航行时长:\n",j+1);
+            else
+                printf("请输入第%d个下一站机场序号和航行时长:\n",j);
+            scanf("%d %d",&p->serialnum,&p->timelength);
+            printf("请输入航线名:\n");
+            scanf("%s",p->routename);
+        }
+        for(p=a->vertex[i].head;p!=NULL;p=p->next)/*无向图在邻接表中相互指向*/
+        {
+            if(p->serialnum>i)
+            {
+                if(a->vertex[p->serialnum].head==NULL)
+                    q=a->vertex[p->serialnum].head=(anode *)malloc(sizeof(anode));
+                else
+                {
+                    for(q=a->vertex[p->serialnum].head;q->next!=NULL;)
+                        q=q->next;
+                    q->next=(anode *)malloc(sizeof(anode));
+                    q=q->next;
+                }
+                q->next=NULL;
+                q->serialnum=i;
+                strcpy(q->routename,p->routename);
+                q->timelength=p->timelength;
+            }
+        }
+    }
+    churudu(a);
+    establish(a);
+    printf("恭喜您创建完成!\n");
+}
+
+
+
+void readfile(adjlist *a,FILE *sfp,FILE *rfp)/*读文件*/
+{
+    int i,j;
+    anode *p = NULL,*q;
+    fscanf(sfp,"%d %d\n",&a->portnum,&a->airlinenum);/*先读出机场数*/
+    for(i=1;i<=a->portnum;i++)/*读入机场*/
+    {
+        fscanf(sfp,"%s %s %s %d %d\n",a->vertex[i].airportname,a->vertex[i].safelevel,a->vertex[i].narration,&a->vertex[i].in,&a->vertex[i].out);
+        a->vertex[i].head=NULL;/*头结点置空*/
+    }
+    for(i=1;i<=a->portnum;i++)/*读入下一站机场*/
+    {
+        if(a->vertex[i].out!=0)
+        {
+            a->vertex[i].head=p=(anode *)malloc(sizeof(anode));/*第一次先读出头结点信息*/
+            fscanf(rfp,"%s %d %d",p->routename,&p->serialnum,&p->timelength);
+            p->next=NULL;
+        }
+        for(j=1;j<a->vertex[i].out;j++)
+        {
+            q=(anode *)malloc(sizeof(anode));
+            q->next=NULL;
+            p->next=q;
+            p=q;
+            fscanf(rfp,"%s %d %d",p->routename,&p->serialnum,&p->timelength);
+        }
+    }
+    
+}
+
+
+
+
+void show(adjlist *a)/*显示所有机场和航线信息，管理界面显示*/
+{
+    int i;
+    anode *p;
+    printf("序号  机场名称    机场安全系数   机场叙述\n");
+    for(i=1;i<=a->portnum;i++)
+        printf("%d      %s     %s     %s\n",i,a->vertex[i].airportname,a->vertex[i].safelevel,a->vertex[i].narration);
+    if(a->airlinenum==0)
+        printf("没有航线!\n");
+    else
+        printf("航线名称   航行时长(分)   起点序号   终点序号\n");
+    for(i=1;i<=a->portnum;i++)
+    {
+        for(p=a->vertex[i].head;p!=NULL;p=p->next)
+            if(i<p->serialnum)
+                printf("%s    %d     %d    %d\n",p->routename,p->timelength,i,p->serialnum);
+    }
+}
+
+
+
+
+
+
+void add(int s,adjlist *a)/*增加机场和航线*/
+{
+    
+    int n,m,i,j,y,l,flag=1;
+    anode *p = NULL,*q;
+    char name[20];
+    system("cls");
+    show(a);
+    if(s==4)
+    {
+        printf("请输入机场数和航线数:\n");
+        scanf("%d %d",&n,&m);
+        for(i=1;i<=n;i++)
+        {
+            printf("请输入第%d个新机场名称:\n",i);
+            scanf("%s",a->vertex[a->portnum+i].airportname);
+            printf("请输入第%d个新机场安全系数:\n",i);
+            scanf("%s",a->vertex[a->portnum+i].safelevel);
+            printf("请输入第%d个新机场叙述:\n",i);
+            scanf("%s",a->vertex[a->portnum+i].narration);
+            a->vertex[a->portnum+i].out=0;/*出度初始为0*/
+        }
+        for(i=1;i<=n;i++)/*输入新机场的下一站机场*/
+        {
+            getchar();
+            printf("请输入%s的下一站机场个数:\n",a->vertex[a->portnum+i].airportname);
+            scanf("%d",&y);
+            if(y>0)
+            {
+                a->vertex[a->portnum+i].head=p=(anode *)malloc(sizeof(anode));/*第一次要把邻接点和头结点链接*/
+                while(flag)
+                {
+                    printf("请输入第1个下一站机场序号和航行时长:\n");
+                    scanf("%d %d",&p->serialnum,&p->timelength);
+                    if(p->serialnum==a->portnum+i)
+                        printf("输入有误，请重新输入:\n");
+                    else
+                        flag=0;
+                }
+                flag=1;
+                printf("请输入航线名:\n");
+                scanf("%s",p->routename);
+                p->next=NULL;
+            }
+            for(j=1;j<y;j++)
+            {
+                q=(anode *)malloc(sizeof(anode));
+                q->next=NULL;
+                p->next=q;
+                p=q;
+                printf("请输入第%d个下一站机场序号和航行时长(分):\n",j+1);
+                scanf("%d %d",&p->serialnum,&p->timelength);
+                printf("请输入航线名:\n");
+                scanf("%s",p->routename);
+            }
+        }
+        for(i=1;i<=n;i++)/*建立原有机场与新加机场的联系*/
+            for(p=a->vertex[a->portnum+i].head;p!=NULL;p=p->next)
+            {
+                if(a->vertex[p->serialnum].head==NULL)
+                    q=a->vertex[p->serialnum].head=(anode *)malloc(sizeof(anode));
+                else
+                {
+                    for(q=a->vertex[p->serialnum].head;q->next!=NULL;)
+                        q=q->next;
+                    q->next=(anode *)malloc(sizeof(anode));
+                    q=q->next;
+                }
+                q->next=NULL;
+                q->serialnum=a->portnum+i;
+                strcpy(q->routename,p->routename);
+                q->timelength=p->timelength;
+            }
+        a->portnum=a->portnum+n;/*增加机场后的机场数*/
+        a->airlinenum=a->airlinenum+m;/*增加航线后的航线数*/
+    }
+    else
+    {
+        printf("请输入要增加新航线的数量:\n");
+        scanf("%d",&y);
+        a->airlinenum=a->airlinenum+y;
+        for(i=1;i<=y;i++)
+{
+            printf("请输入要增加新航线的起点和终点序号:\n");
+            scanf("%d %d",&m,&n);
+            if(a->vertex[m].head==NULL)/*对m机场端的航线信息*/
+            {
+                q=a->vertex[m].head=(anode *)malloc(sizeof(anode));
+                q->next=NULL;
+            }
+            else
+            {
+                for(q=a->vertex[m].head;q->next!=NULL;)
+                    q=q->next;
+                q->next=(anode *)malloc(sizeof(anode));
+                q=q->next;
+                q->next=NULL;
+            }
+            q->serialnum=n;
+            printf("请输入航线名:\n");
+            scanf("%s",q->routename);
+            strcpy(name,q->routename);/*中间变量*/
+            printf("请输入第%d个新航线的航行时长:\n",i);
+            scanf("%d",&q->timelength);
+            l=q->timelength;
+            if(a->vertex[n].head==NULL)/*对n机场端的航线信息，与m的相对应*/
+            {
+                q=a->vertex[n].head=(anode *)malloc(sizeof(anode));
+                q->next=NULL;
+            }
+            else
+            {
+                for(q=a->vertex[n].head;q->next!=NULL;)
+                    q=q->next;
+                q->next=(anode *)malloc(sizeof(anode));
+                q=q->next;
+                q->next=NULL;
+            }
+            q->serialnum=m;
+            strcpy(q->routename,name);
+            q->timelength=l;
+        }
+    }
+    churudu(a);
+    establish(a);
+    printf("恭喜您增添成功！\n");
+    getchar();
+    printf("按任意键返回上层...");
+    getchar();
+}
+
+
+
+void modify(int s,adjlist *a)/*修改机场信息*/
+{
+    int n,i;
+    FILE *sfp;
+    show(a);
+    printf("请输入要修改的机场的序号:\n");
+    scanf("%d",&n);
+    if(s==1)
+    {
+        printf("请输入机场新名称:\n");
+        scanf("%s",a->vertex[n].airportname);
+    }
+    else if(s==2)
+    {
+        printf("请输入机场新安全系数:\n");
+        scanf("%s",a->vertex[n].safelevel);
+    }
+    else
+    {
+        printf("请输入机场新叙述:\n");
+        scanf("%s",a->vertex[n].narration);
+    }
+    sfp=fopen("air.txt","wt");//创建新机场文件
+    fprintf(sfp,"%d %d\n",a->portnum,a->airlinenum);/*机场数和航线数写到air中*/
+    for(i=1;i<=a->portnum;i++)
+        fprintf(sfp,"%s %s %s %d %d\n",a->vertex[i].airportname,a->vertex[i].safelevel,a->vertex[i].narration,a->vertex[i].out,a->vertex[i].in);
+    fclose(sfp);//关闭文件
+    printf("恭喜您修改成功！\n");
+    getchar();
+    printf("按任意键返回上层...");
+    getchar();
+}
+
+
+
+void modifyroute(int s,adjlist *a)/*修改航线信息*/
+{
+    int m,n,t = 0,i,j;
+    char name[20];
+    anode *p;
+    FILE *rfp;
+    show(a);
+    printf("请输入要修改的起点和终点序号:\n");
+    scanf("%d %d",&m,&n);
+    for(p=a->vertex[m].head;p!=NULL;p=p->next)
+    {
+        if(p->serialnum==n)
+        {
+            if(s==6)
+            {
+                printf("请输入航线新名称:\n");
+                scanf("%s",p->routename);
+                strcpy(name,p->routename);
+            }
+            else
+            {
+                printf("请输入航线新的航行时长:\n");
+                scanf("%d",&p->timelength);
+                t=p->timelength;
+            }
+        }
+    }
+    for(p=a->vertex[n].head;p!=NULL;p=p->next)/*因为要存入文件且这是一个无向图，所以改了m和n也就得改n和m，这才能保证存入文件的信息是一致的,若为有向图则删掉该for*/
+    {
+        if(p->serialnum==m)
+        {
+            if(s==6)
+                strcpy(p->routename,name);
+            else
+                p->timelength=t;
+        }
+    }
+    rfp=fopen("route.txt","wt");
+    for(i=1;i<=a->portnum;i++)/*航线信息写到route中*/
+    {
+        p=a->vertex[i].head;
+        if(a->vertex[i].out>0)
+        {
+            
+            fprintf(rfp,"%s %d %d\n",p->routename,p->serialnum,p->timelength);
+            p=p->next;
+        }
+        for(j=1;j<a->vertex[i].out;j++)
+        {
+            fprintf(rfp,"%s %d %d\n",p->routename,p->serialnum,p->timelength);
+            p=p->next;
+        }
+    }
+    fclose(rfp);//关闭文件
+    printf("恭喜您修改成功！\n");
+    getchar();
+    printf("按任意键返回上层...");
+    getchar();
+}
+
+
+
+void del(int s,adjlist *a)/*删除机场和航线*/
+{
+    anode *p,*q;
+    int n,m,i;
+    show(a);
+    if(s==5)
+    {
+        printf("请输入要删除的机场序号:\n");
+        scanf("%d",&n);
+        for(i=1;i<=a->portnum;)
+        {
+            if(i==n||a->vertex[i].head==NULL)
+                i++;
+            else
+            {
+                if(a->vertex[i].head->serialnum==n)/*先判断头结点是否需要删除*/
+                {
+                    q=a->vertex[i].head->next;
+                    free(a->vertex[i].head);
+                    a->airlinenum=a->airlinenum-1;
+                    a->vertex[i].head=q;
+                }
+                else
+                    for(p=a->vertex[i].head;p->next!=NULL;p=p->next)
+                    {
+                        q=p->next;
+                        if(q->serialnum==n)
+                        {
+                            p->next=q->next;
+                            free(q);
+                            a->airlinenum=a->airlinenum-1;/*与机场相关的航线少了一条，总航线数当然要减1*/
+                            break;
+                        }
+                    }
+                i++;
+            }
+        }
+        for(i=n;i<a->portnum;i++)/*删除机场后把该机场后的元素依次向前移动*/
+            a->vertex[i]=a->vertex[i+1];
+        a->portnum=a->portnum-1;/*总机场数减1*/
+        for(i=1;i<=a->portnum;i++)
+            for(p=a->vertex[i].head;p!=NULL;p=p->next)/*元素依次向前移动之后，原先存储的序号也要保持一致*/
+                if(p->serialnum>n)
+                    p->serialnum--;
+    }
+    else
+    {
+        printf("请输入要删除航线的起点和终点序号:\n");
+        scanf("%d %d",&m,&n);
+        if(a->vertex[m].head->serialnum==n)/*以m为起点的删除航线*/
+        {
+            q=a->vertex[m].head->next;
+            free(a->vertex[m].head);
+            a->airlinenum=a->airlinenum-1;/*与机场相关航线少了一条，总航线数当然要减1*/
+            a->vertex[m].head=q;
+        }
+        else
+            for(p=a->vertex[m].head;p->next!=NULL;p=p->next)
+            {
+                q=p->next;
+                if(q->serialnum==n)
+                {
+                    p->next=q->next;
+                    free(q);
+                    a->airlinenum=a->airlinenum-1;/*与机场相关航线少了一条，总航线数当然要减1*/
+                    break;
+                }
+            }
+        if(a->vertex[n].head->serialnum==m)/*以m为起点的删除航线*/
+        {
+            q=a->vertex[n].head->next;
+            free(a->vertex[n].head);
+            a->vertex[n].head=q;
+        }
+        else
+            for(p=a->vertex[n].head;p->next!=NULL;p=p->next)
+            {
+                q=p->next;
+                if(q->serialnum==m)
+                {
+                    p->next=q->next;
+                    free(q);
+                    break;
+                }
+            }
+    }
+    churudu(a);
+    establish(a);
+    printf("恭喜您删除成功！\n");
+    getchar();
+    printf("按任意键返回上层...");
+    getchar();
+}
+adjmartrix Exchange(adjlist *a)//邻接表转化为带权图邻接矩阵
+{
+    adjmartrix b;
+    anode *p;
+    int i,j;
+    b.portnum=a->portnum;
+    for(i=1;i<=a->portnum;i++)
+    {
+        strcpy(b.airpotname[i],a->vertex[i].airportname);
+        for(j=1;j<=a->portnum;j++)
+            b.routes[i][j]=infinity;//初始化为极大值
+    }
+    for(i=1;i<=a->portnum;i++)
+        for(p=a->vertex[i].head;p!=NULL;p=p->next)
+        {
+            if(p==a->vertex[i].head)
+                b.routes[i][p->serialnum]=p->timelength;
+            else
+                b.routes[i][p->serialnum]=p->timelength;
+        }
+    return b;
+}
+
+
+
+void Dijkstra(adjlist *a,adjmartrix *b,int start,int *dist,int (*path)[maxsize])//最短航线算法
+{
+    int mindist,i,j,k = 0,t=1;
+    for(i=1;i<=a->portnum;i++)
+    {
+        dist[i]=b->routes[start][i];
+        if(b->routes[start][i]!=infinity)
+            path[i][1]=start;
+    }
+    path[start][0]=1;
+    for(i=2;i<=a->portnum;i++)
+    {
+        mindist=infinity;
+        for(j=1;j<=a->portnum;j++)
+        {
+            if(!path[j][0]&&dist[j]<mindist)
+            {
+                k=j;
+                mindist=dist[j];
+            }
+        }
+        if(mindist==infinity) return;
+        path[k][0]=1;
+        for(j=1;j<=a->portnum;j++)
+        {
+            if(!path[j][0]&&b->routes[k][j]<infinity&&dist[k]+b->routes[k][j]<dist[j])
+            {
+                dist[j]=dist[k]+b->routes[k][j];
+                t=1;
+                while(path[k][t]!=0)
+                {
+                    path[j][t]=path[k][t];
+                    t++;
+                }
+                path[j][t]=k;
+                path[j][t+1]=0;
+            }
+        }
+    }
+}
+
+
+
+void bestvoyage(adjlist *a)//寻找最短航线
+{
+    
+    int i,start = 0,j,flag=1;
+    char name[20];
+    int dist[maxsize];
+    int path[maxsize][maxsize];
+    adjmartrix b=Exchange(a);//把邻接表a转化为邻接矩阵b
+    for(i=1;i<maxsize;i++)
+    {
+        dist[i]=infinity;
+        for(j=0;j<maxsize;j++)
+            path[i][j]=0;
+    }
+    printf("请输入起点名称:\n");
+    scanf("%s",name);
+    for(i=1;i<=a->portnum;i++)
+    {
+        if(strcmp(b.airpotname[i],name)==0)
+        {start=i;
+            flag=1;
+            break;
+        }
+        flag=0;
+    }
+    if(flag==0)
+    {
+        printf("此机场不存在!");
+        getchar();
+        printf("按任意键返回上层...");
+        getchar();
+        return;
+    }
+    Dijkstra(a,&b,start,dist,path);
+    printf("%s到其它机场的最短行程航线为:\n",a->vertex[start].airportname);
+    for(i=1;i<=a->portnum;i++)
+    {
+        if(i!=start)
+        {
+            printf("%s",a->vertex[start].airportname);//显示最短航线
+            for(j=2;j<a->portnum;j++)
+            {
+                if(path[i][j]!=0)
+                    printf("---->%s",a->vertex[path[i][j]].airportname);
+                else
+                    printf("---->%s",a->vertex[i].airportname);
+                if(path[i][j]==0)
+                    break;
+            }
+        }
+        if(i!=start)
+            printf("\n");
+    }
+    getchar();
+    printf("按任意键返回上层...");
+    getchar();
+}
+
+
+
+void showall(adjlist *a)/*显示所有机场和航线信息，用户界面显示*/
+{
+    int i;
+    anode *p;
+    printf("机场名称              机场安全系数     机场叙述\n");
+    for(i=1;i<=a->portnum;i++)
+        printf("%-17s     %-8s     %s\n",a->vertex[i].airportname,a->vertex[i].safelevel,a->vertex[i].narration);
+    printf("----------------------------------------------\n");
+    printf("航线名称       航行时长(分)          起点              终点\n");
+    for(i=1;i<=a->portnum;i++)
+    {
+        for(p=a->vertex[i].head;p!=NULL;p=p->next)
+            if(i<p->serialnum)
+                printf("%-11s    %-10d     %-16s    %s\n",p->routename,p->timelength,a->vertex[i].airportname,a->vertex[p->serialnum].airportname);
+    }
+    getchar();
+    printf("按任意键返回上层...");
+    getchar();
+}
+SeqStack *init_SeqStack()//置空栈
+{
+    SeqStack *s;
+    s=(SeqStack *)malloc(sizeof(SeqStack));
+    s->top=0;
+    return s;
+}
+
+
+
+void push(SeqStack *s,int x,int *visit)//入栈
+{
+    s->top++;
+    s->stack[s->top]=x;
+    visit[x]=1;
+}
+
+
+
+void pop(SeqStack *s,int *visit)
+{
+    visit[s->stack[s->top]]=0;
+    s->top--;
+}
+
+
+
+int Adjvex(adjmartrix *b,int v,int w)
+{
+    int i;
+    for(i=1+w;i<=b->portnum;i++)
+    {
+        if(b->routes[v][i]!=infinity)
+        {
+            w=i;
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+
+void DFS(adjmartrix *b,int start,int end,int *visit,SeqStack *s,adjlist *a)//深度遍历搜索
+{
+    int w=0,i;
+    push(s,start,visit);//start入栈
+    if(start==end)
+    {   printf("%s",a->vertex[s->stack[1]].airportname);
+        for(i=2;i<=s->top;i++)//输出栈内的元
+            printf("--->%s",a->vertex[s->stack[i]].airportname);
+        printf("\n");
+        pop(s,visit);//退栈
+        return;
+    }
+    w=Adjvex(b,start,0);
+    while(w!=-1)
+    {
+        
+        if(!visit[w])
+        {
+            DFS(b,w,end,visit,s,a);
+            
+        }
+        w=Adjvex(b,start,w);
+    }
+    pop(s,visit);
+}
+
+
+void allroute(adjlist *a)//两机场之间所有航线
+{
+    int i,end = 0,start = 0,visit[maxsize],flag=1;
+    char t[20],d[20];
+    SeqStack *s=init_SeqStack();
+    adjmartrix b=Exchange(a);//邻接表转化成矩阵
+    for(i=1;i<=a->portnum;i++)
+        visit[i]=0;
+    printf("请输入起点名称和终点名称(空格隔开):\n");
+    scanf("%s %s",t,d);
+    for(i=1;i<=a->portnum;i++)
+    {
+        if(strcmp(t,a->vertex[i].airportname)==0)
+        {
+            start=i;
+            flag=1;
+            break;
+        }
+        flag=0;
+    }
+    if(flag==0)
+    {
+        printf("此起点不存在!");
+        getchar();
+        printf("按任意键返回上层...");
+        getchar();
+        return;
+    }
+    for(i=1;i<=a->portnum;i++)
+    {
+        if(strcmp(d,a->vertex[i].airportname)==0)
+        {
+            end=i;
+            flag=1;
+            break;
+        }
+        flag=0;
+    }
+    if(flag==0)
+    {
+        printf("此终点不存在!");
+        getchar();
+        printf("按任意键返回上层...");
+        getchar();
+        return;
+    }
+    printf("%s到%s的所有航线为:\n",a->vertex[start].airportname,a->vertex[end].airportname);
+    DFS(&b,start,end,visit,s,a);
+    getchar();
+    printf("按任意键返回上层...");
+    getchar();
+}
+
+void prim(adjmartrix *b,int start)//prim算法求最佳换乘航线
+{
+    struct
+    {
+        int adjvex;
+        int lowcost;
+    }closedge[maxsize];
+    int i,e,s,m = 0,min;
+    closedge[start].lowcost=0;
+    for(i=1;i<=b->portnum;i++)
+        if(i!=start)
+        {
+            closedge[i].adjvex=start;
+            closedge[i].lowcost=b->routes[start][i];
+        }
+    for(e=1;e<=b->portnum-1;e++)
+    {
+        min=infinity;
+        for(s=1;s<=b->portnum;s++)
+        {
+            if(closedge[s].lowcost!=0&&closedge[s].lowcost<min)
+            {
+                m=s;
+                min=closedge[s].lowcost;
+            }
+            
+        }
+        printf("%s--->%s   航线航行时长为%d\n",b->airpotname[closedge[m].adjvex],b->airpotname[m],closedge[m].lowcost);
+        closedge[m].lowcost=0;
+        for(i=1;i<=b->portnum;i++)
+            if(i!=m&&b->routes[m][i]<closedge[i].lowcost)
+            {
+                closedge[i].lowcost=b->routes[m][i];
+                closedge[i].adjvex=m;
+            }
+    }
+}
+
+
+
+
+
+
+
+void bestroute(adjlist *a)
+{
+    int i,start = 0,flag=1;
+    char t[20];
+    adjmartrix b=Exchange(a);//邻接表转化成矩阵
+    printf("请输入起点名称:\n");
+    scanf("%s",t);
+    for(i=1;i<=a->portnum;i++)
+    {
+        if(strcmp(t,a->vertex[i].airportname)==0)
+        {
+            start=i;
+            flag=1;
+            break;
+        }
+        flag=0;
+    }
+    if(flag==0)
+    {
+        printf("此机场不存在!");
+        getchar();
+        printf("按任意键返回上层...");
+        getchar();
+        return;
+    }
+    prim(&b,start);
+    getchar();
+    printf("按任意键返回上层...");
+    getchar();
+}
+
+
+
+
+
+
+
+
+int key()//管理密码
+{
+    char key[20],m[20];
+    FILE *s;
+    s=fopen("key.txt","r");
+    if(s==NULL)
+    {   s=fopen("key.txt","wt");
+        printf("请创建管理密码:\n");
+        scanf("%s",key);
+        fprintf(s,"%s",key);
+        fclose(s);
+        printf("恭喜您创建成功!\n");
+        getchar();
+        printf("按任意键继续...");
+        getchar();
+        return 1;
+    }
+    else
+    {  fscanf(s,"%s",m);
+        fclose(s);
+        printf("请输入管理密码:\n");
+        scanf("%s",key);
+        if(strcmp(m,key)==0)
+        {
+            printf("密码正确!\n");
+            getchar();
+            printf("按任意键继续...");
+            getchar();
+            return 1;
+        }
+        else
+        {
+            printf("密码错误!\n");
+            getchar();
+            printf("按任意键继续...");
+            getchar();
+            return 0;
+        }
+    }
+    
+}
+
+
+
+
+
+
+void System(adjlist *a)
+{
+    int s,flag=1;
+    system("cls");
+    flag=key();
+    if(flag==1)
+        do
+        {
+            system("cls");
+            printf("******************************************\n");
+            printf("*            1.修改机场名称              *\n");
+            printf("*            2.修改机场安全系数          *\n");
+            printf("*            3.修改机场叙述              *\n");
+            printf("*            4.增加机场                  *\n");
+            printf("*            5.删除机场                  *\n");
+            printf("*            6.修改航线名称              *\n");
+            printf("*            7.修改航行时长              *\n");
+            printf("*            8.增加航线                  *\n");
+            printf("*            9.删除航线                  *\n");
+            printf("*            10.重新初始化(请慎重!)      *\n");
+            printf("*            0.返回                      *\n");
+            printf("******************************************\n");
+            printf("请选择:");
+            scanf("%d",&s);
+            system("cls");
+            switch(s)
+            {
+                case 1:modify(s,a);break;/*修改机场名称*/
+                case 2:modify(s,a);break;/*修改机场安全系数*/
+                case 3:modify(s,a);break;/*修改机场叙述*/
+                case 4:add(s,a);break;/*增加机场*/
+                case 5:del(s,a);break;/*删除机场*/
+                case 6:modifyroute(s,a);break;/*修改航线名称*/
+                case 7:modifyroute(s,a);break;/*修改航行时长*/
+                case 8:add(s,a);break;/*增加航线*/
+                case 9:del(s,a);break;/*删除航线*/
+                case 10:creategraph(a);break;/*重新初始化(慎重)*/
+            }
+        }while(s!=0);
+}
+int main()
+{
+    int q;
+    adjlist a;
+    FILE *sfp,*rfp;
+    sfp=fopen("air.txt","r");
+    rfp=fopen("route.txt","r");
+    if(sfp==NULL)
+        creategraph(&a);
+    else
+        readfile(&a,sfp,rfp);
+    do
+    {
+        system("cls");
+        printf("\n\n\n\n\n");
+        printf("**********************************************\n");
+        printf("*           欢迎使用航班换乘服务系统         *\n");
+        printf("*                                            *\n");
+        printf("*           1.显示所有机场和航线             *\n");
+        printf("*                                            *\n");
+        printf("*           2.两机场之间所有航线             *\n");
+        printf("*                                            *\n");
+        printf("*           3.最佳换乘航线查询               *\n");
+        printf("*                                            *\n");
+        printf("*           4.最佳航程查询                   *\n");
+        printf("*                                            *\n");
+        printf("*           5.系统管理                       *\n");
+        printf("*                                            *\n");
+        printf("*           0.退出系统                       *\n");
+        printf("*                                            *\n");
+        printf("**********************************************\n");
+        printf("                请选择:");
+        scanf("%d",&q);
+        system("cls");
+        switch(q)
+        {
+            case 1: showall(&a);break;
+            case 2: allroute(&a);break;
+            case 3: bestroute(&a);break;
+            case 4: bestvoyage(&a);break;
+            case 5: System(&a);break;
+        }
+    }while(q!=0);
+}
+参考文献
+
+1.刘畅，姚学峰. 数据结构（C语言版）【M】.上海：上海交通大学出版社，2016
+2.百度百科
+3.百度文库
+4.百度学术
+5.搜狗百科
+6.CSDN博客

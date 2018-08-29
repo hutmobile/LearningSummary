@@ -1,0 +1,166 @@
+//  Created by adong666666 on 2018/8/18. Copyright © 2018年 adong666666. All rights reserved.
+import Foundation
+import Alamofire
+
+enum MethodType {
+    case get
+    case post
+}
+
+class Networktools{
+    class func requestData(URLString: String, type: MethodType, parameters: [String: Any]? = nil, 
+    finishedCallback: @escaping (_ result: Any)->()) {
+        let method = type == .get ? HTTPMethod.get : HTTPMethod.post
+        
+        Alamofire.request(home_url, method: method, parameters: parameters).responseJSON( completionHandler: {(response) in
+            guard let result = response.result.value else{
+                print(response.result.error ?? 0)
+                return
+            }
+            finishedCallback(result)
+        })
+        
+    }
+}
+
+注意到逃逸闭包（_ result: Any）->()整个是一个参数，由于在 Alamofire.request(home_url, method: method,
+parameters: parameters).responseJSON这个请求中进行调用，而不是在requestData 中直接调用，故此处不能使用普通闭包，
+而要加关键字@escaping  使其成为一个逃逸闭包，可以在其他函数或方法或请求中进行调用，注意到 requestData中所设置的参数都有被使用到
+
+URLString: String, type: MethodType, parameters: [String: Any]? = nil, 
+    finishedCallback: @escaping (_ result: Any)->()
+    
+    可以细细地体会
+    
+    
+    
+{(response) in
+            guard let result = response.result.value else{
+                print(response.result.error ?? 0)
+                return
+            }
+            finishedCallback(result)
+        }
+        
+        
+这一整个就是个闭包， in  相当于 ->   
+
+response 是闭包的参数， 相当于(_ result: Any)，  所以response有一个属性: response.result,
+
+finishedCallback(result)是一个回调函数，
+
+ guard let result = response.result.value else{
+                print(response.result.error ?? 0)
+                return
+            }
+            finishedCallback(result)
+这个就相当于一个（），即void ,无返回值，如果里面有参数，那么我们还需要return所需要的返回值
+
+completionHandeler 是可以省略的， 还可以写成下面这个样子
+
+class Networktools{
+    class func requestData(URLString: String, type: MethodType, parameters: [String: Any]? = nil, 
+    finishedCallback: @escaping (_ result: Any)->()) {
+        let method = type == .get ? HTTPMethod.get : HTTPMethod.post
+        
+        Alamofire.request(home_url, method: method, parameters: parameters).responseJSON {(response) in
+            guard let result = response.result.value else{
+                print(response.result.error ?? 0)
+                return
+            }
+            finishedCallback(result)
+        }
+        
+    }
+}
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 而后在需要的地方就能够调用此类方法了，注意到他是个class func ,以便在其他类里也能方便调用
+ 
+ 
+ 
+ extension shouyeViewController{
+    fileprivate func loadData(){
+        Networktools.requestData(URLString: home_url, type: .get){ (result : Any) in
+            print(result)
+        }
+    }
+}
+
+比如在shouyeViewController中写一个函数，用extension的话要用文件私有，即在当前文件中才能访问 ，fileprivate 
+
+
+
+另外 open 是可以跨项目访问的 ，类似于public ,当然public在swift 4 中不常用了，一般是在扩展的时候用，如
+public extension Double{
+}
+如 UIColor,UILabel,UIView......,别以为人家是生来就有， 人家也只是一个类 open class UIColor{}而已，所以我们能调用相应框架内的类和函数，
+这个就是UIKit中的诸多类之一啦
+咱们只是天生要强
+
+
+而 private 是绝对私有，只能在当前类中使用，extension 中都不能调用，想要调用就只能fileprivate
+
+再者就是internal ,这个是默认的哈，我们都用了这么多遍了，却不一定注意到它，它是可以省略的,在项目内私有
+    
+最后使用调用loadData()这个函数，就能请求到数据了，记得给home_url 赋值 “”,一个字符串链接，https://.....
+
+
+
+注意了，由于http请求不是很安全，iOS默认关闭了http请求，所以如果要用http请求，你需要在info plist中添加个App Transport Security Settings
+简称atp设置，开发人员基本上人尽皆知，在其中再添加个Allow Arbitrary Loads 将默认的bool值从NO改为YES
+
+
+对了，但是如果你又加个Allow Arbitrary Loads in Web Content ,并且设置为YES，http请求会失败的哦，苹果就是这么会折腾，如果非要用两个的话
+
+可以考虑弄个HTTP证书试试，毕竟也折腾了这么久了
+
+
+
+
+对了，加点东西哈
+
+   我常用这个来规范代码，而实际上它也是个闭包
+    var btn: PowerButton = {
+        let bt1 = PowerButton(type: UIButtonType.roundedRect)
+        bt1.frame = CGRect(x: 0.fitScreen, y: 35.fitHeight, width: 20.fitScreen, height: 35.fitHeight)
+        bt1.setBackgroundImage(UIImage(named: "返回"), for: UIControlState())
+        bt1.setTitle(" ", for: UIControlState())
+        bt1.setTitleColor(UIColor.white, for: UIControlState())
+        bt1.addTarget(self, action: #selector(histroicalViewController.buttonTap(_:)), for: UIControlEvents.touchUpInside)
+        return bt1
+    }()
+   
+   
+    等价于 
+    
+    var btn: PowerButton = {() in
+        let bt1 = PowerButton(type: UIButtonType.roundedRect)
+        bt1.frame = CGRect(x: 0.fitScreen, y: 35.fitHeight, width: 20.fitScreen, height: 35.fitHeight)
+        bt1.setBackgroundImage(UIImage(named: "返回"), for: UIControlState())
+        bt1.setTitle(" ", for: UIControlState())
+        bt1.setTitleColor(UIColor.white, for: UIControlState())
+        bt1.addTarget(self, action: #selector(histroicalViewController.buttonTap(_:)), for: UIControlEvents.touchUpInside)
+        return bt1
+    }(
+    
+    
+    
+    （）in ()    等价于  ()->()
+    
+     因为()in， () 中没有参数，故可省略， 必须连着in省略
+     
+     所以要有意识，上述的东西实质上是一个闭包
+
+
+
+
+
+
+
+

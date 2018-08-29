@@ -1,0 +1,45 @@
+在使用RecyclerView时一般要在app/build.gradle中加入这么一段语句
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    compile 'com.android.support:recyclerview-v7:27.1.1'
+}
+这样才能使用RecyclerView;
+我在Android Studio 3.1.2使用时出现这么一个报错
+
+Configuration 'compile' is obsolete and has been replaced with 'implementation' and 'api'.
+It will be removed at the end of 2018. For more information see: http://d.android.com/r/tools/update-dependency-configurations.html
+
+有道翻译后：配置“编译”已经过时，已经被“实现”和“api”取代。
+它将在2018年底被移除。有关更多信息，请参见:http://d.android.com/r/tools/update-dependconfigurations.html。
+
+这已经不能用complie 来使用这个功能了，
+
+于是我尝试将这个语句改为implementation 'com.android.support:recyclerview-v7:27.1.1'
+
+仍是出现了同样的报错
+
+打开SDK Manager发现了这么一个问题Android SDK tool的版本为26.1.1
+而Android SDK Platfrom-Tools的版本为27.0.1
+
+发现这个问题后我把Android Plafroms的Android 8.1(API Level 27)卸载后
+
+新开一个项目的
+
+bulid.gradle的dependecies的内容如下
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+后加入 implementation 'com.android.support:recyclerview-v7:26.1.0'这段语句能正常使用RecyclerView
+

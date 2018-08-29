@@ -1,0 +1,57 @@
+在登陆界面中一般密码都会有是否显示密码这个功能来确认自己的密码是否输入正确
+在我写登陆页面是用的是CheckBox来实现
+可以在activity_main.xml
+加入如下代码来在布局中实施这个功能 
+
+<EditText
+            android:id="@+id/user_Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_ID"
+            android:hint="请输入密码"
+            android:maxLines="1"
+            android:textColorHint="@drawable/black" />
+        <CheckBox
+            android:id="@+id/is_showpassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_Password"
+            android:layout_marginLeft="200dp"
+            android:textColor="@color/black"
+            android:text="显示密码" />
+            
+由此我们可以在布局中显示CheckBox和EditText
+这些了布局还不能实现这个功能还要在MainActivity中加入如下代码来实现显示或者隐藏代码的功能;
+
+
+    private EditText userPassword;
+
+    private CheckBox checkBox;
+    
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        userPassword = (EditText) findViewById(R.id.user_Password);
+        checkBox = (CheckBox) findViewById(R.id.is_showpassword);
+        userPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());//默认为隐藏密码
+         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //如果选中，显示密码
+                    userPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    //否则隐藏密码
+                    userPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                }
+            }
+        });
+     }   
+      
+当然Check也可以由此来让用户选择是否记住密码和自动登陆等功能；
+
+        
+
+
+            
