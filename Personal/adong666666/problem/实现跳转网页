@@ -1,5 +1,0 @@
- //实现跳转网页   
-     
-     let website = "http://www.huthelper.cn"
-     let url = URL(string:website)
-     UIApplication.shared.open(url!, options: [:], completionHandler: nil)
