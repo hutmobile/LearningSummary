@@ -1,0 +1,40 @@
+cv t
+cv g
+cv p
+cvs m
+f8
+s f8
+a l/r
+cvs tab
+cv f
+cv h
+f3
+s f3
+a en
+cvs n
+cv k f
+cv 1/2/3
+cv n/o/s
+cv k s
+cv k w
+cvs t
+f11
+cv b
+cvs v
+cv f2 //all
+cv c v
+cvs e/f/g/d/u
+sa up/down
+cv en
+cv en
+cvs en
+cv /
+cv u
+sh f12
+cv k cv x
+cv k m
+cv | // not l
+cv `
+sha a
+a up/down
+cv ~
