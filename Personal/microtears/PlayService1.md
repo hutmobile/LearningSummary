@@ -1,14 +1,17 @@
-MusicPlayService#Exoplayer
-===
-利用Exoplayer和MediaBrowserService实现的音乐播放服务(一)
----
+# MusicPlayService#Exoplayer
+
+## 利用Exoplayer和MediaBrowserService实现的音乐播放服务(一)
+
 ### Todo
+
 - [ ] 获取音频焦点
 - [ ] 列表加载
 - [ ] 优化加载策略
+
 ### Sources
 
-#### MediaControl Callback 
+#### MediaControl Callback
+
 ```kotlin
  inner class SessionCallback : MediaSessionCompat.Callback() {
 
@@ -67,6 +70,7 @@ MusicPlayService#Exoplayer
 ```
 
 #### Service complete source code
+
 ```kotlin
 package com.messy.lingplayer.service
 
@@ -455,4 +459,3 @@ class PlayService : MediaBrowserServiceCompat() {
 
 }
 ```
-

@@ -1,17 +1,21 @@
-MusicPlayService#Exoplayer
-===
-利用Exoplayer和MediaBrowserService实现的音乐播放服务(三)
----
-在Fragment中控制媒体播放
----
+# MusicPlayService#Exoplayer
+
+## 利用Exoplayer和MediaBrowserService实现的音乐播放服务(三)
+
+## 在Fragment中控制媒体播放
+
 关于如何在activity和fragment中共享资源查看另一篇文章《在Activity和多个Fragment之间共享资源》
 
 ### Todo
+
 - [ ] 获取音频焦点
 - [ ] 列表加载
 - [ ] 优化加载策略
-###Sources
-####Fragment complete source code
+
+### Sources
+
+#### Fragment complete source code
+
 ```kotlin
 package com.messy.lingplayer.playlist
 

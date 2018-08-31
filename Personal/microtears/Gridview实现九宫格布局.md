@@ -1,6 +1,8 @@
 Gridview实现九宫格布局
 ===
+
 由于GridView只支持指定列数和列宽，所以想要实现宽高一致的九宫格布局就需要在代码中动态修改view的宽度,假如GridView中ItemView布局如下：
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,7 +20,9 @@ Gridview实现九宫格布局
 
 </RelativeLayout>
 ```
+
 GridView布局文件如下：
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -51,7 +55,9 @@ GridView布局文件如下：
 
 </android.support.constraint.ConstraintLayout>
 ```
+
 由于列数固定，列宽固定，所以我们可以确定GridView的宽度：
+
 ```kotlin
 //获取内边距
 val margin = plane.layoutParams as ViewGroup.MarginLayoutParams
@@ -62,16 +68,21 @@ val param = plane.layoutParams
 //指定GridView宽度
 param.width = dis - bad
 ```
+
 然后根据ItemView指定GridView的高度
+
 ```kotlin
 //由于ItemView只有一个简单的ImageView，所以此时的宽度之比即为GridView与Image的宽度之比
 val b = param.width.toDouble() / bitmap.width
 //根据刚才得到的壁纸重新指定GridView高度，这样就不会在显示的时候留有空隙
 param.height = (bitmap.height * b + 0.5).toInt() //b== param.height / bitmap.height
 ```
+
 接下来还需要在GridViewAdapter中做进一步修改，重新设定ItemView的宽高
 GridViewAdapter中getView方法中实现重新设定：
+
 ```kotlin
+
 override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
     var image = this.arr[position].bitmap
     var inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -90,6 +101,9 @@ override fun getView(position: Int, convertView: View?, parent: ViewGroup?): Vie
     return itemView
 }
 ```
-最终效果图如下：<br>
-![](https://s1.ax1x.com/2018/05/12/CBRSRs.png)
-![](https://s1.ax1x.com/2018/05/12/CB2zGj.png)
+
+最终效果图如下：
+
+![a](https://s1.ax1x.com/2018/05/12/CBRSRs.png)
+
+![b](https://s1.ax1x.com/2018/05/12/CB2zGj.png)
