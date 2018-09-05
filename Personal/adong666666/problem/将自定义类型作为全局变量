@@ -1,0 +1,29 @@
+将其父类公有化，并将父类重写的方法公有化，最后就可以将自定义类型作为全局变量了
+
+public class bbbase_info: NSObject{
+    @objc var base_img: String = ""
+    @objc var base_no: String = ""
+    @objc var base_price: String = ""
+    @objc var distance: Double = 0.0
+    @objc var collect: String = ""
+    @objc var max_in_people: String = ""
+    @objc var popular_value: String = ""
+    @objc var base_name: String = ""
+    @objc var well_value: String = ""
+    @objc var hot_value: String = ""
+    @objc var base_tag: [String] = [String]()
+    
+    init(dict:[String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    
+    override public func setValue(_ value: Any?, forUndefinedKey key: String) {}
+}
+
+
+
+
+
+
+public var InstanceInfoArray = [bbbase_info]()
