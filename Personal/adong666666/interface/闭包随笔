@@ -172,7 +172,7 @@ public extension Double{
 reversedNames = names.sorted(by: >)
 
 里面的> 的确让人摸不着头脑，而实际上竟然是因为编译器非常强大，可谓是编译器界的工藤新一，
-它能推断出程序员所想要飙到的意识，所以这样写就可以运行了，但实质上
+它能推断出程序员所想要表达的意思，所以这样写就可以运行了，但实质上
 
 reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
     return s1 > s2
