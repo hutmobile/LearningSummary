@@ -89,7 +89,7 @@ PIC_TYPES = {
 '手机 电脑':PHONE_COM,
 '建筑': BUILDING,
 '人脸': PEOPLE,
-'风景': SCENERY
+'风景': SCENERY,
 '花': FLOWER,
 '汽车图片': CAR,
 '合影': GROUPPHOTO,
@@ -100,11 +100,11 @@ PIC_TYPES = {
 '动物': ANIMAL,
 '小物品': THINGS,
 '文本 文字': TEXT,
-'自拍': SELF_SNAPSHOT
+'自拍': SELF_SNAPSHOT,
 '表情包': Emoticon,
 '卡通': Cartoon,
 '夜景': Night_Scene,
-'食物': FOOD
+'食物': FOOD,
 '办公室': Office
 }
 
