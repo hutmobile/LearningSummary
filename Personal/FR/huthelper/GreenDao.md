@@ -60,3 +60,9 @@ public class dayStep {
 4.@NotNull 非空</br>
 5.@Transient 标识这个字段是自定义的不会创建到数据表里</br>
 
+关系注解
+---
+
+@ToOne 是将自己的一个属性与另一个表建立关联</br>
+@ToMany 的属性referencedJoinProperty，类似于外键约束</br>
+@JoinProperty 对于更复杂的关系，可以使用这个注解标明属性的源属性
