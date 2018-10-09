@@ -54,3 +54,9 @@ public class dayStep {
 }
 
 ```
+1.@Entity 用于标识这是一个需要GreenDao帮我们生成代码的bean</br>
+2.@Id 标明主键，括号里可以指定是否自增</br>
+3.@Property 用于设置属性在数据库中的列名（默认不写就是保持一致）</br>
+4.@NotNull 非空</br>
+5.@Transient 标识这个字段是自定义的不会创建到数据表里</br>
+
