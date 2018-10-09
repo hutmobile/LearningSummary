@@ -14,7 +14,7 @@ implementation 'org.greenrobot:greendao:3.2.2'
         }
 
         /**
-         * 数据库
+         * 对greendao的generator生成文件进行配置
          */
         greendao {
             schemaVersion 1//数据库版本号
@@ -38,4 +38,19 @@ allprojects {
 
 //数据库升级数据迁移
 implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.1'
+```
+
+创建实体类，生成dao文件
+```
+@Entity
+public class dayStep {
+    @Id
+    private long id;
+    private String date;
+    private int step;
+    private Long sportId;
+    @ToOne(joinProperty = " sportId")
+    private SportInfo sportInfo;//关系表
+}
+
 ```
