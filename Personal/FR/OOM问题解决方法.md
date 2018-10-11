@@ -3,6 +3,7 @@
 >    * @param scale 缩放比例(1到10, 为2时，长和宽均缩放至原来的2分之1，为3时缩放至3分之1，以此类推)
 >    * @return Bitmap
 
+
 ```
  public synchronized static Bitmap readBitmap(Context context, int res, int scale) {
         try {
