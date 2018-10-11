@@ -105,5 +105,4 @@ override fun getView(position: Int, convertView: View?, parent: ViewGroup?): Vie
 最终效果图如下：
 
 ![a](https://s1.ax1x.com/2018/05/12/CBRSRs.png)
-
 ![b](https://s1.ax1x.com/2018/05/12/CB2zGj.png)
