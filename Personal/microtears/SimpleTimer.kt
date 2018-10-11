@@ -1,9 +1,12 @@
+package com.messy.kitty.run
+
 import kotlin.concurrent.thread
 
 fun main(args: Array<String>) {
     timer(10*1000){
         println("ten min")
     }
+    
 }
 
 fun timer(nextTime: Long = 0L, block: () -> Unit): SimpleTimer {
