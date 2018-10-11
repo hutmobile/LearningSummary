@@ -1,0 +1,100 @@
+
+昨天试着实现一些富文本，一个文本中，字体，颜色 有所不同，昨天运气还不错，花了半个小时就解决了，下面是封装的方法，
+扩展的NSMutableAttributeString, 所以使用的时候，直接调用方法就是了，这些方法也可以随意修改，以实现自己想要的效果
+下面展示一下我是怎么调用的吧！
+
+            self.llabel.attributedText = NSMutableAttributedString.highLightText2(
+                (((baseInfo?["base_name"] as? String) ?? "") + "   " + ((RoomInfo["room_price"] as? String) ?? "") ),
+                changeFont: ((RoomInfo["room_price"] as? String) ?? ""), changeFont2: "元/晚",
+                color: UIColor.black, color2: UIColor.red, color3: UIColor.black,
+                font: UIFont(name: "Arial", size: 18)!,
+                font2: UIFont(name: "Arial", size: 16)!,
+                font3: UIFont(name: "Arial", size: 11)!)
+                
+            比较轻松哈！
+
+
+
+//  Created by adong666666 on 2018/9/6.  Copyright © 2018年 adong666666. All rights reserved.
+
+import UIKit
+import Foundation
+
+extension NSMutableAttributedString {
+    static func highLightText(_ normal: String, changeFont: String,
+                              color: UIColor, color2: UIColor,
+                              font: UIFont, font2: UIFont) -> NSMutableAttributedString {
+        let attributedStrM : NSMutableAttributedString = NSMutableAttributedString()
+        let strings = normal.components(separatedBy: changeFont)
+        
+        for i in 0..<strings.count {
+            let item = strings[i]
+            let dict = [NSAttributedStringKey.font: font,
+                NSAttributedStringKey.foregroundColor: color]
+            let content = NSAttributedString(string: item, attributes: dict)
+            attributedStrM.append(content)
+            
+            if i != strings.count - 1 {
+                let dict1 = [NSAttributedStringKey.font: font2,
+                    NSAttributedStringKey.foregroundColor: color2]                
+                let content2 = NSAttributedString(string: changeFont,
+                                                  attributes: dict1)
+                attributedStrM.append(content2)
+            }
+            
+        }
+        return attributedStrM
+    }
+}
+extension NSMutableAttributedString{
+    static func changeTextFont(_ normal: String, changeFont: String,
+                               color: UIColor, font: UIFont,
+                               font2: UIFont) -> NSMutableAttributedString{
+        let attributedStrM = highLightText(normal, changeFont: changeFont,
+                                           color: color, color2: color,
+                                           font: font, font2: font2)
+        return attributedStrM
+    }
+}
+extension NSMutableAttributedString{
+    static func changeTextColor(_ normal: String, changeColor: String,
+                                color: UIColor, color2: UIColor,
+                                font: UIFont) -> NSMutableAttributedString{
+        let attributedStrM = highLightText(normal, changeFont: changeColor,
+                                           color: color, color2: color2,
+                                           font: font, font2: font)
+        return attributedStrM
+    }
+}
+extension NSMutableAttributedString {
+    static func highLightText2(_ normal: String, changeFont: String, changeFont2: String,
+        color: UIColor, color2: UIColor, color3: UIColor,
+        font: UIFont, font2: UIFont, font3: UIFont) -> NSMutableAttributedString {
+        let attributedStrM : NSMutableAttributedString = NSMutableAttributedString()
+        let strings = normal.components(separatedBy: changeFont)
+        
+        for i in 0..<strings.count {
+            let item = strings[i]
+            let dict = [NSAttributedStringKey.font: font,
+                        NSAttributedStringKey.foregroundColor: color]
+            let content = NSAttributedString(string: item, attributes: dict)
+            attributedStrM.append(content)
+            
+            if i != strings.count - 1 {
+                let dict1 = [NSAttributedStringKey.font: font2,
+                             NSAttributedStringKey.foregroundColor: color2]
+                let content2 = NSAttributedString(string: changeFont,
+                                                  attributes: dict1)
+                attributedStrM.append(content2)
+                
+                let dict2 = [NSAttributedStringKey.font: font3,
+                             NSAttributedStringKey.foregroundColor: color3]
+                let content3 = NSAttributedString(string: changeFont2,
+                                                  attributes: dict2)
+                attributedStrM.append(content3)
+            }
+            
+        }
+        return attributedStrM
+    }
+}
