@@ -22,3 +22,7 @@ B b = new B(a);
 a = null;
 b.getA();  //返回null
 ```
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2ea023cec1327561af2327ae507857f0c251424e
