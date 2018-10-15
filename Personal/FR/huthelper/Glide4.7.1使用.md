@@ -1,5 +1,6 @@
-#Glide 4.7.1 学习使用
-##在项目中添加依赖
+# Glide 4.7.1 学习使用
+
+## 在项目中添加依赖
 ```
 repositories {
   mavenCentral()
@@ -16,7 +17,7 @@ dependencies {
 Glide默认会导入Android的support-v4包。4.71版本默认导入的是v4包的27版本。如果你的项目中有v4包的别的版本，就会引起冲突发生错误如：
 java.lang.NoSuchMethodError: No static method
 
-###权限添加；视情况选择相应的权限
+### 权限添加；视情况选择相应的权限
 ```
     <uses-permission android:name="android.permission.INTERNET"/>	
     //它可以监听用户的连接状态并在用户重新连接到网络时重启之前失败的请求    
@@ -25,8 +26,9 @@ java.lang.NoSuchMethodError: No static method
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>    
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 ```
-####基本使用
-#####加载图片三步走，1.with,2.load,3.into;
+#### 基本使用
+
+##### 加载图片三步走，1.with,2.load,3.into;
 ```
 String url = "";
 
@@ -36,7 +38,7 @@ Glide.with(this) //with()方法可以接收Contexr,Activity,Fragment类型的数
 ```
 **注意with()方法中传入的实例会决定Glide加载图片的生命周期，如果传入的Activity实例或者Fragment实例，那么当这个Activity或者这个Fragment被销毁时，图片加载也会停止，如果传入的时ApplicationContext，那么只有当这个应用程序被杀死的时候，图片加载才会停止**
 
-#####取消图片也是三步走，1.with(),2.load(),3.clear();
+##### 取消图片也是三步走，1.with(),2.load(),3.clear();
 ```
 //一般很少用到，因为图会跟with(this)生命周期消亡而消亡
 Glide.with(this)
