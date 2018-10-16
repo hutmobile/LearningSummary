@@ -27,12 +27,6 @@ MeasureSpec代表一个32位的int值，前两位代表specMode，后30位代表
 
 三种测量模式：</Br>
 1. EXACTLY: 父容器已经检测出子View所需要的精确大小，这个时候view的大小即为SpecSize的大小，他对应于布局参数中的MATCH_PARENT,或者精确大小值</Br>
-<<<<<<< HEAD
-
 2. AT_MOST: 父容器指定了一个大小，即SpecSize，子view的大小不能超过这个SpecSize的大小</Br>
-
-=======
-2. AT_MOST: 父容器指定了一个大小，即SpecSize，子view的大小不能超过这个SpecSize的大小</Br>
->>>>>>> fbd029d06c6d3d375c3511cd9178a32ff1ebad42
 3. UNSPECIFIED: 表示子View想多大都可以</Br>
 
