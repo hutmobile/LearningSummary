@@ -21,8 +21,4 @@ A a = new A();
 B b = new B(a);
 a = null;
 b.getA();  //返回null
-<<<<<<< HEAD
 ```
-=======
-```
->>>>>>> fbd029d06c6d3d375c3511cd9178a32ff1ebad42
