@@ -6,9 +6,11 @@ LayoutInflater类的inflate方法是所有布局填充方法的基石
 LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 ```
 LayoutInflater类的作用是，将xml布局文件实例化为它对应的View对象。这个类不能直接使用，也就是不能直接调用其中的成员。一般，我们通过getLayoutInflater()方法或者getSystemService(String)方法来获取该类的实例
+
 getLayoutInflater()方法
 ---
 并不是上下文的方法，Activity类有这个方法，不需要传入参数，在Activity中直接调用即可。Fragment类也有这个方法，但是需要传入一个Bundle对象作为参数
+
 getSystemService(String)
 ---
 该方法是Context的方法，需要传入Context的成员变量作为参数，获得相应的对象，要获得LayoutInflater对象，需要传入Context.LAYOUT_INFLATER_SERVICE
