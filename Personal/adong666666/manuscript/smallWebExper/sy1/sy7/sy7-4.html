@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>求100以内的素数</title>
+	</head>
+	<body>
+		<h2>100以内的素数有：</h2>
+		<script type="text/javascript">
+			var count = 0;
+			for (var prime=2;prime<100;prime++){
+				var t = 1;
+				for (var i=2;i<prime;i++){
+					if(prime%i ==0){
+						t=0;
+					   break;
+					}
+				}
+				if (t==1){
+					document.write(prime+" ");
+					count++;
+				}
+			}
+			document.write("<br />素数有："+count)
+		</script>
+	</body>
+</html>
