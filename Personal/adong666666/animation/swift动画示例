@@ -1,0 +1,218 @@
+@IBAction func collectButtonClicked(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        UIView.animate(withDuration: 0.15, animations: {
+            sender.transform = CGAffineTransform(scaleX: 0, y: 0)
+        }) { (_) in
+            UIView.animate(withDuration: 0.15, animations: {
+                sender.transform = CGAffineTransform.identity
+            })
+        }
+}
+
+
+func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let cell = collectionView.ym_dequeueReusableCell(indexPath: indexPath) as NewsDetailImageCell
+        if hidden {
+            UIView.animate(withDuration: 0.3, animations: { // 隐藏
+                // 设置透明度
+                self.setup(cell, alpha: 1.0)
+            }, completion: { (_) in
+                self.hidden = false
+                cell.isUserInteractionEnabled = true
+            })
+        } else {
+            UIView.animate(withDuration: 0.3, animations: { // 显示
+                // 设置透明度
+                self.setup(cell, alpha: 0)
+            }, completion: { (_) in
+                self.hidden = true
+                cell.isUserInteractionEnabled = true
+            })
+        }
+    }
+
+
+
+@IBAction func unfoldButtonClicked(_ sender: UIButton) {
+        sender.isHidden = true
+        unfoldButtonWidth.constant = 0
+        contentLabelHeight.constant = question.content.textH!
+        height = question.unfoldHeight!
+        UIView.animate(withDuration: 0.25) {
+            self.layoutIfNeeded()
+            self.didSelectUnfoldButton?()
+        }
+    }
+    
+    
+   
+     @IBAction func loveButtonClicked(_ sender: UIButton) {
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.5, options: .curveLinear, animations: {
+            sender.imageView?.transform = CGAffineTransform(scaleX: sender.imageView!.width * 0.2, y: sender.imageView!.width * 0.2)
+        }) { (_) in
+            sender.imageView?.transform = .identity
+            sender.isSelected = !sender.isSelected
+        }
+    }
+    
+    
+    
+    
+          headerView.foldButton.rx.controlEvent(.touchUpInside)
+            .subscribe(onNext: { [weak self] in
+                UIView.animate(withDuration: 0.25, animations: {
+                    self!.tableView.y = self!.headerView.frame.maxY
+                    self!.footerView.y = self!.tableView.frame.maxY
+                })
+            })
+            .disposed(by: disposeBag)
+        // 查看更多
+        footerView.moreButton.rx.controlEvent(.touchUpInside)
+            .subscribe(onNext: { [weak self] in
+                self!.isUnfold = true
+                UIView.animate(withDuration: 0.25, animations: {                
+                    self!.tableView.height = CGFloat(self!.videoDetail.related_video_toutiao.count) * 80.0
+                })
+                self!.tableView.reloadData()
+                self!.footerView.y = self!.tableView.frame.maxY
+                self!.height = self!.footerView.frame.maxY
+                self!.didSelectCheckMoreButton?()
+            })
+            .disposed(by: disposeBag)
+           
+           
+           
+           
+           
+     
+      UIView.animate(withDuration: 0.25, animations: {
+            avatarImageView.frame = self.avatarRect
+        }) { (_) in
+            UIView.animate(withDuration: 0.25, animations: {
+                avatarImageView.frame = CGRect(x: 0, y: (self.view.height - screenWidth) * 0.5, width: screenWidth, height: screenWidth)
+            })
+        }
+        
+        
+        
+        
+            func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        if isPresent { // 展开
+            // 拿到展现的视图
+            let toView = transitionContext.view(forKey: .to)
+            toView?.transform = CGAffineTransform(scaleX: 0, y: 0)
+            transitionContext.containerView.addSubview(toView!)
+            // 执行动画
+            UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
+                toView?.transform = .identity
+            }, completion: { (_) in
+                transitionContext.completeTransition(true)
+            })
+        } else { // 关闭
+            // 拿到关闭的视图
+            let fromView = transitionContext.view(forKey: .from)
+            // 执行动画
+            UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
+                // 关闭
+                fromView?.transform = CGAffineTransform(scaleX: 0, y: 0)
+            }, completion: { (_) in
+                transitionContext.completeTransition(true)
+            })
+        }
+    }
+    
+    
+        @objc func topTabButtonClicked(button: UIButton) {
+        privorButton?.isSelected = false
+        button.isSelected = !button.isSelected
+        UIView.animate(withDuration: 0.25, animations: {
+            self.indicatorView.centerX = button.centerX
+            self.bottomScrollView.contentOffset = CGPoint(x: CGFloat(button.tag) * screenWidth, y: 0)
+        }) { (_) in
+            self.privorButton = button
+        }
+        // 获取索引
+        currentSelectedIndex = button.tag
+        // 取出 当前点击的 topTab, 赋值给 currentTopTabType
+        let topTab = userDetail!.top_tab[button.tag]
+        currentTopTabType = topTab.type
+    }
+    
+    
+    
+     UIView.animate(withDuration: 0.25) {
+                    self.recommendButton.imageView?.transform = .identity
+                    self.layoutIfNeeded()
+                    self.didSelectConcernButton?()
+                }
+                
+                
+                
+     
+     
+         @objc func topTabButtonClicked(button: UIButton) {
+        privorButton?.isSelected = false
+        button.isSelected = !button.isSelected
+        UIView.animate(withDuration: 0.25, animations: {
+            self.indicatorView.centerX = button.centerX
+        }) { (_) in
+            self.privorButton = button
+        }
+        // 获取索引
+        currentSelectedIndex = button.tag
+        // 取出 当前点击的 topTab, 赋值给 currentTopTabType
+        currentTopTab?(topTabs[button.tag], currentSelectedIndex)
+    }
+    
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        endEditing(true)
+        // 如果 emoji 按钮选中了
+        if isEmojiButtonSelected {
+            UIView.animate(withDuration: 0.25, animations: {
+                // 重置约束
+                self.resetConstraints()
+            }, completion: { (_) in
+                self.removeFromSuperview()
+            })
+        } else {
+            removeFromSuperview()
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        @objc func topTabButtonClicked(button: UIButton) {
+        privorButton?.isSelected = false
+        button.isSelected = !button.isSelected
+        UIView.animate(withDuration: 0.25, animations: {
+            self.indicatorView.centerX = button.centerX
+            self.bottomScrollView.contentOffset = CGPoint(x: CGFloat(button.tag) * screenWidth, y: 0)
+        }) { (_) in
+            self.privorButton = button
+        }
+        // 获取索引
+        currentSelectedIndex = button.tag
+        // 取出 当前点击的 topTab, 赋值给 currentTopTabType
+        let topTab = userDetail!.top_tab[button.tag]
+        currentTopTabType = topTab.type
+    }//这个蛮有意思
+
+
+
+
+
+  
