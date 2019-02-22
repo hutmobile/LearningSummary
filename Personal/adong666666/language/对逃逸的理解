@@ -1,0 +1,26 @@
+如果你想让一个自动闭包可以“逃逸”，则应该同时使用 @autoclosure 和 @escaping 属性。@escaping 属性的讲解见上面的逃逸闭包。
+
+// customersInLine i= ["Barry", "Daniella"]
+var customerProviders: [() -> String] = []
+func collectCustomerProviders(_ customerProvider: @autoclosure @escaping () -> String) {
+    customerProviders.append(customerProvider)
+}
+collectCustomerProviders(customersInLine.remove(at: 0))
+collectCustomerProviders(customersInLine.remove(at: 0))
+
+print("Collected \(customerProviders.count) closures.")
+// 打印 "Collected 2 closures."
+for customerProvider in customerProviders {
+    print("Now serving \(customerProvider())!")
+}
+// 打印 "Now serving Barry!"
+// 打印 "Now serving Daniella!"
+在上面的代码中，collectCustomerProviders(_:) 函数并没有调用传入的 customerProvider 闭包，而是将闭包追加到了 customerProviders 数组中。
+这个数组定义在函数作用域范围外，这意味着数组内的闭包能够在函数返回之后被调用。因此，customerProvider 参数必须允许“逃逸”出函数作用域。
+
+
+这里逃出函数的作用域，我是这样理解的： 在函数外定义了一个数组，然后我在函数中所调用的闭包被追加到数组中，在函数返回之后，这个数组内的闭包仍然
+存在，没有随着函数调用的结束而消失，将上述闭包及类似情况下的闭包称为逃逸闭包。
+
+
+
