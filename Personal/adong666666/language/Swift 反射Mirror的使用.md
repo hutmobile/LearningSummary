@@ -30,22 +30,7 @@ class User {
     var emails:[String]?  //邮件地址
 }
 接着创建一个用户对象，并通过反射获取这个对象的信息：
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
+
 //创建一个User实例对象
 let user1 = User()
 user1.name = "hangge"
@@ -140,13 +125,7 @@ KVC是key-value coding的缩写。它是一种间接访问对象的机制。其�
 KVC中：key的值就是属性名称的字符串，返回的value是任意类型，需要自己转化为需要的类型。
 （注意：正由于KVC是基于Objective-C的，所以其不支持可选类型（optional）的属性，比如上例的 var age:Int? 
 因此用户类做如下改造：）
-1
-2
-3
-4
-5
-6
-7
+
 //用户类
 class User: NSObject{
     var name:String = ""  //姓名
