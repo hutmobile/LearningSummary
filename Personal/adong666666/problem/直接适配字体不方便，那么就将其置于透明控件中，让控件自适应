@@ -1,0 +1,44 @@
+  
+  
+  
+//
+//    private lazy var promptLabel: UILabel = {
+//        let label = UILabel()
+//        label.frame = CGRect(x: 305.fitWidth, y: 110.fitHeight,
+//                             width: 200.fitWidth, height: 100.fitHeight)
+//        label.text = "出售物品\n\n求购物品\n\n我的发布"
+//        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+//        label.numberOfLines = 0
+//        label.textAlignment = .left
+//        label.textColor = UIColor.black
+//        label.font = UIFont (name: "Arial", size: 20)
+//        return label
+//    }()
+  
+  
+  
+  
+  
+  private lazy var addWords: UIButton = {
+        let bt1 = UIButton(type: UIButton.ButtonType.roundedRect)
+        bt1.frame = CGRect(x: 220.fitWidth, y: 120.fitHeight,
+                           width: 190.fitWidth, height: 40.fitHeight)
+        bt1.backgroundColor = UIColor.clear
+        bt1.layer.cornerRadius = CGFloat(10.fitWidth)
+        bt1.setTitle("求购物品", for: .normal)
+        bt1.addTarget(self, action: #selector(HandViewController.addWordsTap(_:)),
+                      for: UIControl.Event.touchUpInside)
+        return bt1
+    }()
+    
+    private lazy var myWords: UIButton = {
+        let bt1 = UIButton(type: UIButton.ButtonType.roundedRect)
+        bt1.frame = CGRect(x: 220.fitWidth, y: 160.fitHeight,
+                           width: 190.fitWidth, height: 40.fitHeight)
+        bt1.backgroundColor = UIColor.clear
+        bt1.layer.cornerRadius = CGFloat(10.fitWidth)
+        bt1.setTitle("出售物品", for: .normal)
+        bt1.addTarget(self, action: #selector(HandViewController.myWordsTap(_:)),
+                      for: UIControl.Event.touchUpInside)
+        return bt1
+    }()
