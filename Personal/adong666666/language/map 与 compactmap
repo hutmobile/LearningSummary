@@ -1,0 +1,158 @@
+//                            var schoolComment = [CommentsModel]()
+//                            for i in dataArr{
+//                                schoolComment.append(CommentsModel(dict: i))
+//                                print(CommentsModel(dict: i).comment ?? "无信息")
+//                            }
+//                            self.comments.append(schoolComment)
+
+
+self.comments.append(dataArr.compactMap({CommentsModel(dict: $0)}))
+
+
+
+
+
+
+
+
+Swift之Map与CompactMap区别
+96  程序H 关注
+ 0.1 2018.09.04 17:07* 字数 889 阅读 621评论 2喜欢 5
+对于一个iOS开发，如何便利一个Array、Dictionary再熟悉不过了，for、for in嘛...
+被某位前辈问到其中的map和flatMap区别时，未答出个所以然，然后..然后就没有然后了...
+
+
+
+
+嗯嗯...声音很响...
+在项目空闲期，针对Swift中的Map、CompactMap、Filter、Reduce进行系统学习
+感谢：
+化零为整：Reduce详解
+Swift 4.1 新特性 (2) Sequence.compactMap
+Swift数组中Map,FlatMap,Filter,Reduce的使用
+Swift 2.0 ：揭秘 Map 和 FlatMap
+被问到的两个问题
+
+问题1：将一个包含Student对象的数组，取出其中的name值，并生成一个新数组，如何实现？
+
+struct Student {
+    var name: String
+    var age: Int
+}
+
+let student1 = Student(name: "张三", age: 23)
+let student2 = Student(name: "李四", age: 24)
+let student3 = Student(name: "王二", age: 25)
+
+/// 可以看到下面的代码正是我们经常用到的代码，通过创建一个中间变量来接收
+func getNames(students: [Student]) -> [String] {
+    var names = [String]()
+    for student in students {
+        names.append(student.name)
+    }
+    return names
+}
+
+/// 通过Map便利，我们可以不再定义可变的数组来做中间变量，并且代码更简洁
+func getNames1(students: [Student]) -> [String] {
+    return students.compactMap {
+        $0.name
+    }
+}
+
+print(getNames(students: [student1, student2, student3]))
+print(getNames1(students: [student1, student2, student3]))
+/// 均输出["张三", "李四", "王二"]
+问题2：Map和FlatMap的区别？
+
+对于不同点，我们先说说相同点：
+Map和FlatMap都可以用在Optionals和SequenceTypes上（如：数组、字典等）。
+
+对于不同点：
+先说说Swift4新加入的新特性compactMap;
+flatMap会将transform函数的返回类型先拍扁，在组合成本身的复合类型，标准库有3个 flatMap
+
+Sequence.flatMap<S>(_: (Element) -> S) 
+    -> [S.Element] where S : Sequence
+Optional.flatMap<U>(_: (Wrapped) -> U?) -> U?
+Sequence.flatMap<U>(_: (Element) -> U?) -> [U]
+在 Swift 4.1中引入的compactMap新函数实际上是对第三个方法的重命名。
+
+1. Sequence.flatMap区别
+
+map 最终将它们组成一个二维的数组；
+flatMap 中执行的 closure 返回的是同样的数组，但是 flatMap 将每一个返回的数组都拍扁，取出它的元素，构成一个大的一维数组。
+
+let numbers = [[1, 2, 3, 4], [5, 6], [7]]
+
+let maped = numbers.map { $0 }
+let flatMapped = numbers.flatMap { $0 }
+
+print(maped)
+print(flatMapped)
+/// [[1, 2, 3, 4], [5, 6], [7]]
+/// [1, 2, 3, 4, 5, 6, 7]
+
+
+2. Optional.flatMap区别
+
+Optional的版本知道的和日常使用的就没有那么多了。先仔细看一下这两个函数的定义，区别仅在一个处：
+
+func map<U>( transform: (Wrapped) -> U)  -> U?
+func flatMap<U>( transform: (Wrapped) -> U?) -> U?
+map是闭包内return为非可选项，但最终返回值为可选项，即闭包return后又套了一层可选项。
+flatMap是闭包内return为可选项，最终返回值也为可选项，即闭包内return后对可选项进行解包，最终又套了一层可选项。
+
+说了区别，还是通过一个例子来说明：
+
+let number: Int? = Int("2")
+
+let mapSquare = number.map { (x) -> Int in
+    // 此处编译不通过
+    // Value of optional type 'Int?' not unwrapped; did you mean to use '!' or '?'?
+    // 闭包内return非可选项
+    return x % 2 == 0 ? 0 : x
+}
+
+let flatMapSquare = number.flatMap { (x) -> Int? in
+    return x % 2 == 0 ? nil : x
+}
+那么什么时候使用 Optional Chaining，什么时候使用 Optional 的 Mapping 呢？
+
+看了小得写代码的文章，自觉其说的有一定道理
+我认为，他们的差异在于 receiver 在类型转换过程中承担的角色，Optional Chaining 中只能作为 receiver，而 Optional Mapping 函数还能作为参数，更为通用，因而第一个例子只能用 Mapping 实现；另一个方面，Optional Chaining 只能写成串联表达式，而 closure 当中可以写更复杂的转换逻辑，还是用例子来说明：
+
+let possibleNumber: Int? = Int("42")
+let nonOverflowingSquare = possibleNumber.flatMap { 
+    x -> Int? in
+    let (result, overflowed) = x.multipliedReportingOverflow(by: x)
+    return overflowed ? nil : result
+}
+
+
+2. Optional.compactMap区别
+
+众所周知，flatMap可以作为降维使用，除了 flat 之外其实还有 filter 的作用，在使用时容易产生歧义，所以社区认为最好把第二个版本重新拆分出来，使用一个新的方法命名，就产生了这个提案 SE-0187。
+
+最初这个提案用了filterMap这个名字，但后来经过讨论，就决定参考了 Ruby 的Array::compact方法，使用compactMap这个名字。
+
+如下是改版前后的代码区别，可以看到用法相同，仅针对名字进行了更改。
+
+Sequence.flatMap<U>(_ : (Element) -> U?) -> [U]
+Sequence.compactMap<U>(_ : (Element)  -> U?) -> [U]
+compactMap，可以把一个集合中的空值去除，并且返回一个去除nil值得数组
+下面通过代码例子说明下区别：
+
+let numbers = ["1", "2", "three", "///5///", "5"]
+
+let mapResult = numbers.map { (number) -> Int? in
+    return Int(number)
+}
+print(mapResult)
+// [Optional(1), Optional(2), nil, nil, Optional(5)]
+
+let compactMapResult = numbers.compactMap { (number) -> Int? in
+    return Int(number)
+}
+print(compactMapResult)
+// [1, 2, 5]
