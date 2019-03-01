@@ -1,0 +1,51 @@
+struct MySchoolModel: HandyJSON{
+    var head_pic_thumb: String?
+    var head_pic: String?
+    var username: String?
+    var created_on: String?
+    var content: String?
+    var dep_name: String?
+    var likes: String?
+    var comments = [MyCommentsModel]()
+}
+struct MyCommentsModel: HandyJSON{
+    var username: String?
+    var comment: String?
+    var user_id: String?
+    var created_on: String?
+}
+
+
+
+    static func loadMySchoolModel(num: Int, completionHandler: @escaping(_ myScoolModel: [MySchoolModel]) -> ()){
+        let url = getApiSchoolSpeakings(num: num)
+        NetworkTool.requestData(URLString: url, type: .get) {
+            if let posts = JSON($0)["data"].dictionary?["posts"]?.arrayObject{
+                completionHandler(posts.compactMap({MySchoolModel.deserialize(from: $0 as? Dictionary)}))
+            }
+        }
+    }
+    
+    
+      static func requestData(URLString: String, type: MethodType, parameters: [String: Any]? = nil,
+      finishedCallback: @escaping (_ result: Any)->()) {
+        
+        let method = type == .get ? HTTPMethod.get : HTTPMethod.post
+        
+        Alamofire.request(URLString, method: method, parameters: parameters).responseJSON( completionHandler: {(response) in
+            guard let result = response.result.value else{
+                print(response.result.error ?? 0)
+                return
+            }
+            finishedCallback(result)
+        })
+    }
+    
+    
+    
+    
+    NetworkTool.loadMySchoolModel(num: 1) { self.mySchoolModel = $0 }
+    
+    
+    
+    
