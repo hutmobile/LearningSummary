@@ -1,0 +1,32 @@
+    
+    今天遇到网络数据还没请求好，tableView就先开始调用相关的function了，如下，如果不进行校验的话，程序会崩的，
+    例如schoolModel此时还没有值，但是下面的方法已经开始访问schoolModel[indexPath.item]了，就会导致溢出现象out of range
+    加上一句guard校验，简单点的直接判断语句，就可以防止此类问题的出现
+    当然还要记得tableView，collectionView与reloadData关系紧密
+    
+    诸如下方的didSet都要多多使用
+    fileprivate var schoolModel = [tempSchoolModel](){
+        didSet{
+            self.tableView.reloadData()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = tableView.zsd_dequeueReusableCell(indexPath: indexPath) as SchoolSpeakingCell
+        guard schoolModel != [] else { return cell}
+        if schoolModel[indexPath.item].head_pic != ""{
+            cell.headPic.kf.setImage(with: URL(string: schoolModel[indexPath.item].head_pic ?? ""))
+        }else{
+            cell.headPic.kf.setImage(with: URL(string: schoolModel[indexPath.item].head_pic_thumb ?? ""))
+        }
+
+       cell.userName.text = schoolModel[indexPath.row].username
+        cell.time.text = schoolModel[indexPath.item].created_on
+        cell.schoolSpeaking.text = schoolModel[indexPath.item].content
+        cell.ImageCollectionView.images = schoolModel[indexPath.item].pics
+        cell.college.text = schoolModel[indexPath.item].dep_name
+        cell.commentCount.text = String(describing: schoolModel[indexPath.item].comments.count)
+        cell.likesCount.text = schoolModel[indexPath.item].likes
+        return cell
+    }
