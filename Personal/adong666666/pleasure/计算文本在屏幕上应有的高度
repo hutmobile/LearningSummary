@@ -1,0 +1,7 @@
+    static func schoolSpeakingHeight(_ string: String) -> CGFloat{
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
+        return  (string as NSString).boundingRect(with: CGSize(width: screenWidth - 30, height: CGFloat(MAXFLOAT)),
+        options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [.font: UIFont.systemFont(ofSize: 18),
+        .paragraphStyle: paragraphStyle], context: nil).height
+    }
