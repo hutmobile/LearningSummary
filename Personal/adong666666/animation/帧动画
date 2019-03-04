@@ -1,0 +1,29 @@
+                        UIView.animateKeyframes(withDuration: 1, delay: 0, options: UIView.KeyframeAnimationOptions.beginFromCurrentState, animations: {
+                            UIView.performWithoutAnimation {
+                                self.view.addSubview(self.clearGrayButton)
+                            }
+                            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.25, animations: {
+                                self.promptBottom.centerX = 290.0.FitWidth
+                                self.promptBottom.centerY = 135.0.FitHeight
+                                self.promptBottom.height = 37.5.FitHeight
+                                self.promptBottom.width = 47.5.FitWidth
+                            })
+                            UIView.addKeyframe(withRelativeStartTime: 0.25, relativeDuration: 0.25, animations: {
+                                self.promptBottom.centerX = 290.0.FitWidth
+                                self.promptBottom.centerY = 135.0.FitHeight
+                                self.promptBottom.height = 75.0.FitHeight
+                                self.promptBottom.width = 95.0.FitWidth
+                            })
+                            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.25, animations: {
+                                self.promptBottom.centerX = 290.0.FitWidth
+                                self.promptBottom.centerY = 135.0.FitHeight
+                                self.promptBottom.height = 112.5.FitHeight
+                                self.promptBottom.width = 142.5.FitWidth
+                            })
+                            UIView.addKeyframe(withRelativeStartTime: 0.75, relativeDuration: 0.25, animations: {
+                                self.promptBottom.centerX = 290.0.FitWidth
+                                self.promptBottom.centerY = 135.0.FitHeight
+                                self.promptBottom.height = 150.0.FitHeight
+                                self.promptBottom.width = 190.0.FitWidth
+                            })
+                        }, completion: nil)
