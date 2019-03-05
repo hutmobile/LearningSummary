@@ -18,3 +18,7 @@ clang: error: linker command failed with exit code 1 (use -v to see invocation)
 最近老是遇到上面的问题 ， 到Build Phases 里 把 Link Binary With Libraries 中的 Pods_projectname 删除就OK了
 
 然后点击+号，把该加入的framework 加进来就好了
+
+
+
+podfile里记得设置platform ,ios9,10什么的
