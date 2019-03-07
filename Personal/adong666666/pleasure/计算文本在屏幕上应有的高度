@@ -1,7 +1,13 @@
+  /// 计算校园说说里的schoolSpeakingHeight
     static func schoolSpeakingHeight(_ string: String) -> CGFloat{
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
-        return  (string as NSString).boundingRect(with: CGSize(width: screenWidth - 30, height: CGFloat(MAXFLOAT)),
-        options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [.font: UIFont.systemFont(ofSize: 18),
-        .paragraphStyle: paragraphStyle], context: nil).height
+        let size = (string as NSString).boundingRect(with: CGSize(width: screenWidth - 30, height: CGFloat(MAXFLOAT)), options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [.font: UIFont.systemFont(ofSize: 14), .paragraphStyle: paragraphStyle], context: nil)//.height
+        return size.height
+    }
+    
+    ///计算校园说说中评论区域SchoolTableViewCell的高度
+    static func SchoolTableViewCellHeight(_ string: String) -> CGFloat{
+        let size = (string as NSString).boundingRect(with: CGSize(width: screenWidth - 50, height: CGFloat.greatestFiniteMagnitude), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12)], context: nil)
+        return size.height + 10
     }
