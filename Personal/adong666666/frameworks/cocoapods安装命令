@@ -124,3 +124,11 @@ Installing ri documentation for cocoapods-1.5.3
 Done installing documentation for concurrent-ruby, i18n, thread_safe, tzinfo, activesupport, nap, fuzzy_match, cocoapods-core, claide, cocoapods-deintegrate, cocoapods-downloader, cocoapods-plugins, cocoapods-search, cocoapods-stats, netrc, cocoapods-trunk, cocoapods-try, molinillo, atomos, CFPropertyList, colored2, nanaimo, xcodeproj, escape, fourflusher, gh_inspector, ruby-macho, cocoapods after 34 seconds
 28 gems installed
 adong666666deiMac:~ adong666666$ 
+
+
+
+
+   
+$ git clone https://git.coding.net/CocoaPods/Specs.git ~/.cocoapods/repos/master
+
+还有上面这种操作
