@@ -1,0 +1,101 @@
+一大堆的你为什么要用swiftlint，你为什么要codereview，swiftlint到底在做什么，就不多说了，没意义，他就是帮助你写出规范漂亮代码的神器！
+
+安装
+官方提供了三种安装的方式
+
+homebrew
+brew install swiftlint
+cocoapods
+pod 'SwiftLint'
+pkg安装
+https://github.com/realm/SwiftLint/releases/tag/0.24.2
+
+
+使用：
+整合 SwiftLint 到 Xcode 体系中去从而可以使警告和错误显示到 IDE 上，只需要在 Xcode 中添加一个新的“Run Script Phase”并且包含如下代码即可：
+
+if which swiftlint >/dev/null; then
+  swiftlint
+else
+  echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+fi
+或者，脚本看起来应该像这样如果你已经通过 CocoaPods 安装了 SwiftLint：
+
+"${PODS_ROOT}/SwiftLint/swiftlint"
+
+Rules：
+swiftlint整合了大约70中的代码规范，你可以选择性的在代码中使用；
+
+我们将目录切换到工程的根目录之下，然后敲击如下命令:
+
+swiftlint autocorrect
+然后我们就会发现，所有的空格符Warning都消失了。这都得益于我们刚刚所进行的命令行操作，它会将已知的能够自动修复的Error和Warning都自动修复，大大的减轻了我们的工作量。
+
+但是又出现了一个问题，在项目的根目录之下执行自动纠正，SwiftLint会将Pods文件夹中的Swift文件也一起纠正了，第三方的框架原则上能不动就不动，那么我们该怎么办呢？
+
+这个时候就需要.swiftlint.yml文件了。那么这是一个什么文件呢？在使用SwiftLint的时候，很多时候我们会碰到一些自定义的规则需求，这个时候就需要.swiftlint.yml来解决问题了。
+
+.swiftlint.yml
+
+所谓的.swiftlint.yml其实就是SwiftLint的一个配置文件，我们可以通过这个配置文件来修改约束的规则，以此达到自定义的效果。
+
+创建.swiftlint.yml必须严格按照命名创建，Mac可以直接使用文本编辑器创建，Mac默认不允许创建以.开头的文件名，所以建议大家使用命令行创建文件，然后编辑即可：
+
+touch .swiftlint.yml
+创建好之后是不可见的，我们需要设置隐藏文件的可见：
+
+显示：defaults write com.apple.finder AppleShowAllFiles -bool true
+隐藏：defaults write com.apple.finder AppleShowAllFiles -bool false
+设置好之后重启finder即可看到我们创建的.swiftlint.yml 文件；
+
+使用的时候，将.swiftlint.yml 放在需要执行swiftlint工程的根目录中，整个工程会执行.swiftlint.yml的配置；如果在二级目录同样配置了.swiftlint.yml文件，则会执行二级目录下的配置；
+
+创建一个怎样的.swiftlint.yml文件？：
+这个要根据个人的习惯，需要执行哪些约束以及不执行哪些约束，在哪些文件执行哪些文件不执行，下面是我的一个配置，供参考：
+
+复制代码
+included:
+    - JCFC_Loan_Swift
+excluded:
+    - Pods
+cyclomatic_complexity:
+  warning: 20
+  error: 30
+disabled_rules:
+    - trailing_newline
+    - opening_brace
+    - empty_count
+    - comma
+    - colon
+    - force_cast #强制转换
+    - type_name
+    # - trailing_semicolon
+    # - force_try
+    # - function_body_length
+    # - nesting
+    - variable_name
+    # - operator_whitespace
+    # - control_statement
+    # - legacy_constant
+    - line_length
+    # - return_arrow_whitespace
+    # - trailing_whitespace
+    # - closing_brace
+    # - statement_position
+    # - type_body_length
+    # - todo
+    # - legacy_constructor
+    # - valid_docs
+    # - missing_docs
+    # - file_length
+    # - leading_whitespace
+identifier_name:
+    excluded: id 
+复制代码
+我们也可以在类内部执行注释来屏蔽某一条约束等，具体操作格式如下
+
+// swiftlint:disable colon
+let noWarning :String = "" // No warning about colons immediately after variable names!
+// swiftlint:enable colon
+let hasWarning :String = "" // Warning generated about colons immediately after variable names
+好了，开始你的约束之路吧！
