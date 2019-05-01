@@ -1,0 +1,385 @@
+iOS数据存储之NSCoder
+
+
+资源连接：
+
+iOS数据库存储之SQL语句;
+
+iOS数据库存储之SQLite3;
+
+iOS数据存储之文件沙盒;
+
+iOS的本地存储技术
+Plist文件（NSArray\NSDictionary）
+
+Property List，属性列表文件，它是一种用来存储串行化后的对象的文件。属性列表文件的扩展名为.plist ，因此通常被称为 plist文件。文件是xml格式的。
+Plist文件通常用于储存用户设置，也可以用于存储捆绑的信息
+
+Preference（偏好设置\NSUserDefaults）
+
+用户偏好设置，plist格式文档，文档存储在沙盒Library/Preference下，系统提供[NSUserDefaults standardUserDefaults]单例类直接操作文档
+
+NSCoder（NSKeyedArchiver\NSkeyedUnarchiver）
+
+本文章重点介绍。
+
+SQLite3
+
+数据库，用于处理相对大量的数据（详情请参考顶部连接）。
+
+Core Data
+
+SQLite数据库的面向对象封装，体量比SQLite3大很多。
+
+NSCoder
+简介：NSCoder是个抽象类，该类提供了用于存储和读取对象和其他值的接口（在内存和其他数据形式之间），但是必须要使用它的子类。此功能提供了归档的基础（对象和数据项存储在磁盘上）和分配（对象和数据项在不同进程或线程之间复制）。这些目的的子类包括NSArchiver，NSUnarchiver，NSKeyedarchiver，NSKeyedunarchiver，和NSPortCoder。NSCoder的具体子类统称为编码器类和这些类的实例作为编码对象（或简单的编码）。只能编码值的编码器对象称为编码器对象，并且只能将值解码的对象称为为解码器对象。
+
+Tip：
+
+NSPortCoder 和 NSCoder还有NSUnarchiver 在Xcode8.3没有找到对应的累，也就说iOS项目中，iOS10以及之前的版本中Foundation框架中并没有对应的类。这里我们只找到了NSKeyedarchiver和NSKeyedunarchiver
+对象，标量，C++数组、结构、指针、字符串，以及这些类型。它不处理跨平台执行不同的类型，如联合体、void *、函数指针和指针的长链。编码器对象将对象类型信息与数据一起存储，因此从字节流中解码的对象通常与最初编码到流中的对象相同。然而，当编码对象时，我们可以改变它的类型。
+
+AV Foundation框架给NSCoder类添加了方法（应该是分类方法，但具体声明在哪个文件，这里不做查找），这些方法使创建包括核心媒体的时间结构的归档更加容易，并从中提取核心媒体档案的时间结构。
+
+NSCoding
+这是一个编码协议，遵守此协议，并且实现协议方法，就可以使用NSCoder进行编码解码了，Cocoa框架大部分类都遵守了此协议。NSArray遵守了NSSecureCoding，NSSecureCoding 遵守了NSCoding。因此NSArray对于列表数据编码解码提供了很好的支持。
+
+// 用编码器编码对象的时候，会调用该对象的此方法
+- (void)encodeWithCoder:(NSCoder *)aCoder;
+// 用解码器解码的时候会调用该对象的此方法
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder;
+Note：解码器解码的时候怎么判断是哪一个类呢？后面会有解释，请坚持看完。
+一般情况下我们还需要提供NSCoping协议支持，协议方法如下（完全看个人需求）
+-(id)copyWithZone:(NSZone *)zone {
+}
+
+基本实例
+通过基本实例我们可以熟悉、总结
+
+三个对象类
+//
+//  XWZPerson.h
+//  NSCodingDemo
+//
+//  Created by XinWeizhou on 2017/5/12.
+//  Copyright © 2017年 XinWeizhou. All rights reserved.
+//
+#import <Foundation/Foundation.h>
+#import "XWZDog.h"
+
+extern NSString * const kName ;
+extern NSString * const kAge ;
+extern NSString * const kDog ;
+@interface XWZPerson : NSObject<NSCoding>
+@property(nonatomic,strong) NSString *name;
+@property(nonatomic,assign) NSInteger age;
+
+@property(nonatomic,strong) XWZDog *dog;
+
+@end
+
+#import "XWZPerson.h"
+NSString * const kName = @"name";
+NSString * const kAge = @"age";
+NSString * const kDog = @"dog";
+@implementation XWZPerson
+//+ (BOOL)supportsSecureCoding {
+//    return YES;
+//}
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    _name = [aDecoder decodeObjectForKey:kName];
+    _age = [aDecoder decodeIntegerForKey:kAge];
+    _dog = [aDecoder decodeObjectForKey:kDog];
+    NSLog(@"%s",__func__);
+    return self;
+}
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:_name forKey:kName];
+    [aCoder encodeInteger:_age forKey:kAge];
+    [aCoder encodeObject:_dog forKey:kDog];
+    NSLog(@"%s",__func__);
+}
+@end
+
+//
+//  XWZDog.h
+//  NSCodingDemo
+//
+//  Created by XinWeizhou on 2017/5/12.
+//  Copyright © 2017年 XinWeizhou. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+extern NSString * const kName ;
+extern NSString * const kAge ;
+
+@interface XWZDog : NSObject<NSCoding>
+@property(nonatomic,strong) NSString *name;
+@property(nonatomic,assign) NSInteger age;
+@end
+
+#import "XWZDog.h"
+
+@implementation XWZDog
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    _name = [aDecoder decodeObjectForKey:kName];
+    _age = [aDecoder decodeIntegerForKey:kAge];
+    NSLog(@"%s",__func__);
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:_name forKey:kName];
+    [aCoder encodeInteger:_age forKey:kAge];
+    NSLog(@"%s",__func__);
+}
+@end
+
+//
+//  XWZTool.h
+//  NSCodingDemo
+//
+//  Created by XinWeizhou on 2017/5/12.
+//  Copyright © 2017年 XinWeizhou. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+extern NSString * const kName ;
+extern NSString * const kAge ;
+
+@interface XWZTool : NSObject<NSCoding>
+@property(nonatomic,strong) NSString *name;
+@property(nonatomic,assign) NSInteger age;
+@end
+
+#import "XWZTool.h"
+
+@implementation XWZTool
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    _name = [aDecoder decodeObjectForKey:kName];
+    _age = [aDecoder decodeIntegerForKey:kAge];
+    NSLog(@"%s",__func__);
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    NSLog(@"%s",__func__);
+    [aCoder encodeObject:_name forKey:kName];
+    [aCoder encodeInteger:_age forKey:kAge];
+}
+@end
+
+多对象归档
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *keyedDecoder = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    
+    XWZTool *tool = [XWZTool new];
+    tool.name = @"chuTou";
+    tool.age = 2;
+    [keyedDecoder encodeObject:tool forKey:@"tool"];
+    
+    XWZPerson *person = [XWZPerson new];
+    person.name = @"Jack";
+    person.age = 28;
+    [keyedDecoder encodeObject:person forKey:@"person"];
+    [keyedDecoder finishEncoding];
+    
+    XWZDog *dog = [XWZDog new];
+    dog.name = @"mengmeng";
+    dog.age = 3;
+    NSData *dataRoot = [NSKeyedArchiver archivedDataWithRootObject:dog];
+
+   ***先注释掉***
+   //  [data appendData:dataRoot];
+    self.codeData = data;
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    NSKeyedUnarchiver *keyedDecoder = [[NSKeyedUnarchiver alloc] initForReadingWithData:self.codeData];
+    
+    XWZTool *tool = [keyedDecoder decodeObjectForKey:@"tool"];
+    XWZPerson *person = [keyedDecoder decodeObjectForKey:@"person"];
+   
+    XWZDog *dog = [keyedDecoder decodeObjectForKey:NSKeyedArchiveRootObjectKey];
+    XWZDog *dog1 = [NSKeyedUnarchiver unarchiveObjectWithData:self.codeData];
+    
+    [keyedDecoder finishDecoding];
+   
+    NSLog(@"\n%@\n%@\n%@\n%@",tool,person,dog,dog1);
+}
+打印结果
+<XWZTool: 0x600000036000>
+<XWZPerson: 0x600000036080>
+(null)
+(null)
+
+// 当我们把上面的一行注释代码***先注释掉*** [data appendData:dataRoot];还原，打印结果如下：
+(null)
+(null)
+(null)
+(null)
+看来编码之后的data数据不能随便改动，那怎么用它的NSKeyedArchiveRootObjectKey呢，把它当普通的key使用，继续往下研究，看代码
+
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *keyedDecoder = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    
+    XWZTool *tool = [XWZTool new];
+    tool.name = @"chuTou";
+    tool.age = 2;
+    [keyedDecoder encodeObject:tool forKey:@"tool"];
+    
+    XWZPerson *person = [XWZPerson new];
+    person.name = @"Jack";
+    person.age = 28;
+    [keyedDecoder encodeObject:person forKey:@"person"];
+    
+    XWZDog *dog = [XWZDog new];
+    dog.name = @"mengmeng";
+    dog.age = 3;
+    [keyedDecoder encodeObject:dog forKey:NSKeyedArchiveRootObjectKey];
+    
+    [keyedDecoder finishEncoding];
+    self.codeData = data;
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    NSKeyedUnarchiver *keyedDecoder = [[NSKeyedUnarchiver alloc] initForReadingWithData:self.codeData];
+    
+    XWZTool *tool = [keyedDecoder decodeObjectForKey:@"tool"];
+    
+    XWZPerson *person = [keyedDecoder decodeObjectForKey:@"person"];
+    XWZPerson *person1 = [keyedDecoder decodeObjectForKey:@"person"];
+    
+    XWZDog *dog = [keyedDecoder decodeObjectForKey:NSKeyedArchiveRootObjectKey];
+    XWZDog *dog1 = [keyedDecoder decodeObjectForKey:NSKeyedArchiveRootObjectKey];
+    
+    XWZDog *dog2 = [NSKeyedUnarchiver unarchiveObjectWithData:self.codeData];
+    
+    [keyedDecoder finishDecoding];
+    
+    
+    NSLog(@"\n%@\n%@\n%@\n%@\n%@\n%@",tool,person,person1,dog,dog1,dog2);
+}
+
+打印结果：
+<XWZTool: 0x6000000316e0>
+<XWZPerson: 0x608000032500>
+<XWZPerson: 0x608000032500>
+<XWZDog: 0x608000032740>
+<XWZDog: 0x608000032740>
+<XWZDog: 0x6080000327e0>
+
+两个人是一样的，三条狗有两条是一样的，第三条为什么不一样。这块真的是没有办法研究了，第三条狗是通过类方法解档，而且我们也不知道，rootobject和其他object的具体层次关系。那妥协的结果就是我们会用就行了。下面再岩石一个组合类型：
+
+对象组合归档
+// 这是一个对象之间的组合
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *keyedDecoder = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    
+    XWZPerson *person = [XWZPerson new];
+    person.name = @"Jack";
+    person.age = 28;
+    
+    XWZDog *dog = [XWZDog new];
+    dog.name = @"mengmeng";
+    dog.age = 3;
+    person.dog = dog;
+    
+    [keyedDecoder encodeObject:person forKey:@"person"];
+    
+    [keyedDecoder finishEncoding];
+    self.codeData = data;
+
+  - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    NSKeyedUnarchiver *keyedDecoder = [[NSKeyedUnarchiver alloc] initForReadingWithData:self.codeData];
+
+    XWZTool *person = [keyedDecoder decodeObjectForKey:@"person"];
+    NSLog(@"person= %@",person);
+  }
+相应结果：
+person= <XWZPerson: 0x600000037e80>
+Printing description of person->_dog:
+<XWZDog: 0x600000037f80>
+
+编码器类方法直接归档
+XWZPerson *person = [XWZPerson new];
+    person.name = @"Jack";
+    person.age = 28;
+    
+    XWZDog *dog = [XWZDog new];
+    dog.name = @"mengmeng";
+    dog.age = 3;
+    person.dog = dog;
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:person];
+//    NSKeyedArchiver archiveRootObject:<#(nonnull id)#> toFile:<#(nonnull NSString *)#>
+    
+    self.codeData = data;
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    XWZPerson *person = [NSKeyedUnarchiver unarchiveObjectWithData:self.codeData];
+//    [NSKeyedUnarchiver unarchiveObjectWithFile:<#(nonnull NSString *)#>];
+    
+    NSKeyedUnarchiver *keyedDecoder = [[NSKeyedUnarchiver alloc] initForReadingWithData:self.codeData];
+    XWZPerson *person1 = [keyedDecoder decodeObjectForKey:NSKeyedArchiveRootObjectKey];
+    
+    NSLog(@"\nperson0 = %@\nperson1 = %@",person,person1);
+}
+// 打印结果：
+person0 = <XWZPerson: 0x600000031300>
+person1 = <XWZPerson: 0x60800002f700>
+Printing description of person->_dog:
+<XWZDog: 0x600000031400>
+Printing description of person1->_dog:
+<XWZDog: 0x608000030aa0>
+Note：其实数据要写入文件才算归档，前面没有加入这么一步，只是为了代码思路简介清晰。看上面的的注释掉的类方法，只是多了一步存储到本地的功能。文件名后缀一般用.archiver。
+
+解码器寻找对应类
+刚才也有抛砖，现在把玉抛出来。首先看一下几个方法：
+
+NSKeyedArchiver
+// 设置NSKeyedArchiver全局的对应类标签，这个标签会被加入到编码Data里
++ (void)setClassName:(nullable NSString *)codedName forClass:(Class)cls;
+// 设置对应的一个编码器的对应类标签
+- (void)setClassName:(nullable NSString *)codedName forClass:(Class)cls;
+// 开始编码，一个对象（objv）数据对应一个索引值（key）
+- (void)encodeObject:(nullable id)objv forKey:(NSString *)key;
+
+// 为NSKeyedUnarchiver类标签设置全局的类型
+NSKeyedUnarchiver
++ (void)setClass:(nullable Class)cls forClassName:(NSString *)codedName;
+// 为一个编码器的对应标签设置对应类
+- (void)setClass:(nullable Class)cls forClassName:(NSString *)codedName;
+- (nullable id)decodeObjectForKey:(NSString *)key;
+
+这些方法的用处总结如有错误请指出；在网上找了好半天也没有找到像样的解释，链接里要么各种广告，要么打不开。最后花了一个小时总结出来。又花了一个小时画了张图。
+
+EncoderAndDecoder.png
+[NSKeyedArchiver setClassName:@"hello" forClass:[XWZPerson class]];
+XWZPerson *person = [XWZPerson new];
+person.name = @"Jack";
+person.age = 28;
+[keyedDecoder encodeObject:person forKey:@"person"];
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+
+[NSKeyedUnarchiver setClass:[XWZDog class] forClassName:@"hello"];
+NSKeyedUnarchiver *keyedDecoder = [[NSKeyedUnarchiver alloc] initForReadingWithData:self.codeData];
+
+ XWZPerson *person = [keyedDecoder decodeObjectForKey:@"person"];    
+    
+NSLog(@"person = %@",person);
+
+// 人对象编码之后解码成了狗对象，打印结果： 
+-[XWZDog initWithCoder:]
+Printing description of person:
+<XWZDog: 0x60800003aac0>
+Printing description of person->_name:
+Jack
+Printing description of person->_age:
+(NSInteger) _age = 28
+
+}
+Note：这里可以看出，NSKeyedUnarchiver的为类名标签设置类型，尤为重要，它可以改变解码出来的对象类型。

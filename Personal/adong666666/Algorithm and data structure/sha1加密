@@ -1,7 +1,7 @@
 
 
 
-swift实现sha1加密算法，需要先在beidge-header文件中添加下述语句
+swift实现sha1加密算法，需要先在bridge-header文件中添加下述语句
 
 #import <CommonCrypto/CommonHMAC.h>
 

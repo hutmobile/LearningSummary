@@ -1,0 +1,95 @@
+swift3.0- 通知使用NotificationCenter
+1:发送通知方法一：
+name:一般情况下我们需要定义成一个常量, 如：kNotiAddPhoto
+
+object:（谁发送的通知）      一般情况下我们可以不传，置为nil表示<匿名发送>   ，如果我们只需要传入一个参数的话，比如说本身控制器或者该类中的某一个控件的话，我们就可以使用object传出去，例子如下
+
+NotificationCenter.default.post(name: <#T##NSNotification.Name#>, object: <#T##Any?#>)
+ // 由于事件要多级传递，所以才用通知，代理和回调其实也是可以的
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kNotiAddPhoto), object: nil)
+只传入一个object:参数的控件:
+
+    @IBAction func closeBtnClick() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kNotiRemovePhoto), object: imageView.image)
+    }
+传入多个参数需要使用userInfo传入：
+
+NotificationCenter.default.post(name: <#T##NSNotification.Name#>, object: <#T##Any?#>, userInfo: <#T##[AnyHashable : Any]?#>)
+NotificationCenter.default.post(name: NSNotification.Name(rawValue: "你定义的名字name"), object: nil, userInfo:["name" : "XJDomain", "age" : 18])
+ 
+
+ 
+
+1.1接收通知方法一：
+NotificationCenter.default.addObserver(<#T##observer: Any##Any#>, selector: <#T##Selector#>, name: <#T##NSNotification.Name?#>, object: <#T##Any?#>)
+// 接受添加图片的通知
+        NotificationCenter.default.addObserver(self, selector: #selector(addPhoto), name: Notification.Name.init(rawValue: kNotiAddPhoto), object: nil)
+ 上面通知调用方法:   没有参数的方法
+
+    // 添加照片
+    @objc fileprivate func addPhoto(){
+        // 方法调用
+    }
+--------------------------------------------------------------
+
+// 接受删除图片的通知
+        NotificationCenter.default.addObserver(self, selector: #selector(removePhoto(noti:)), name: NSNotification.Name(rawValue: kNotiRemovePhoto), object: nil)
+上面通知调用方法:    有参数的方法
+
+// 删除照片
+    @objc fileprivate func removePhoto(noti : Notification) {
+        guard let image = noti.object as? UIImage  else { return }
+        guard let index = images.index(of: image) else { return }
+        images.remove(at: index)
+        picPickerCollectionView.images = images
+    }
+ 
+
+1.2移除通知:
+在接收通知控制器中移除的，不是在发送通知的类中移除通知的
+
+// 移除通知<通知移除是在发通知控制器中移除>
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+ 
+
+ 
+
+1.3 高手使用的通知:
+在接收通知的时候有另外一个方法：
+
+好处是:不需要我们再写一个方法
+
+坏处是:移除通知相比麻烦，但是还好
+
+// name: 通知名字
+        // object :谁发出的通知，一般传nil
+        // queue :队列:表示决定block在哪个线程中去执行，nil表示在发布通知的线程中执行
+        // using :只要监听到了，就会执行这个block
+        // 一定要移除，不移除的话会存在坏内存访问，移除的话需要定义一个属性observe来接收返回对象，然后在移除方法中移除即可
+       observe = NotificationCenter.default.addObserver(forName: Notification.Name.init(rawValue: kNotiAddPhoto), object: nil, queue: nil) { (Notification) in
+            print("-------------",Thread.current)
+        }
+ 
+
+移除通知：
+
+01-先定义一个属性
+
+weak var observe : NSObjectProtocol?
+
+02-接收通知返回来的观察者
+
+       observe = NotificationCenter.default.addObserver(forName: Notification.Name.init(rawValue: kNotiAddPhoto), object: nil, queue: nil) { (Notification) in
+            print("-------------",Thread.current)
+        }
+ 
+
+03-在移除通知方法中移除通知
+
+// 移除通知<通知移除是在发通知控制器中移除>
+    deinit {
+        //NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(observe!)
+    }
