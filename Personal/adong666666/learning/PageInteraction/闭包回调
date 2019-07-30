@@ -1,0 +1,36 @@
+        let newAlbum = NewAlbumViewController()
+        newAlbum.hero.isEnabled = true
+        newAlbum.view.hero.modifiers = [.fade, .scale(0.1)]
+        newAlbum.callBack = { [unowned self] newAlbum in
+            self.recognize.addCustomAlbum(condition: newAlbum)
+        }
+        present(newAlbum, animated: true, completion: nil)
+
+
+如上使用了一个闭包来增加自定义相册，闭包是在NewAlbumViewController中定义的，由于闭包实际上是简写的函数、
+意味着我们可以在其他地方调用，并将闭包中所回调的值加以利用，如下：
+
+        newAlbum.callBack = { [unowned self] newAlbum in
+            self.recognize.addCustomAlbum(condition: newAlbum)
+        }
+
+
+在NewAlbumViewController中定义了callBack闭包
+
+class NewAlbumViewController: UIViewController {
+    var callBack: ((NewAlbum) -> Void)?
+}
+下面是某个点击事件的方法done()，更改了NewAlbumViewController中的闭包
+
+    @objc func done() {
+        let newAlbum = NewAlbum.init(name: nameField.text, classifyChoice: classifyChoice,
+                                     locationChoice: locationChoice,
+                                     beginTime: self.startDate, endTime: self.endDate)
+        callBack?(newAlbum)
+        dismiss(animated: true, completion: nil)
+    }
+
+这里callBack?(newAlbum)便会调用        
+       newAlbum.callBack = { [unowned self] newAlbum in
+            self.recognize.addCustomAlbum(condition: newAlbum)
+        }

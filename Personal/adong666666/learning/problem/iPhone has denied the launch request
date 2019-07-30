@@ -1,0 +1,7 @@
+iPhone has denied the launch request
+
+出现这个错误的原因是手机的缓存了不正确的签名数据,
+解决方案：
+
+用同样的bundle ID 项目
+Edit Scheme -> 在run中勾选 Wait for executable to be launched  选择该选项运行一次,矫正不正确的前面数据

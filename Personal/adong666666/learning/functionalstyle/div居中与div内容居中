@@ -1,0 +1,77 @@
+div居中与div内容居中
+
+其实注意 margin：0 auto
+然后line-height = div的height就ok了
+
+ 
+div css布局时，常见到div 居中与div内容居中，即div自身水平居中与div内的内容居中布局。
+
+而内容居中又分为垂直居中与水平居中，这里thinkcss将逐一让大家掌握这几个居中布局技巧。
+
+关于div两种居中其根本布局效果是不同的，一个是结构的css布局，一个是内容排版布局。
+
+一、div自身居中：
+使用margin:0 auto
+上下为0，左右自适应的css样式。
+
+要让div水平居中，那么除了设置css margin:0 auto外，还不能再设置float，不然将会导致div靠左（设置float:left）和div靠右（设置float:right）。
+
+1、div布局居中实例代码
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>div布局居中实例 thinkcss</title>
+<style>
+#jz{ margin:0 auto; width:320px; height:100px; border:1px solid #F00}
+</style>
+</head>
+<body>
+<div id="jz">设置margin:0 auto兼容各大浏览器让div水平居中</div>
+</body>
+</html>
+
+
+
+以上实例正是使用margin:0 auto让div兼容各大浏览器的水平居中。
+
+二、div内的内容居中：
+内容居中分为div内容水平居中与div内容垂直居中。
+
+div内容水平居中相比布局div居中，而div内容居中比较简单，只需要设置一个内容居中css（text-align:center）、内容垂直居中（line-height）即可。
+
+1、div内容水平居中CSS：
+text-align:center
+无论是p还是div都可以对其设置此CSS实现对应对象内的内容水平居中。
+
+
+ 
+2、div内容垂直居中 行高属性：
+line-height
+要让div内只有一行的内容垂直居中，通常对div设置的height(高)与line-height(行高)相同，即可实现div内容垂直居中。
+
+3、div内容水平居中与垂直居中实例代码
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>div内容居中实例 thinkcss</title>
+<style>
+#juzhong{width:320px;height:100px; line-height:100px; text-align:center; border:1px solid #F00}
+</style>
+</head>
+<body>
+<div id="juzhong">text-align和line-height设置水平与垂直居中</div>
+</body>
+</html>
+
+
+div内容水平居中与div内容垂直居中布局实例
+div内容水平居中与div内容垂直居中布局实例
+
+从上图可以看见div内容实现两者情况下居中，但没有设置margin:0 auto而div没有水平居中。
+
+可以实例下再将以上代码拷贝后，加入DIV布局居中代码试试实现DIV的居中。
+

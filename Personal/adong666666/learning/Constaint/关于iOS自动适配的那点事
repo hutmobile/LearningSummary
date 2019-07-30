@@ -1,0 +1,266 @@
+关于iOS自动适配的那点事
+
+自iphone4s以后，苹果先后推出了iphone5、iphone5s、iphone6、iphone6plus、iphone6s、iphone6splus这些新的机型，它们的屏幕大小各有所异，从此给我们开发者留下了一个蛋疼的问题：屏幕适配。
+
+1、显示坐标定位方式：在4和4s的时代，我们采用显示坐标定位方式设置一个视图的坐标，比如view.frame  = CGRectMake(20, 70, 160, 160);在当时显然是没有任何问题的，因为手机屏幕的大小是固定的，屏宽320像素，屏高480像素。
+
+2、autoresizingMask：自iphone5以后，手机屏幕的高度变成了568像素，有时候我们定义的视图在iphone4和4s上运行起来位置摆放正常，但是在5和5s上就不那么和谐了，这就对开发者提出了适配的任务：如何让视图在不同大小的屏幕上恰到好处的展现出来呢？其实苹果最先推出来的跟适配沾边的技术autoresizingMask。autoresizingMask能给出子视图相对于父亲视图的对齐方式与缩放系数，当父视图发生变化时，通过每个视图autoresizingMask即可自动得出新的位置。使用步骤是
+
+第一步：设置父视图的autoresizesSubviews属性为YES，superView.autoresizesSubviews = YES;，否则后面的autoresizingMask都将失效。
+
+第二步：设置子视图的autoresizingMask, subView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin。
+
+这里面的autoresizingMask属性是一个枚举值，枚举值各项含义如下：UIViewAutoresizingNone:就是不自动调整。
+
+UIViewAutoresizingFlexibleLeftMargin: 自动调整与superView左边的距离，保证与superView右边的距离不变。
+
+UIViewAutoresizingFlexibleRightMargin: 自动调整与superView的右边距离，保证与superView左边的距离不变。
+
+UIViewAutoresizingFlexibleTopMargin: 自动调整与superView顶部的距离，保证与superView底部的距离不变。
+
+UIViewAutoresizingFlexibleBottomMargin: 自动调整与superView底部的距离，也就是说，与superView顶部的距离不变。
+
+UIViewAutoresizingFlexibleWidth: 自动调整自己的宽度，保证与superView左边和右边的距离不变。
+
+UIViewAutoresizingFlexibleHeight: 自动调整自己的高度，保证与superView顶部和底部的距离不变。
+
+UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin: 自动调整与superView左边的距离，保证与左边的距离和右边的距离和原来距左边和右边的距离的比例不变。比如原来距离为20，30，调整后的距离应为68，102，即68/20=102/30。遗憾的是这些技术的缺陷也十分明显，是一个不成熟的技术，原因有两点：
+
+(1)、autoresizingMask缩放比例是UIKit内部计算的，开发者无法指定缩放比例的精确值。
+
+(2)、变化规则只能基于父子视图，无法解决兄弟视图之间的位置关系。所以在iOS6推出自动布局（Auto Layout）技术后，autoresizingMask成为一项鸡肋技术。可以用食之无味，弃之可惜来形容。
+
+3、AutoLayout-可视化编程自动布局：关于AutoLayout技术有可视化编程和纯代码两种方式，本处先讲解可视化的方式。自动布局是对autoresizingMask的进一步改进，它允许开发者在界面上的任意两个视图之间建立精确的线性变化规则。所谓线性变化就是数学中的一次函数，即： y = m*x + c  其中x和y是界面中任意两个视图的某个布局属性，m为比例系数，c为常量。在storyboard或者xib中设置约束的方案有三种：
+
+（1）在设计器中长按Control键拖动控件。
+
+（2）在左侧文档结构窗口中长按Control键拖动控件。
+
+（3）点击设计器底部图标，pin设置距离约束、固定宽高约束、等高等宽和宽高比约束，align设置对齐约束。
+
+注意：方案(1)和(2)中同时按住Shift键与Option键可以同时设置多个约束。前面我们提到了一个重要概念就是约束，约束有很多种类，现列出如下：Leading :距离另一视图左边距离的约束
+
+Trailing :距离另一视图左边距离的约束
+
+Top :距离另一视图顶部距离的约束
+
+Bottom :距离另一视图底部距离的约束
+
+Width:单个视图固定宽度的约束
+
+Height:单个视图固定高度的约束
+
+Equal Widths:两个视图等宽的约束
+
+Equal Heights:两个视图等高的约束
+
+Aspect Ratio:单个视图固定宽高比的约束
+
+Horizontally in Container:固定在父视图水平方向中线的约束
+
+Vertically in Container:固定在父视图垂直方向中线的约束
+
+Vertically in Container:固定在非父视图水平方向中线的约束
+
+Horizontall Centers:固定在非父视图垂直方向中线的约束
+
+Vertical Spacing:两个视图垂直方向距离的约束
+
+Horizontally Spacing:两个视图水平方向距离的约束
+
+align Top to:顶部对齐约束
+
+align Bottom to:底部对齐约束
+
+align Leading to:左边对齐约束
+
+align Trailing to:右边对齐约束
+
+还有一些选项几乎是我们必用的，含义列出如下：Update Frames:更新坐标以适应约束
+
+Update Constraints:更新约束以适应坐标
+
+Add Constraints:添加约束
+
+Constain to margins:如果你点了constrain to margins，左右会有8个点的空挡，从8个点后开始计算约束，而没有点时，已屏幕的0点开始计算。建议取消勾选。
+
+我们可以在画布的右边查看每个约束的详情，我们在前面讲的y相对于x发生变化的公式 y = m*x + c  在这里得到了呼应，First Item对应公式中的y，表示因变量
+
+Relation对应公式中的=，表示相等关系，这里显示的是Equal即相等
+
+Second Item对应公式中的x，表示自变量
+
+Multiplier对应公示中的m，表示缩放比例系数
+
+Constant对应公示中的c，表示偏移常量
+
+点击First Item或者Second Item下拉菜单，选择Reverse First And Second Item即可交换双方的位置。
+
+得反函数：x = 1/m * y - c/m
+
+值得一提的是约束既不能少，少了不能确定视图位置，也不能多，多了会冲突。
+
+另外，某些用来展现内容的用户控件，例如文本控件UILabel、按钮UIButton、图片视图UIImageView等，它们具有自身内容尺寸（Intrinsic Content Size），此类用户控件会根据自身内容尺寸添加布局约束。也就是说，如果开发者没有显式给出其宽度或者高度约束，则其自动添加的自身内容约束将会起作用。
+
+4、AutoLayout-代码自动布局：并非所有的情况都能用IB来解决，比如定义诸如某视图的高度等于另一个视图的宽度这样的约束，通过代码构建自动布局约束是最基础的，也是最灵活的方式。缺点是代码很冗长。每一个布局约束是一个NSLayoutConstraint实例，NSLayoutConstraint类的主要属性定义如下
+
+@property (readonly, assign) id firstItem;
+
+@property (readonly) NSLayoutAttribute firstAttribute;
+
+@property (readonly) NSLayoutRelation relation;
+
+@property (readonly, assign) id secondItem;
+
+@property (readonly) NSLayoutAttribute secondAttribute;
+
+@property (readonly) CGFloat multiplier;
+
+@property CGFloat constant;
+
+...
+
++(instancetype)constraintWithItem:(id)firstItem attribute:(NSLayoutAttribute)firstAttribute
+
+relatedBy:(NSLayoutRelation)relation
+
+toItem:(id)secondItem attribute:(NSLayoutAttribute)secondAttribute
+
+multiplier:(CGFloat)multiplier constant:(CGFloat)constant;
+
+每一个布局约束就是一个明确的线性变化规则，在数学上是以一次函数的形式表示，即：
+
+y = m * x + c
+
+每个约束就对应如下关系：
+
+firstItem.firstAttribute {==,<=,>=} secondItem.secondAttribute * multiplier + constant
+
+我们可以调用NSLayoutConstraint类的constraintWithItem:…方法，传入所有需要的参数构造一个新的约束。
+
+（1）、firstItem与secondItem分别是界面中受约束的视图与被参照的视图，他们不一定非得是兄弟关系或者父子关系，只要是他们有着共同的祖先视图即可。
+
+（2）、firstAttribute与secondAttribute分别是firstItem与secondItem的某个布局属性（NSLayoutAttribute），其中NSLayoutAttributeNotAnAttribute当我们需要为某个视图精确指定一个宽度或者高度值时，这时候secondItem为nil，secondAttribute为    NSLayoutAttributeNotAnAttribute。
+
+（3）、relation定义了布局关系
+
+typedef NS_ENUM(NSInteger, NSLayoutRelation)
+
+{
+
+NSLayoutRelationLessThanOrEqual = -1,
+
+NSLayoutRelationEqual = 0,
+
+NSLayoutRelationGreaterThanOrEqual = 1,
+
+};
+
+布局关系可以是相等、大于等于或者小于等于。
+
+（4）、multiplier即比例系数。
+
+（5）、constant即常量
+
+使用案例如下：
+
+第一步：默认的autoresizingMask代码和自动布局约束会冲突，设置为no，程序只有自动布局约束代码，避免冲突。
+
+logoView.translatesAutoresizingMaskIntoConstraints = NO;
+
+第二步：设置约束，为了唯一确定视图的位置，我添加了四个约束
+
+logoViewtopConstraint = [NSLayoutConstraint constraintWithItem:logoView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTopMargin multiplier:1.0f constant:80];
+
+NSLayoutConstraint *logoViewcenterConstaint = [NSLayoutConstraint constraintWithItem:logoView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0];
+
+NSLayoutConstraint *logoViewwidthConstaint = [NSLayoutConstraint constraintWithItem:logoView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.3f constant:0];
+
+NSLayoutConstraint *logoViewhightConstaint = [NSLayoutConstraint constraintWithItem:logoView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:logoView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0];
+
+第三步：添加约束
+
+logoViewtopConstraint.active  = YES;
+
+logoViewcenterConstaint.active = YES;
+
+logoViewwidthConstaint.active = YES;
+
+logoViewhightConstaint.active = YES;
+
+5、VFL:Visual Format Language,可视化格式语言,能直观又简单的创建约束,缺点是不能表达所有的约束。用法举例：
+
+第一步：autoresizingMask设置为NO。
+
+logoView.translatesAutoresizingMaskIntoConstraints = NO;
+
+第二步：使用VFL添加约束
+
+[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-80-[logoView]" options:NSLayoutFormatAlignAllLeft metrics:nil views:@{@"logoView":logoView}]];
+
+语法是这样的，H表示横向
+
+V表示竖向
+
+| 表示父视图
+
+[视图名字]表示视图
+
+-表示 间距
+
+-间距- 表示设置其他间距
+
+[视图名字(设置视图的宽高)]
+
+上面constraintsWithVisualFormat方法的参数含义如下
+
+VisualFormat:VFL语句
+
+options:基于哪一个选项（基于哪个方向去计算布局）
+
+metrics：绑定数值（NSNumber） 与字符串
+
+views：绑定视图 与字符串
+
+NSDictionaryOfVariableBindings：是一个宏，方便我们构建字典，NSDictionaryOfVariableBindings(logoView)就等于@{@”logoView”: logoView}。
+
+另外需要注意一些精简写法（1）、省略：也就是说如果间距为0则不用明确写出，所以@”H:|-0-[logoView]-0-|”可以精简为@”H:|[logoView]|”
+
+（2）、合并：例如@"H:[password]-20-[tfPassword]"和@"[tfPassword]-40-|"可以合并为@"H:[password]-20-[tfPassword]-40-|"
+
+6、Masonry：是第三方库，让自动布局的写法更加简便，是现在程序员使用较为普遍的一种方案。用法案例如下：
+
+第一步：声明为__weak,因为我们后面要使用block，以防内存问题。
+
+__weak typeof(self) weakself = self;
+
+第二步：添加约束。
+
+[logoView mas_makeConstraints:^(MASConstraintMaker *make) {
+
+make.centerX.equalTo(weakself.view);
+
+make.top.mas_equalTo(80);
+
+make.width.mas_equalTo(weakself.view.bounds.size.width*0.3);
+
+make.height.mas_equalTo(weakself.view.bounds.size.width*0.3); }];
+
+Masonry用法比较简单，需要注意的地方主要有两点
+
+注意点（1)： 使用 mas_makeConstraints方法的元素必须事先添加到父元素的中，例如[self.view addSubview:view];
+
+注意点（2)： masequalTo 和 equalTo 区别：masequalTo 比equalTo多了类型转换操作，一般来说，大多数时候两个方法都是 通用的，但是对于数值元素使用mas_equalTo。对于对象或是多个属性的处理，使用equalTo。特别是多个属性时，必须使用equalTo,例如 make.left.and.right.equalTo(self.view);
+
+另外，在Masonry中，and,with都没有具体操作，仅仅是为了提高程序的可读性
+
+7、SizeClass：在自适应布局中，苹果提出了Size Class（尺寸类型）的概念，用于在概念上表示水平或垂直方向的大小。共有3种类型尺寸，大的称之为Regular（标准尺寸类型，简记为+），小的称之为Compact（紧凑尺寸类型，简记为-），任意的称之为Any（Regular和Compact任意）。所有的iPad不管什么方位都是[+, +]
+
+所有的iPhone在竖屏时都是[-, +]
+
+在横屏时只有iPhone 6 Plus和6s Plus是[+, -]，其余的iPhone都是[-, -]。当设计人员给出了不同设备上的界面设计稿之后，作为开发人员的我们应该首先总结出最通用的自动布局方案，将其作为任意尺寸类型的自动布局（基类）；把差异化的布局放在某个特定尺寸类型的自动布局（子类）。使用的时候一定要确保Use Auto Layout复选框和Use Size Classes复选框都已选中
+
+8、利用宏进行适配：我们观察到从iphone5以后所有的苹果机型，尽管屏幕大小不尽相同，但是屏幕的宽高比确是一致的，这就为我们进行适配又找到了一丝线索，实际上，我们可以利用宽高比相等这点，以某种机型为基础，比如5s，在5s上的视图，搬到iphone6以上时，就将这个视图的大小进行等比扩大，同理，在4和4s上时，将这个视图的大小进行等比缩小，这样视图在不同大小屏幕上，只是大小不一样而已，看起来却都是和谐的，因为视图相对于屏幕大小的比例是一样的 。用法案例：pch是一个全局文件，在pch文件导入的头文件和宏，对全局类都是有效的，我们在pch文件里定义两个带参数的宏，#define Width(x) [UIScreen mainScreen].bounds.size.width/320*x
+
+#define Height(y) [UIScreen mainScreen].bounds.size.height/568*y,这样我们在控制器中设置一个视图的位置可以这么写，bigView = [[UIView alloc] initWithFrame:CGRectMake(Width(20), Height (70), Width(160), Height(160))];当然你可以重写CGRectMake方法，这样使用的时候会更加的方便，笔者将这个最后的小任务就交给大家思考下吧！
+

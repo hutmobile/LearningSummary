@@ -1,5 +1,0 @@
-$ hexo d 
-ERROR Deployer not found: git
-
-npm install --save hexo-deployer-git
-即可。

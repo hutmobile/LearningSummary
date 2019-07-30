@@ -1,5 +1,0 @@
-如何正确设置你的 git 个人信息
-接下来全局设置好你的正确信息，以后就放心的用Github进行版本管理吧 ^_^
-
-git config --global user.email "你的邮件地址"
-git config --global user.name "你的Github用户名"

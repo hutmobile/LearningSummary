@@ -1,6 +1,0 @@
-解决Swift中出现 No such module 'SnapKit'
-
-我的问题是pod install完成后还是提示：解决Swift中出现 No such module 'SnapKit'
-
-解决办法是在build phases中的link binary with libraries中先删除pods_xxx.framework，再重新添加一次就好了
-

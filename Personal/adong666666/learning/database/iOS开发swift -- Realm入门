@@ -1,0 +1,1513 @@
+本网站使用cookies以确保您在我们的网站上获得最佳体验。学到更多
+得到它了！
+制品 
+文件 
+价钱
+支持 
+公司 
+ 
+Realm Swift
+3.13.1
+最新版本
+先决条件
+XCode 8.3.3或更高版本
+iOS 8或更高版本的目标，macOS 10.9或更高版本，或任何版本的tvOS或watchOS
+安装
+动态框架
+的CocoaPods
+迦太基
+安装CocoaPods 1.1.0或更高版本。
+运行pod repo update以使CocoaPods了解最新的Realm版本。
+在你Podfile，添加use_frameworks!和pod 'RealmSwift'你的主和测试目标。
+从命令行运行pod install。
+使用.xcworkspaceCocoaPods生成的文件来处理您的项目！
+入门
+
+在GitHub上查看更多
+
+
+如果您希望使用Objective-C中的 Realm ，或者使用混合的Objective-C和Swift应用程序，请参阅Realm Objective-C。Realm Objective-C和Realm Swift API不可互操作，不支持它们一起使用。
+
+Realm Swift使您能够以安全，持久和快速的方式有效地编写应用程序的模型层。这是它的样子：
+
+// Define your models like regular Swift classes
+class Dog: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var age = 0
+}
+class Person: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var picture: Data? = nil // optionals supported
+    let dogs = List<Dog>()
+}
+
+// Use them like regular Swift objects
+let myDog = Dog()
+myDog.name = "Rex"
+myDog.age = 1
+print("name of dog: \(myDog.name)")
+
+// Get the default Realm
+let realm = try! Realm()
+
+// Query Realm for all dogs less than 2 years old
+let puppies = realm.objects(Dog.self).filter("age < 2")
+puppies.count // => 0 because no dogs have been added to the Realm yet
+
+// Persist your data easily
+try! realm.write {
+    realm.add(myDog)
+}
+
+// Queries are updated in realtime
+puppies.count // => 1
+
+// Query and update from any thread
+DispatchQueue(label: "background").async {
+    autoreleasepool {
+        let realm = try! Realm()
+        let theDog = realm.objects(Dog.self).filter("age == 1").first
+        try! realm.write {
+            theDog!.age = 3
+        }
+    }
+}
+Realm Studio
+Realm Studio是我们的首选开发人员工具，可以轻松管理Realm数据库和Realm平台。使用Realm Studio，您可以打开和编辑本地和同步的域，并管理任何Realm Object Server实例。它支持Mac，Windows和Linux。
+
+
+
+
+
+使用菜单项“ 工具”>“生成演示数据库”创建包含示例数据的测试数据库。
+
+如果您在查找应用程序的Realm文件时需要帮助，请查看此StackOverflow答案以获取详细说明。
+
+例子
+您可以在我们的发布zip下找到iOS和OS X的示例应用程序examples/，演示如何使用Realm的许多功能，如迁移，如何使用它UITableViewController，加密，命令行工具等等。
+
+使用Realm框架
+在Swift源文件的顶部，用于import RealmSwift导入Realm Swift并使其可用于您的代码。这就是你开始所需要的一切！
+
+tvOS
+因为在tvOS上禁止写入“Documents”目录，所以默认的Realm位置设置为NSCachesDirectory。但是，请注意tvOS可以随时清除“Caches”目录中的文件，因此我们建议您依赖Realm作为可重建的缓存，而不是存储重要的用户数据。
+
+如果您想在tvOS应用程序和电视服务扩展（例如Top Shelf扩展）之间共享Realm文件，则必须使用Library/Caches/共享容器中的应用程序组目录。
+
+let fileURL = FileManager.default
+    .containerURL(forSecurityApplicationGroupIdentifier: "group.io.realm.examples.extension")!
+    .appendingPathComponent("Library/Caches/default.realm")
+您还可以在应用中捆绑预构建的Realm文件。但是，请务必遵守App Store指南，将您的应用保持在200MB以下。请浏览我们的tvOS示例，了解示例如何使用Realm作为离线缓存或预加载数据的示例tvOS应用程序。
+
+使用Realm与后台应用程序刷新
+在iOS 8及更高版本中，NSFileProtection只要设备被锁定，应用程序内的文件就会自动加密。如果您的应用程序在设备被锁定时尝试执行涉及Realm的任何工作，并且NSFileProtection您的Realm文件的属性设置为加密它们（默认情况下就是这种情况），open() failed: Operation not permitted则会引发异常。
+
+为了解决这个问题，有必要确保应用于Realm文件本身及其辅助文件的文件保护属性降级为不太严格的文件保护属性，即使在设备被锁定时也允许文件访问，例如NSFileProtectionCompleteUntilFirstUserAuthentication。
+
+如果您选择以这种方式选择退出完整的iOS文件加密，我们建议您使用Realm自己的内置加密来确保您的数据仍然得到妥善保护。
+
+由于辅助文件有时可以在操作过程中延迟创建和删除，因此我们建议您将文件保护属性应用于包含这些Realm文件的父文件夹。这将确保该属性正确应用于所有相关Realm文件，无论其创建时间如何。
+
+let realm = try! Realm()
+
+// Get our Realm file's parent directory
+let folderPath = realm.configuration.fileURL!.deletingLastPathComponent().path
+
+// Disable file protection for this directory
+try! FileManager.default.setAttributes([FileAttributeKey(rawValue: NSFileProtectionKey): NSFileProtectionNone],
+                                       ofItemAtPath: folderPath)
+三界
+一个境界是一种境界移动数据库容器的一个实例。
+
+有关Realms的详细讨论，请阅读The Realm Data Model。有关创建和管理领域的信息，请参阅
+
+打开本地领域
+要打开Realm，请实例化一个新Realm对象：
+
+let realm = try! Realm()
+
+try! realm.write {
+    realm.add(myDog)
+}
+这会实例化默认的Realm。
+
+配置本地领域
+通过创建实例Realm.Configuration并设置适当的属性，在打开Realm之前配置它。创建和自定义配置值允许您自定义以及其他方面：
+
+本地Realm文件位置的路径
+该迁移功能，如果一个领域的模式和版本之间的更改必须更新
+配置压缩功能以确保有效利用磁盘空间。
+可以在Realm(configuration: config)每次需要Realm实例时传递配置，也可以将配置设置为使用默认Realm实例Realm.Configuration.defaultConfiguration = config。
+
+例如，假设您有一个应用程序，用户必须登录到您的Web后端，并且您希望支持在帐户之间快速切换。您可以通过执行以下操作为每个帐户提供自己的Realm文件，该文件将用作默认Realm：
+
+func setDefaultRealmForUser(username: String) {
+    var config = Realm.Configuration()
+
+    // Use the default directory, but replace the filename with the username
+    config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("\(username).realm")
+
+    // Set this as the configuration used for the default Realm
+    Realm.Configuration.defaultConfiguration = config
+}
+您可以拥有多个配置对象，因此您可以独立控制每个Realm的版本，架构和位置。
+
+let config = Realm.Configuration(
+    // Get the URL to the bundled file
+    fileURL: Bundle.main.url(forResource: "MyBundledData", withExtension: "realm"),
+    // Open the file in read-only mode as application bundles are not writeable
+    readOnly: true)
+
+// Open the Realm with the configuration
+let realm = try! Realm(configuration: config)
+
+// Read some data from the bundled Realm
+let results = realm.objects(Dog.self).filter("age > 5")
+存储可写Realm文件的最常见位置是iOS上的“Documents”目录和macOS上的“Application Support”目录。请尊重Apple的iOS数据存储指南，该指南建议如果应用程序可以重新生成的文档应存储在<Application_Home>/Library/Caches目录中。如果使用自定义URL初始化Realm，则必须描述具有写入权限的位置。
+
+默认领域
+到目前为止，您可能已经注意到我们realm通过调用初始化了对变量的访问Realm()。该方法返回一个Realm对象，该对象映射到default.realm应用程序的Documents文件夹（iOS）或Application Support文件夹（macOS）中指定的文件。
+
+打开同步领域
+您是否希望使用Realm Mobile Platform同步所有Realm数据库？所有与同步相关的文档已移至我们的平台文档中
+
+内存领域
+通过设置inMemoryIdentifier而不是fileURLon Realm.Configuration，您可以创建一个完全在内存中运行而不会持久保存到磁盘的Realm。设置inMemoryIdentifier将为零fileURL（反之亦然）。
+
+let realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "MyInMemoryRealm"))
+内存领域不会跨应用程序启动保存数据，但Realm的所有其他功能将按预期工作，包括查询，关系和线程安全。如果您需要灵活的数据访问而没有磁盘持久性的开销，这是一个有用的选项。
+
+内存领域在临时目录中创建多个文件，用于协调跨进程通知等事务。实际上没有数据写入文件，除非由于内存压力操作系统需要交换到磁盘。
+
+注意：当具有特定标识符的所有内存中Realm实例超出范围而没有引用时，该Realm中的所有数据都将被删除。我们建议您在应用程序的生命周期内保留对任何内存领域的强引用。（对于磁盘领域，这不是必需的。）
+
+错误处理
+与任何磁盘I / O操作一样，Realm如果资源受到限制，创建实例有时可能会失败。实际上，这只能在第一次在给定线程上创建Realm实例时发生。从同一个线程对Realm的后续访问将重用高速缓存的实例并始终成功。
+
+要在首次访问给定线程上的Realm时处理错误，请使用Swift的内置错误处理机制：
+
+do {
+    let realm = try Realm()
+} catch let error as NSError {
+    // handle error
+}
+辅助领域文件
+除标准.realm文件外，Realm还为其自己的内部操作生成并维护其他文件和目录。
+
+.realm.lock - 资源锁的锁文件。
+.realm.management - 进程间锁定文件的目录。
+.realm.note - 用于通知的命名管道。
+这些文件对.realm数据库文件没有任何影响，如果删除或替换父数据库文件，则不会导致任何错误行为。
+
+当报告领域的问题，请一定要包括这些辅助文件与主一起.realm的文件，因为它们包含用于调试的信息。
+
+捆绑一个境界
+通常使用初始数据为应用程序设定种子，使其在首次启动时立即可供您的用户使用。这是如何做到这一点：
+
+首先，填充领域。您应该使用与最终发货应用相同的数据模型来创建Realm，并使用您希望与应用捆绑在一起的数据填充它。由于Realm文件是跨平台的，您可以使用macOS应用程序（请参阅我们的JSONImport示例）或在模拟器中运行的iOS应用程序。
+在您生成此Realm文件的代码中，您应该通过制作文件的压缩副本来完成（请参阅参考资料Realm().writeCopyToPath(_:encryptionKey:)）。这将减少Realm的文件大小，使您的最终应用程序更轻松地为您的用户下载。
+将Realm文件的新压缩副本拖到最终应用程序的Xcode Project Navigator中。
+转到Xcode中的app target的构建阶段选项卡，并将Realm文件添加到“Copy Bundle Resources”构建阶段。
+此时，您的应用可以访问捆绑的Realm文件。您可以使用找到它的路径NSBundle.main.pathForResource(_:ofType:)。
+如果捆绑的领域包含您不需要修改固定的数据，你可以直接从束路径设置中打开它readOnly = true的上Realm.Configuration对象。否则，如果它是您要修改的初始数据，则可以使用将捆绑的文件复制到应用程序的Documents目录中NSFileManager.default.copyItemAtPath(_:toPath:)。
+您可以参考我们的迁移示例应用程序，以获取有关如何使用捆绑的Realm文件的示例。
+
+类子集
+在某些情况下，您可能希望限制哪些类可以存储在特定领域中。例如，如果您有两个团队在应用程序的不同组件上工作，这两个组件都在内部使用Realm，那么您可能不希望必须协调它们之间的迁移。你可以通过设置objectTypes你的属性来做到这一点Realm.Configuration：
+
+let config = Realm.Configuration(objectTypes: [MyClass.self, MyOtherClass.self])
+let realm = try! Realm(configuration: config)
+压缩领域
+Realm的工作方式是Realm文件的大小始终大于存储在其中的对象的总大小。请参阅我们关于线程的文档，了解为什么这种架构能够实现Realm的一些出色性能，并发性和安全性优势。
+
+为了避免进行昂贵的系统调用，Realm文件很少在运行时缩小。相反，它们按特定大小增量增长，新数据写入文件内跟踪的未使用空间。但是，可能存在Realm文件的重要部分由未使用的空间组成的情况。为了解决这个问题，您可以shouldCompactOnLaunch在Realm的配置对象上设置block属性，以确定在第一次打开时是否应该压缩Realm文件。例如：
+
+let config = Realm.Configuration(shouldCompactOnLaunch: { totalBytes, usedBytes in
+    // totalBytes refers to the size of the file on disk in bytes (data + free space)
+    // usedBytes refers to the number of bytes used by data in the file
+
+    // Compact if the file is over 100MB in size and less than 50% 'used'
+    let oneHundredMB = 100 * 1024 * 1024
+    return (totalBytes > oneHundredMB) && (Double(usedBytes) / Double(totalBytes)) < 0.5
+})
+do {
+    // Realm is compacted on the first open if the configuration block conditions were met.
+    let realm = try Realm(configuration: config)
+} catch {
+    // handle error compacting or opening Realm
+}
+压缩操作通过读取Realm文件的全部内容，将其重写到不同位置的新文件，然后替换原始文件来工作。根据文件中的数据量，这可能是一项昂贵的操作。
+
+我们鼓励您尝试使用这些数字来确定在经常执行压缩和让Realm文件变得过大之间取得良好平衡。
+
+最后，如果另一个进程正在访问Realm，即使满足配置块的条件，也会跳过压缩。这是因为在访问Realm时无法安全地执行压缩。
+
+shouldCompactOnLaunch同步域不支持设置块。这是因为压缩不会保留事务日志，必须保留事务日志以进行同步。
+
+删除Realm文件
+在某些情况下，例如清除缓存或重置整个数据集，从磁盘中完全删除Realm文件可能是合适的。
+
+因为Realm避免将数据复制到内存中，除非绝对需要，所以Realm管理的所有对象都包含对磁盘上文件的引用，并且必须先释放它才能安全删除文件。这包括从读取（或加入）的所有对象的境界，所有List，Results以及ThreadSafeReference目的和Realm本身。
+
+在实践中，这意味着删除境界文件应该做到无论在应用程序启动时你已经打开的境界之前，或之后只有明确中打开境界自动释放池，确保所有的领域对象将被释放。
+
+最后，虽然不是绝对必要，但您应该删除辅助Realm文件以及主Realm文件以完全清除所有相关文件。
+
+autoreleasepool {
+    // all Realm usage here
+}
+let realmURL = Realm.Configuration.defaultConfiguration.fileURL!
+let realmURLs = [
+    realmURL,
+    realmURL.appendingPathExtension("lock"),
+    realmURL.appendingPathExtension("note"),
+    realmURL.appendingPathExtension("management")
+]
+for URL in realmURLs {
+    do {
+        try FileManager.default.removeItem(at: URL)
+    } catch {
+        // handle error
+    }
+}
+楷模
+领域数据模型被定义为具有常规属性的常规Swift类。创建一个，只是子类Object或现有的Realm模型类。领域模型对象的功能大多与其他任何Swift对象一样。您可以在它们上定义自己的方法，使它们符合协议，并像使用任何其他对象一样使用它们。主要限制是您只能在创建它的线程上使用对象。
+
+关系和嵌套的数据结构由包括目标类型的属性或建模List小号的对象的类型的列表。List实例也可用于建模原始值的集合（例如，字符串或整数数组）。
+
+import RealmSwift
+
+// Dog model
+class Dog: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var owner: Person? // Properties can be optional
+}
+
+// Person model
+class Person: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var birthdate = Date(timeIntervalSince1970: 1)
+    let dogs = List<Dog>()
+}
+由于Realm在启动时会解析代码中定义的所有模型，因此它们必须全部有效，即使它们从未使用过。
+
+当使用Swift中的Realm时，该Swift.reflect(_:)函数用于确定有关模型的信息，这需要调用init()成功。这意味着所有非可选属性都必须具有默认值。
+
+有关详细信息，请参阅我们的API文档Object。
+
+支持的属性类型
+域支持以下属性类型：Bool，Int，Int8，Int16，Int32，Int64，Double，Float，String，Date，和Data。
+
+CGFloat 不鼓励使用属性，因为类型不是平台无关的。
+
+String，Date并且Data属性可以是可选的。Object属性必须是可选的。存储可选数字是使用RealmOptional。
+
+必需的属性
+String，Date和Data属性可以使用标准Swift语法声明为可选或必需（非可选）。使用类型声明可选的数字类型RealmOptional：
+
+class Person: Object {
+    // Optional string property, defaulting to nil
+    @objc dynamic var name: String? = nil
+
+    // Optional int property, defaulting to nil
+    // RealmOptional properties should always be declared with `let`,
+    // as assigning to them directly will not work as desired
+    let age = RealmOptional<Int>()
+}
+
+let realm = try! Realm()
+try! realm.write() {
+    var person = realm.create(Person.self, value: ["Jane", 27])
+    // Reading from or modifying a `RealmOptional` is done via the `value` property
+    person.age.value = 28
+}
+RealmOptional支持Int，Float，Double，Bool，和所有的大小版本Int（Int8，Int16，Int32，Int64）。
+
+主键
+覆盖Object.primaryKey()以设置模型的主键。声明主键可以有效地查找和更新对象，并为每个值强制实现唯一性。将具有主键的对象添加到Realm后，无法更改主键。
+
+class Person: Object {
+    @objc dynamic var id = 0
+    @objc dynamic var name = ""
+
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
+索引属性
+要索引属性，请覆盖Object.indexedProperties()。与主键一样，索引会使写入速度稍慢，但会更快地使用比较运算符进行查询。（它还会使您的Realm文件略大，以存储索引。）最好只在优化特定情况下的读取性能时添加索引。
+
+class Book: Object {
+    @objc dynamic var price = 0
+    @objc dynamic var title = ""
+
+    override static func indexedProperties() -> [String] {
+        return ["title"]
+    }
+}
+Realm支持对字符串，整数，布尔值和Date属性进行索引。
+
+忽略属性
+如果您不想将模型中的字段保存到其Realm，请覆盖Object.ignoredProperties()。领域不会干扰这些属性的正常运行; 他们将得到伊娃的支持，你可以自由地覆盖他们的二传手和吸气者。
+
+class Person: Object {
+    @objc dynamic var tmpID = 0
+    var name: String { // read-only properties are automatically ignored
+        return "\(firstName) \(lastName)"
+    }
+    @objc dynamic var firstName = ""
+    @objc dynamic var lastName = ""
+
+    override static func ignoredProperties() -> [String] {
+        return ["tmpID"]
+    }
+}
+忽略的属性与普通属性完全相同。它们不支持任何特定于Realm的功能（例如，它们不能在查询中使用，也不会触发通知）。仍然可以使用KVO观察它们。
+
+属性属性
+领域模型属性必须具有该@objc dynamic var属性才能成为底层数据库数据的访问者。请注意，如果将类声明为@objcMembers（Swift 4或更高版本），则可以将各个属性声明为dynamic var。
+
+有三种例外情况：LinkingObjects，List和RealmOptional。这些属性不能声明为动态，因为通用属性无法在Objective-C运行时中表示，后者用于动态分派dynamic属性。应始终使用声明这些属性let。
+
+财产备忘单
+此表提供了声明模型属性的便捷参考。
+
+类型	非可选	可选的
+布尔	@objc dynamic var value = false	let value = RealmOptional<Bool>()
+诠释	@objc dynamic var value = 0	let value = RealmOptional<Int>()
+浮动	@objc dynamic var value: Float = 0.0	let value = RealmOptional<Float>()
+双	@objc dynamic var value: Double = 0.0	let value = RealmOptional<Double>()
+串	@objc dynamic var value = ""	@objc dynamic var value: String? = nil
+数据	@objc dynamic var value = Data()	@objc dynamic var value: Data? = nil
+日期	@objc dynamic var value = Date()	@objc dynamic var value: Date? = nil
+宾语	不适用：必须是可选的	@objc dynamic var value: Class?
+名单	let value = List<Type>()	不适用：必须是非选择性的
+LinkingObjects	let value = LinkingObjects(fromType: Class.self, property: "property")	不适用：必须是非选择性的使用Realm对象自动更新对象
+Object实例是实时的，自动更新基础数据的视图; 你永远不必刷新对象。修改对象的属性将立即反映在引用同一对象的任何其他实例中。
+
+let myDog = Dog()
+myDog.name = "Fido"
+myDog.age = 1
+
+try! realm.write {
+    realm.add(myDog)
+}
+
+let myPuppy = realm.objects(Dog.self).filter("age == 1").first
+try! realm.write {
+    myPuppy!.age = 2
+}
+
+print("age of my dog: \(myDog.age)") // => 2
+这不仅可以保持Realm的快速和高效，还可以使您的代码更简单，更具反应性。如果您的UI代码依赖于特定的Realm对象，则在触发UI重绘之前，您无需担心刷新或重新获取它。
+
+您可以订阅Realm通知，以了解对象中的Realm数据何时更新，指示何时应刷新应用程序的UI。
+
+模型继承
+Realm允许模型进一步子类化，允许跨模型重用代码，但是一些导致运行时富类多态的Cocoa特性不可用。这是可能的：
+
+父类的类方法，实例方法和属性在其子类中继承。
+将父类作为参数的方法和函数可以在子类上运行。
+目前无法实现以下目标：
+
+多态类之间的转换（即，子类到子类，子类到父类，父类到子类等）
+同时查询多个类
+多级容器（List和Results）
+将此功能添加到Realm是路线图。目前，我们提供了一些代码示例，用于解决一些更常见的模式。
+
+或者，如果您的实现允许，我们建议使用以下类组合模式来构建包含来自其他类的逻辑的子类：
+
+// Base Model
+class Animal: Object {
+    @objc dynamic var age = 0
+}
+
+// Models composed with Animal
+class Duck: Object {
+    @objc dynamic var animal: Animal? = nil
+    @objc dynamic var name = ""
+}
+class Frog: Object {
+    @objc dynamic var animal: Animal? = nil
+    @objc dynamic var dateProp = Date()
+}
+
+// Usage
+let duck = Duck(value: [ "animal": [ "age": 3 ], "name": "Gustav" ])
+集合
+Realm有几种类型可以帮助表示对象组，我们称之为“Realm集合”：
+
+Results，一个表示从查询中检索的对象的类。
+List，一个表示模型中多对多关系的类。
+LinkingObjects，一个表示模型中反比关系的类。
+RealmCollection，一个定义所有Realm集合符合的公共接口的协议。
+AnyRealmCollection，一个类型擦除的类，可以转发到具体的Realm集合，如Results，List或LinkingObjects。
+Realm集合类型各自符合RealmCollection协议，这确保它们的行为一致。该协议的继承CollectionType使得它可以以与其他标准库集合相同的方式使用。在此协议中声明了其他常见的Realm集合API，例如查询，排序和聚合操作等。Lists具有超出协议接口的额外变异操作，例如添加和删除对象或值。
+
+使用该RealmCollection协议，您可以编写可以在任何Realm集合上运行的通用代码：
+
+func operateOn<C: RealmCollection>(collection: C) {
+    // Collection could be either Results or List
+    print("operating on collection containing \(collection.count) objects")
+}
+由于与斯威夫特的类型系统的局限性，有必要使用类型擦除的包装，例如AnyRealmCollection，以存储该集合作为一个属性或变量：
+
+class ViewController {
+//    let collection: RealmCollection
+//                    ^
+//                    error: protocol 'RealmCollection' can only be used
+//                    as a generic constraint because it has Self or
+//                    associated type requirements
+//
+//    init<C: RealmCollection>(collection: C) where C.ElementType == MyModel {
+//        self.collection = collection
+//    }
+
+    let collection: AnyRealmCollection<MyModel>
+
+    init<C: RealmCollection>(collection: C) where C.ElementType == MyModel {
+        self.collection = AnyRealmCollection(collection)
+    }
+}
+在领域之间复制对象
+将Realm对象复制到其他Realms就像传入原始对象一样简单Realm().create(_:value:update:)。例如，realm.create(MyObjectSubclass.self, value: originalObjectInstance)。请记住，只能从首次创建它们的线程访问Realm对象，因此该副本仅适用于同一线程上的Realms。
+
+请注意，Realm().create(_:value:update:)不支持处理循环对象图。不要直接或间接传入包含涉及引用其父项的对象的关系的对象。
+
+关系
+您可以将任意两个Realm对象链接在一起。Realm中的关系很便宜：遍历链接在速度或内存方面并不昂贵。让我们探索不同类型的关系，Realm允许您在对象之间进行定义。
+
+Object通过使用Object和List属性链接a 。Lists具有非常类似的接口Array，并且List可以使用索引下标来访问a中包含的对象。与Arrays 不同，Lists只保存Object单个子类的类型。有关更多详细信息，请参阅API文档List。
+
+假设您的Person模型已经定义（参见模型），让我们创建一个名为的模型Dog：
+
+class Dog: Object {
+    @objc dynamic var name = ""
+}
+许多到一
+要设置多对一或一对一关系，请为模型提供其类型为您的Object子类之一的属性：
+
+class Dog: Object {
+    // ... other property declarations
+    @objc dynamic var owner: Person? // to-one relationships must be optional
+}
+您可以像使用任何其他属性一样使用此属性：
+
+let jim = Person()
+let rex = Dog()
+rex.owner = jim
+使用Object属性时，可以使用常规属性语法访问嵌套属性。例如，rex.owner?.address.country将遍历对象图并根据需要自动从Realm中获取每个对象。
+
+许多一对多
+您可以使用List属性创建与任意数量的对象或支持的原始值的关系。Lists包含Object单个类型的其他s或原始值，并且具有与mutable非常相似的接口Array。
+
+List包含Realm对象的s可以存储对同一Realm对象的多个引用，包括具有主键的对象。例如，您可以创建一个空的List并将相同的对象插入其中三次; 在List然后将返回如果元素该对象在任何索引0,1和2被访问。
+
+Lists可以存储原始值来代替Realm对象。为此，简单地定义一个List含有Bool，Int，Int8，Int16，Int32，Int64，Float，Double，String，Data，或Date值，或任何上述类型的可选版本。
+
+要dogs在我们的Person模型上添加链接到多个狗的属性，我们可以声明类型的属性List<Dog>：
+
+class Person: Object {
+    // ... other property declarations
+    let dogs = List<Dog>()
+}
+您可以List照常访问和分配属性：
+
+let someDogs = realm.objects(Dog.self).filter("name contains 'Fido'")
+jim.dogs.append(objectsIn: someDogs)
+jim.dogs.append(rex)
+List 保证属性保持其插入顺序。
+
+请注意，List当前不支持查询包含原始值的s。
+
+反向关系
+关系是单向的。就拿我们的两个类Person，并Dog作为一个例子。如果Person.dogs链接到Dog实例，则可以按照链接从Persona到a Dog，但是无法从a Dog到其Person对象。您可以设置Dog.owner链接到的一对一属性Person，但这些链接彼此独立。添加一个Dogto Person.dogs不会将该狗的Dog.owner属性设置为正确Person。为解决此问题，Realm提供链接对象属性以表示反向关系。
+
+class Dog: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var age = 0
+    let owners = LinkingObjects(fromType: Person.self, property: "dogs")
+}
+通过链接对象属性，您可以从特定属性获取链接到给定对象的所有对象。一个Dog对象可以有一个名为属性owners包含所有的Person有这个确切的对象Dog在他们的对象dogs属性。创建owners类型的属性，LinkingObjects然后指定它与Person对象的关系。
+
+写
+对象的所有更改（添加，修改和删除）必须在写入事务中完成。
+
+Realm对象可以实例化并用作非托管对象（即尚未添加到Realm），就像常规的Swift对象一样。但是，要在线程之间共享对象或在应用程序启动之间重新使用它们，必须将它们添加到Realm。向Realm添加对象必须在写入事务中完成。由于写入事务会产生不可忽略的开销，因此您应该构建代码以最大限度地减少写入事务的数量。
+
+领域写操作是同步和阻塞，而不是异步。如果线程A开始写操作，则线程B在线程A完成之前在同一个域上开始写操作，线程A必须在线程B的写操作发生之前完成并提交其事务。写操作始终自动刷新beginWrite()，因此重叠写入不会创建竞争条件。
+
+因为写事务可能会失败，就像任何其他的磁盘IO操作，都Realm.write()与Realm.commitWrite()被标记为throws这样你就可以处理，并从失败就像跑出来的磁盘空间进行恢复。没有其他可恢复的错误。为简洁起见，我们的代码示例不处理这些错误，但您肯定应该在生产应用程序中。
+
+创建对象
+定义模型后，可以实例化子Object类并将新实例添加到Realm。考虑这个简单的模型：
+
+class Dog: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var age = 0
+}
+我们可以用几种方式创建新对象：
+
+// (1) Create a Dog object and then set its properties
+var myDog = Dog()
+myDog.name = "Rex"
+myDog.age = 10
+
+// (2) Create a Dog object from a dictionary
+let myOtherDog = Dog(value: ["name" : "Pluto", "age": 3])
+
+// (3) Create a Dog object from an array
+let myThirdDog = Dog(value: ["Fido", 5])
+最明显的是使用指定的初始化程序来创建对象。
+也可以使用适当的键和值从字典创建对象。
+最后，Object可以使用数组实例化子类。数组中的值必须与模型中的相应属性的顺序相同。
+数组中的值应与存储在Realm中的属性相对应 - 您不应指定忽略的属性或计算属性的值。
+
+创建对象后，可以将其添加到Realm：
+
+// Get the default Realm
+let realm = try! Realm()
+// You only need to do this once (per thread)
+
+// Add to the Realm inside a transaction
+try! realm.write {
+    realm.add(myDog)
+}
+将对象添加到Realm后，您可以继续使用它，并且您对其所做的所有更改都将被保留（并且必须在写入事务中进行）。在提交写入事务时，对使用相同Realm的其他线程可以进行任何更改。
+
+请注意，写入会相互阻塞，并且如果正在进行多次写入，则会阻止它们创建的线程。这类似于其他持久性解决方案，我们建议您在这种情况下使用通常的最佳实践：将写入卸载到单独的线程。
+
+由于Realm的MVCC架构，在写事务打开时不会阻止读取。除非您需要同时从多个线程同时进行写入，否则您应该支持更大的写入事务，这些事务对许多细粒度的写入事务执行更多操作。当您向Realm提交写入事务时，将通知该Realm的所有其他实例，并自动更新。
+
+有关详细信息，请参阅领域和对象。
+
+嵌套对象
+如果对象具有Objects或Lists 属性，则可以使用嵌套数组和/或字典递归设置这些属性。您只需使用表示其属性的字典或数组替换每个对象：
+
+// Instead of using already existing dogs...
+let aPerson = Person(value: ["Jane", 30, [aDog, anotherDog]])
+
+// ...we can create them inline
+let anotherPerson = Person(value: ["Jane", 30, [["Buster", 5], ["Buddy", 6]]])
+这适用于嵌套数组和字典的任意组合。请注意，a List可能只包含Objects，而不是基本类型String。
+
+更新对象
+Realm提供了一些更新对象的方法，所有这些方法都根据具体情况提供不同的权衡。
+
+键入的更新
+您可以通过在写入事务中设置其属性来更新任何对象。
+
+// Update an object with a transaction
+try! realm.write {
+    author.name = "Thomas Pynchon"
+}
+键值编码
+Object，Result和List所有符合键值编码（KVC）。当您需要确定在运行时更新哪个属性时，这非常有用。
+
+将KVC应用于集合是批量更新对象的好方法，而不会在为每个项创建访问器时迭代集合。
+
+let persons = realm.objects(Person.self)
+try! realm.write {
+    persons.first?.setValue(true, forKeyPath: "isFirst")
+    // set each person's planet property to "Earth"
+    persons.setValue("Earth", forKeyPath: "planet")
+}
+具有主键的对象
+如果模型类包含主键，则可以使用Realm智能更新或基于主键值添加对象Realm().add(_:update:)。
+
+// Creating a book with the same primary key as a previously saved book
+let cheeseBook = Book()
+cheeseBook.title = "Cheese recipes"
+cheeseBook.price = 9000
+cheeseBook.id = 1
+
+// Updating book with id = 1
+try! realm.write {
+    realm.add(cheeseBook, update: true)
+}
+如果Book数据库中已存在主键值为“1”的对象，则只会更新该对象。如果它不存在，那么Book将创建一个全新的对象并将其添加到数据库中。
+
+您还可以通过仅传递要更新的值的子集以及主键来部分更新具有主键的对象：
+
+// Assuming a "Book" with a primary key of `1` already exists.
+try! realm.write {
+    realm.create(Book.self, value: ["id": 1, "price": 9000.0], update: true)
+    // the book's `title` property will remain unchanged.
+}
+您可能无法传递update: true未定义主键的对象类型。
+
+请注意，更新对象时，nil仍被视为可选属性的有效值。如果您提供具有nil属性值的字典，则这些字典将应用于您的对象，并且这些属性将被清空。为确保您不会遇到任何计划外数据丢失，请确保在使用此方法时仅提供您要更新的属性。
+
+删除对象
+将要删除的对象传递Realm().delete(_:)给写入事务中的方法。
+
+// let cheeseBook = ... Book stored in Realm
+
+// Delete an object with a transaction
+try! realm.write {
+    realm.delete(cheeseBook)
+}
+您还可以删除存储在Realm中的所有对象。请注意，Realm文件将在磁盘上保持其大小，以便有效地将该空间重用于将来的对象。
+
+// Delete all objects from the realm
+try! realm.write {
+    realm.deleteAll()
+}
+查询
+查询返回一个Results实例，其中包含Objects 的集合。Results有一个非常相似的接口，Array并且Results可以使用索引下标访问a中包含的对象。与Arrays 不同，Results只保留Object单个子类的类型。
+
+所有查询（包括查询和属性访问）在Realm中都是惰性的。只有在访问属性时才会读取数据。
+
+查询的结果不是数据的副本：修改查询结果（在写入事务中）将直接修改磁盘上的数据。同样，您可以直接从a中包含的s 遍历关系图。ObjectResults
+
+延迟执行查询直到使用结果。这意味着将几个临时链接Results以对数据进行排序和过滤不会执行处理中间状态的额外工作。
+
+一旦执行了查询，或者添加了通知块，Results就会更新Realm中的更改，并在可能的情况下在后台线程上执行查询。
+
+从Realm中检索对象的最基本方法是Realm().objects(_:)，返回从默认Realm查询的子类类型的所有Object实例的结果。
+
+let dogs = realm.objects(Dog.self) // retrieves all Dogs from the default Realm
+过滤
+如果您熟悉NSPredicate，那么您已经知道如何在Realm中查询。Objects，Realm，List，和Results所有提供允许您查询具体方法为Object通过简单地传递一个实例NSPredicate的实例，谓语字符串，或者就像你的查询谓词时格式字符串NSArray。
+
+例如，以下内容将通过调用Results().filter(_:...)从默认Realm中检索名称以“B”开头的所有棕褐色狗来扩展我们之前的示例：
+
+// Query using a predicate string
+var tanDogs = realm.objects(Dog.self).filter("color = 'tan' AND name BEGINSWITH 'B'")
+
+// Query using an NSPredicate
+let predicate = NSPredicate(format: "color = %@ AND name BEGINSWITH %@", "tan", "B")
+tanDogs = realm.objects(Dog.self).filter(predicate)
+有关构建谓词和使用我们的NSPredicate Cheatsheet的更多信息，请参阅Apple的Predicates编程指南。Realm支持许多常见谓词：
+
+比较操作数可以是属性名称或常量。至少有一个操作数必须是属性名称。
+比较操作符==，<= ，<，> =，>，！=，和BETWEEN都支持Int，Int8，Int16，Int32，Int64，Float，Double和Date属性类型，例如age == 45
+身份比较==，！=，例如Results<Employee>().filter("company == %@", company)。
+布尔属性支持比较运算符==和！=。
+对于String和Data属性，支持==，！=，BEGINSWITH，CONTAINS和ENDSWITH运算符，例如name CONTAINS 'Ja'
+对于String属性，LIKE运算符可用于将左手属性与右手表达式进行比较：?并且*允许作为通配符，其中?匹配1个字符并*匹配0个或更多个字符。示例：value LIKE '?bc*'匹配“abcde”和“cbc”等字符串。
+字符串的不区分大小写的比较，例如name CONTAINS[c] 'Ja'。请注意，只有字符“AZ”和“az”才会被忽略。在[c] modifier can be combined with the [d]`改性剂。
+字符串的变音符号不敏感比较，例如name BEGINSWITH[d] 'e'匹配étoile。此修饰符可与[c]修饰符组合使用。（此修饰符只能应用于Realm支持的字符串子集：请参阅详细信息的限制。）
+Realm支持以下复合运算符：“AND”，“OR”和“NOT”，例如name BEGINSWITH 'J' AND age >= 32。
+收容操作数IN，例如name IN {'Lisa', 'Spike', 'Hachi'}
+无比较==，！=，例如Results<Company>().filter("ceo == nil")。请注意，Realm将其nil视为特殊值而不是缺少值; 与SQL不同，nil等于自己。
+任何比较，例如ANY student.age < 21。
+支持和属性的聚合表达式@ count，@ min，@ max，@ sum和@avg，例如，查找所有员工人数超过五人的公司。ListResultsrealm.objects(Company.self).filter("employees.@count > 5")
+子查询受以下限制支持：
+@count是唯一可以应用于SUBQUERY表达式的运算符。
+的SUBQUERY(…).@count表达式必须以恒定的相比较。
+尚不支持相关的子查询。
+见Results().filter(_:...)。
+
+排序
+Results允许您根据键路径，属性或一个或多个排序描述符指定排序条件和顺序。例如，以下调用按名称按字母顺序对上面示例中返回的狗进行排序：
+
+// Sort tan dogs with names starting with "B" by name
+let sortedDogs = realm.objects(Dog.self).filter("color = 'tan' AND name BEGINSWITH 'B'").sorted(byKeyPath: "name")
+关键路径也可能是一对一关系的属性：
+
+class Person: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var dog: Dog?
+}
+class Dog: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var age = 0
+}
+
+let dogOwners = realm.objects(Person.self)
+let ownersByDogAge = dogOwners.sorted(byKeyPath: "dog.age")
+请注意，sorted(byKeyPath:)并且sorted(byProperty:)不支持多个属性作为排序条件，并且不能链接（仅使用最后一次调用sorted）。要按多个属性排序，请使用sorted(by:)具有多个SortDescriptor对象的方法。
+
+有关更多信息，请参阅
+
+Results().sorted(_:)
+Results().sorted(byKeyPath:ascending:)
+请注意，Results仅在查询排序时保证顺序保持一致。出于性能原因，不保证保留插入顺序。如果您需要维护插入顺序，这里提出了一些解决方案。
+
+链接查询
+与需要为每个连续查询单独访问数据库服务器的传统数据库相比，Realm查询引擎的一个独特属性是能够以非常小的事务开销链接查询。
+
+如果你想要一个棕褐色狗的结果集，以及名字也以'B'开头的棕褐色狗，你可以链接两个这样的查询：
+
+let tanDogs = realm.objects(Dog.self).filter("color = 'tan'")
+let tanDogsWithBNames = tanDogs.filter("name BEGINSWITH 'B'")
+自动更新结果
+Results实例是实时的，自动更新基础数据的视图，这意味着永远不必重新获取结果。它们总是在当前线程上反映Realm的当前状态，包括在当前线程的写入事务期间。对此的一个例外是使用for...in枚举时，枚举开始时将始终枚举与查询匹配的对象，即使其中一些被删除或修改为在枚举期间被过滤器排除。
+
+let puppies = realm.objects(Dog.self).filter("age < 2")
+puppies.count // => 0
+try! realm.write {
+    realm.create(Dog.self, value: ["name": "Fido", "age": 1])
+}
+puppies.count // => 1
+这适用于所有Results：所有对象，已过滤和链接。
+
+这种属性Results不仅使Realm快速高效，而且使您的代码更简单，更具反应性。例如，如果视图控制器依赖于查询结果，则可以将其存储Results在属性中并对其进行访问，而无需确保在每次访问之前刷新其数据。
+
+您可以订阅Realm通知，以了解Realm数据何时更新，指示应该刷新应用程序的UI的时间，而无需重新获取Results。
+
+由于结果是自动更新的，因此不要依赖索引和计数保持不变是很重要的。a Results冻结的唯一时间是对其进行快速枚举，这样就可以在枚举对象时改变匹配查询的对象：
+
+try! realm.write {
+    for person in realm.objects(Person.self).filter("age == 10") {
+        person.age += 1
+    }
+}
+或者，使用键值编码来执行操作Results。
+
+限制结果
+大多数其他数据库技术提供了从查询中“分页”结果的能力（例如SQLite中的'LIMIT'关键字）。这通常是为了避免从磁盘中读取太多内容，或者一次将太多结果拉入内存中。
+
+由于Realm中的查询是惰性的，因此根本不需要执行这种分页行为，因为Realm只会在显式访问后从查询结果中加载对象。
+
+如果出于UI相关或其他实现原因，您需要查询中特定的对象子集，那么就像获取Results对象一样简单，只读取您需要的对象。
+
+// Loop through the first 5 Dog objects
+// restricting the number of objects read from disk
+let dogs = try! Realm().objects(Dog.self)
+for i in 0..<5 {
+    let dog = dogs[i]
+    // ...
+}
+迁移
+使用任何数据库时，您的数据模型可能会随着时间的推移而发生变化。由于Realm中的数据模型被定义为标准的Swift类，因此进行模型更改就像更改任何其他Swift类一样简单。
+
+假设我们有以下Person模型：
+
+class Person: Object {
+    @objc dynamic var firstName = ""
+    @objc dynamic var lastName = ""
+    @objc dynamic var age = 0
+}
+我们希望更新数据模型以要求fullName属性，而不是分隔名和姓。为此，我们只需将对象界面更改为以下内容：
+
+class Person: Object {
+    @objc dynamic var fullName = ""
+    @objc dynamic var age = 0
+}
+此时，如果您使用以前的型号版本保存了任何数据，则Realm在代码中定义的内容与Realm在磁盘上看到的数据之间将存在不匹配。发生这种情况时，除非您运行迁移，否则在尝试打开现有文件时将引发异常。
+
+请注意，在迁移期间，默认属性值不会应用于现有对象上的新对象或新属性。我们认为这是一个错误，并将其跟踪为＃1793。
+
+本地迁移
+本地迁移由设置Realm.Configuration.schemaVersion和定义Realm.Configuration.migrationBlock。您的迁移块提供了将数据模型从先前模式转换为新模式的所有逻辑。Realm使用此配置创建a 时，如果需要迁移，将应用迁移块以更新Realm给定的架构版本。
+
+假设我们想要迁移Person先前声明的模型。最小必要的迁移块将如下：
+
+// Inside your application(application:didFinishLaunchingWithOptions:)
+
+let config = Realm.Configuration(
+    // Set the new schema version. This must be greater than the previously used
+    // version (if you've never set a schema version before, the version is 0).
+    schemaVersion: 1,
+
+    // Set the block which will be called automatically when opening a Realm with
+    // a schema version lower than the one set above
+    migrationBlock: { migration, oldSchemaVersion in
+        // We haven’t migrated anything yet, so oldSchemaVersion == 0
+        if (oldSchemaVersion < 1) {
+            // Nothing to do!
+            // Realm will automatically detect new properties and removed properties
+            // And will update the schema on disk automatically
+        }
+    })
+
+// Tell Realm to use this new configuration object for the default Realm
+Realm.Configuration.defaultConfiguration = config
+
+// Now that we've told Realm how to handle the schema change, opening the file
+// will automatically perform the migration
+let realm = try! Realm()
+至少我们需要使用空块更新版本，以指示架构已由Realm升级（自动）。
+
+更新值
+虽然这是可接受的最小迁移，但我们可能希望使用此块来填充任何fullName有意义的新属性（在本例中）。在迁移块中，我们可以调用Migration().enumerateObjects(ofType: _:_:)枚举Object某种类型的每一种，并应用任何必要的迁移逻辑。请注意每个枚举如何Object通过oldObject变量访问现有实例，并通过以下方式访问更新的实例newObject：
+
+// Inside your application(application:didFinishLaunchingWithOptions:)
+
+Realm.Configuration.defaultConfiguration = Realm.Configuration(
+    schemaVersion: 1,
+    migrationBlock: { migration, oldSchemaVersion in
+        if (oldSchemaVersion < 1) {
+            // The enumerateObjects(ofType:_:) method iterates
+            // over every Person object stored in the Realm file
+            migration.enumerateObjects(ofType: Person.className()) { oldObject, newObject in
+                // combine name fields into a single field
+                let firstName = oldObject!["firstName"] as! String
+                let lastName = oldObject!["lastName"] as! String
+                newObject!["fullName"] = "\(firstName) \(lastName)"
+            }
+        }
+    })
+迁移成功完成后，您的应用程序可以像往常一样访问Realm及其所有对象。
+
+重命名属性
+作为迁移的一部分在类上重命名属性比复制值和保留关系而不是复制它们更有效。
+
+要在迁移期间重命名属性，请确保新模型具有具有新名称的属性，并且没有具有旧名称的属性。
+
+如果新属性具有不同的可为空性或索引设置，则将在重命名操作期间应用这些设置。
+
+这里是你如何可以重命名Person的yearsSinceBirth属性age：
+
+// Inside your application(application:didFinishLaunchingWithOptions:)
+
+Realm.Configuration.defaultConfiguration = Realm.Configuration(
+    schemaVersion: 1,
+    migrationBlock: { migration, oldSchemaVersion in
+        // We haven’t migrated anything yet, so oldSchemaVersion == 0
+        if (oldSchemaVersion < 1) {
+            // The renaming operation should be done outside of calls to `enumerateObjects(ofType: _:)`.
+            migration.renameProperty(onType: Person.className(), from: "yearsSinceBirth", to: "age")
+        }
+    })
+线性迁移
+假设我们的应用程序有两个用户：JP和Tim。JP经常更新应用程序，但Tim恰好跳过了几个版本。JP可能已经看到了我们应用程序的每个新版本，并且按顺序升级了每个架构：他下载了将他从v0带到v1的应用程序版本，以及后来又将其从v1带到v2的另一个更新版本。相比之下，蒂姆可能会下载应用程序的更新，需要立即将他从v0带到v2。使用非嵌套 if (oldSchemaVersion < X)调用构建迁移块可确保它们将看到所有必需的升级，无论它们从哪个架构版本开始。
+
+对于跳过应用程序版本的用户，可能会出现另一种情况。如果您删除email版本2 的属性并在版本3重新引入它，并且用户从版本1跳转到版本3，则Realm将无法自动检测到email属性的删除，因为它们之间不会存在不匹配磁盘上的架构以及该属性的代码中的架构。这将导致Tim的Person对象具有v3地址属性，该属性具有v1地址属性的内容。除非您在v1和v3之间更改了该属性的内部存储表示（例如，从ISO地址表示转到自定义表示），否则这可能不是问题。为避免这种情况，我们建议您在email房产上取消房产if (oldSchemaVersion < 3) 声明，保证升级到版本3的所有Realms都具有正确的数据集。
+
+通知
+可以注册侦听器以接收有关Realm或其实体的更改的通知。当Realm作为一个整体被更改时发送领域通知 ; 更改，添加或删除单个对象时会发送收集通知。
+
+只要对返回的通知令牌进行引用，就会传递通知。您应该在注册更新的类上保留对此标记的强引用，因为在取消分配通知令牌时会自动取消注册通知。
+
+通知始终在最初注册的线程上提供。该线程必须具有当前运行的运行循环。如果您希望在主线程以外的线程上注册通知，则您负责在该线程上配置和启动运行循环（如果尚不存在）。
+
+在提交每个相关的写事务之后异步调用通知处理程序，无论写事务发生在哪个线程或进程上。
+
+如果在启动写入事务时将Realm提升到最新版本，则可能会同步调用通知处理程序。如果在Realm进入最新版本时，将以触发通知的方式修改或删除正在观察的Realm实体，则会发生这种情况。此类通知将在当前写入事务的上下文中运行，这意味着尝试在通知处理程序中开始写入事务将导致Realm抛出异常。如果您的应用程序的架构设置可能会出现这种情况，您可以使用它Realm.isInWriteTransaction来确定您是否已经在写入事务中。
+
+由于使用运行循环传递通知，因此运行循环上的其他活动可能会延迟通知的传递。当无法立即传递通知时，多个写入事务的更改可能会合并为单个通知。
+
+领域通知
+通知处理程序可以在整个Realm上注册。每次提交涉及该Realm的写入事务时，无论写入事务发生在哪个线程或进程上，都将触发通知处理程序：
+
+// Observe Realm Notifications
+let token = realm.observe { notification, realm in
+    viewController.updateUI()
+}
+
+// later
+token.invalidate()
+收集通知
+收集通知不会收到整个Realm，而是收到细粒度的更改说明。它们包括自上次通知以来已添加，删除或修改的对象索引。收集通知是异步传递的，首先是初始结果，然后是每次写入事务后再次发送，这会改变集合中的任何对象（或添加新对象）。
+
+可以通过RealmCollectionChange传递给通知块的参数访问这些更改。这个对象保存有关受索引信息deletions，insertions和modifications。
+
+前两个，删除和插入，在对象开始和停止成为集合的一部分时记录索引。这会将对象添加到Realm或从Realm中删除它们时考虑在内。为此，Results当您筛选特定值并更改对象以使其现在与查询匹配或不再匹配时也适用。对于基于List或LinkingObjects包括派生的集合，Results当在关系中添加或删除对象时，这也适用。
+
+只要集合中对象的属性发生更改，您就会收到有关修改的通知。这也发生更改的一对一和一对多的关系，虽然通知不会采取反向关系考虑在内。
+
+class Dog: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var age = 0
+}
+
+class Person: Object {
+    @objc dynamic var name = ""
+    let dogs = List<Dog>()
+}
+我们假设您正在观察上面的模型代码给出的狗主人名单。在下列情况下，您将收到有关匹配Person对象的修改的通知：
+
+你修改Person的name属性。
+您添加或删除Dog到Person的dogs财产。
+您修改属于该age属性的属性。DogPerson
+这使得可以离散地控制对UI内容进行的动画和视觉更新，而不是每次发生通知时任意重新加载所有内容。
+
+class ViewController: UITableViewController {
+    var notificationToken: NotificationToken? = nil
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let realm = try! Realm()
+        let results = realm.objects(Person.self).filter("age > 5")
+
+        // Observe Results Notifications
+        notificationToken = results.observe { [weak self] (changes: RealmCollectionChange) in
+            guard let tableView = self?.tableView else { return }
+            switch changes {
+            case .initial:
+                // Results are now populated and can be accessed without blocking the UI
+                tableView.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                // Query results have changed, so apply them to the UITableView
+                tableView.beginUpdates()
+                tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
+                                     with: .automatic)
+                tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0)}),
+                                     with: .automatic)
+                tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }),
+                                     with: .automatic)
+                tableView.endUpdates()
+            case .error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                fatalError("\(error)")
+            }
+        }
+    }
+
+    deinit {
+        notificationToken?.invalidate()
+    }
+}
+对象通知
+Realm支持对象级通知。您可以在特定Realm对象上注册通知，以便在删除对象时或在对象上的任何托管属性修改其值时收到通知。（这也适用于将其值设置为其现有值的托管属性。）
+
+只有Realm管理的对象可能在其上注册了通知处理程序。
+
+对于在不同线程或不同进程中执行的写入事务，当管理对象的Realm（自动）刷新到包含更改的版本时，将调用该块，而对于本地写入事务，它将在某个时刻被调用。写入事务提交后的未来。
+
+通知处理程序采用ObjectChange枚举值，该值指示对象是否已删除，对象上的属性值是否已更改，或者是否发生错误。ObjectChange.deleted如果删除了对象，将调用通知块。永远不会再次调用该块。
+
+ObjectChange.change如果对象的属性已更改，则将调用该块。枚举将包含一组PropertyChange值。这些值中的每一个都包含已更改的属性的名称（作为字符串），前一个值和当前值。
+
+如果发生错误，将调用该块并ObjectChange.error包含NSError一个错误。永远不会再次调用该块。
+
+class StepCounter: Object {
+    @objc dynamic var steps = 0
+}
+
+let stepCounter = StepCounter()
+let realm = try! Realm()
+try! realm.write {
+    realm.add(stepCounter)
+}
+var token : NotificationToken?
+token = stepCounter.observe { change in
+    switch change {
+    case .change(let properties):
+        for property in properties {
+            if property.name == "steps" && property.newValue as! Int > 1000 {
+                print("Congratulations, you've exceeded 1000 steps.")
+                token = nil
+            }
+        }
+    case .error(let error):
+        print("An error occurred: \(error)")
+    case .deleted:
+        print("The object was deleted.")
+    }
+}
+接口驱动的写入
+Realm中的通知始终是异步传递的，因此它们永远不会阻止主UI线程，从而导致应用程序断断续续。但是，有些情况需要在主线程上同步完成更改，并立即反映在UI中。我们将这些事务称为接口驱动的写入。
+
+例如，假设用户将项添加到表视图中。理想情况下，UI应该为此操作设置动画，并在用户启动操作后立即启动此过程。
+
+但是，当此插入的Realm更改通知稍后传递时，它将指示对象已添加到支持表视图的集合中，我们将再次尝试在UI中插入新行。这种双重插入会导致UI和支持数据之间的状态不一致，从而导致应用程序崩溃！
+
+执行接口驱动的写入时，传递通知块的通知令牌，这些通知块不应对第二次更改做出反应Realm.commitWrite(withoutNotifying:)。
+
+当使用带有同步Realm的细粒度收集通知时，此功能特别有用，因为以前考虑接口驱动写入的许多解决方法依赖于控制应用程序何时可以执行更改的完整状态。使用同步领域，只要它们被同步就会应用更改，这可能发生在应用程序生命周期的任何时候。
+
+// Add fine-grained notification block
+token = collection.observe { changes in
+    switch changes {
+    case .initial:
+        tableView.reloadData()
+    case .update(_, let deletions, let insertions, let modifications):
+        // Query results have changed, so apply them to the UITableView
+        tableView.beginUpdates()
+        tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
+                             with: .automatic)
+        tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0)}),
+                             with: .automatic)
+        tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }),
+                             with: .automatic)
+        tableView.endUpdates()
+    case .error(let error):
+        // handle error
+        ()
+    }
+}
+
+func insertItem() throws {
+     // Perform an interface-driven write on the main thread:
+     collection.realm!.beginWrite()
+     collection.insert(Item(), at: 0)
+     // And mirror it instantly in the UI
+     tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+     // Making sure the change notification doesn't apply the change a second time
+     try collection.realm!.commitWrite(withoutNotifying: [token])
+}
+关键价值观察
+领域对象是符合大多数属性的键值观察。几乎所有Object子类上的托管（非忽略）属性都符合KVO，以及invalidated属性on Object和List。（LinkingObjects使用KVO无法观察到属性。）
+
+观察Object子类的非托管实例的属性就像使用任何其他动态属性一样，但请注意，realm.add(obj)当它具有任何已注册的观察者时，您无法将对象添加到Realm（使用或其他类似方法）。
+
+观察托管对象（以前添加到Realm中的对象）的属性的工作方式略有不同。对于托管对象，有三次属性值可能会发生变化：直接分配给它时; 当你realm.refresh()在另一个线程上提交写入事务后调用或自动刷新域时; 当你realm.beginWrite()在另一个线程上的更改后调用时，当前线程上的刷新没有拾取这些更改。
+
+在后两种情况下，将在另一个线程上的写入事务中进行的所有更改将立即应用，并且KVO通知将一次全部发送。任何中间步骤都将被丢弃，因此如果在写入事务中将属性从1增加到10，则在主线程上，您将直接从1到10获得单个更改通知。由于属性在不在写入事务中或甚至在开始写入事务时可能会更改值，observeValueForKeyPath(_:ofObject:change:context:)因此不建议尝试从内部修改托管的Realm对象。
+
+与NSMutableArray属性不同，观察对List属性所做的更改不需要使用mutableArrayValueForKey(_:)，尽管支持与不使用Realm编写的代码兼容。相反，您可以直接调用修改方法List，并且将通知任何观察其存储的属性的人。dynamic与普通属性不同，列表属性不需要标记为可观察。
+
+在我们的例子应用，您可以找到使用领域具有很短的例子ReactiveCocoa从Objective-C中，并从斯威夫特ReactKit。
+
+加密
+请注意我们许可证的出口合规部分，因为如果您位于有美国出口限制或禁运的国家/地区，它会对使用Realm进行限制。
+
+Realm支持在创建Realm时通过提供64字节加密密钥，使用AES-256 + SHA2加密磁盘上的数据库文件。
+
+// Generate a random encryption key
+var key = Data(count: 64)
+_ = key.withUnsafeMutableBytes { bytes in
+    SecRandomCopyBytes(kSecRandomDefault, 64, bytes)
+}
+
+// Open the encrypted Realm file
+let config = Realm.Configuration(encryptionKey: key)
+do {
+    let realm = try Realm(configuration: config)
+    // Use the Realm as normal
+    let dogs = realm.objects(Dog.self).filter("name contains 'Fido'")
+} catch let error as NSError {
+    // If the encryption key is wrong, `error` will say that it's an invalid database
+    fatalError("Error opening realm: \(error)")
+}
+这使得存储在磁盘上的所有数据都可以根据需要使用AES-256进行透明加密和解密，并使用SHA-2 HMAC进行验证。每次获得Realm实例时都必须提供相同的加密密钥。
+
+请参阅我们的加密示例应用程序，了解生成加密密钥的端到端应用程序，将其安全地存储在钥匙串中，并使用它来加密领域。
+
+使用加密领域时，性能受到很小影响（通常低于10％）。
+
+使用同步领域
+您是否希望使用Realm Mobile Platform同步所有Realm数据库？所有与同步相关的文档已移至我们的平台文档中
+
+穿线
+领域读取事务生存期与Realm实例的内存生存期相关联。避免通过使用自动刷新领域“固定”旧的Realm事务，并在显式自动释放池中包含所有使用Realm API的后台线程。
+
+有关此效果的更多详细信息，请参阅我们的当前限制。
+
+在单个线程中，您可以将所有内容视为常规对象，而无需担心并发或多线程。不需要任何锁定或资源协调来访问它们（即使它们同时在其他线程上被修改），并且它只修改必须包含在写入事务中的操作。
+
+通过确保每个线程始终具有一致的Realm视图，Realm使并发使用变得容易。您可以在同一个Realms上并行处理任意数量的线程，并且因为它们都有自己的快照，所以它们永远不会导致彼此看到不一致的状态。
+
+您唯一需要注意的是，您不能让多个线程共享相同的Realm对象实例。如果多个线程需要访问相同的对象，则每个线程都需要获取自己的实例（否则在一个线程上发生的更改可能会导致其他线程看到不完整或不一致的数据）。
+
+查看其他线程的更改
+在主UI线程（或任何具有runloop的线程）上，对象将在runloop的每次迭代之间自动更新来自其他线程的更改。在任何其他时间，您将处理快照，因此各个方法始终可以看到一致的视图，而不必担心其他线程上发生的情况。
+
+当您最初在线程上打开Realm时，其状态将基于最近成功的写入提交，并且它将保留在该版本上直到刷新。除非将Realm的autorefresh属性设置为，否则领域会在每次runloop迭代开始时自动刷新NO。如果一个线程没有runloop（通常是后台线程中的情况），那么Realm.refresh()必须手动调用才能将事务推进到最近的状态。
+
+提交写入事务时，域也会刷新（Realm.commitWrite()）。
+
+未能定期刷新Realms可能导致某些事务版本变为“固定”，从而阻止Realm重用该版本使用的磁盘空间，从而导致更大的文件大小。
+
+跨线程传递实例
+Objects的非托管实例与常规NSObject子类完全相同，并且可以安全地传递线程。
+
+的实例Realm，Results或者List，托管实例或者Object是线程限制，这意味着它们只能在创建它们的线程上使用，否则会抛出异常*。这是Realm强制执行事务版本隔离的一种方式。否则，当在没有可能广泛的关系图的情况下在不同事务版本的线程之间传递对象时，将无法确定应该做什么。
+
+Realm公开了一种机制，可以通过三个步骤安全地传递线程限制的实例：
+
+使用ThreadSafeReference线程限制对象初始化a 。
+将其传递ThreadSafeReference到目标线程或队列。
+通过调用在目标Realm上解析此引用Realm.resolve(_:)。像往常一样使用返回的对象。
+let person = Person(name: "Jane")
+try! realm.write {
+    realm.add(person)
+}
+let personRef = ThreadSafeReference(to: person)
+DispatchQueue(label: "background").async {
+    autoreleasepool {
+        let realm = try! Realm()
+        guard let person = realm.resolve(personRef) else {
+            return // person was deleted
+        }
+        try! realm.write {
+            person.name = "Jane Doe"
+        }
+    }
+}
+一个ThreadSafeReference对象必须最多一次可以解决。未能解析ThreadSafeReference将导致Realm的源版本被固定，直到引用被取消分配。出于这个原因，ThreadSafeReference应该是短暂的。
+
+可以从任何线程访问这些类型的一些属性和方法：
+
+Realm：所有属性，类方法和初始化程序。
+Object：isInvalidated，objectSchema，realm，类方法，并初始化。
+Results：objectClassName和realm。
+List：isInvalidated，objectClassName，和realm。
+跨线程使用领域
+要从不同的线程访问同一个Realm文件，您必须初始化一个新的Realm，以便为您的应用程序的每个线程获取不同的实例。只要指定相同的配置，所有Realm实例都将映射到磁盘上的同一文件。
+
+不支持跨线程共享Realm实例。访问同一Realm文件的Realm实例也必须全部使用相同的Realm实例Realm.Configuration。
+
+通过在单个事务中将多个突变批处理在一起编写大量数据时，域可以非常高效。也可以使用Grand Central Dispatch在后台执行事务，以避免阻塞主线程。Realm对象不是线程安全的，不能跨线程共享，因此您必须在要读取或写入的每个线程/调度队列中获取Realm实例。以下是在后台队列中插入一百万个对象的示例：
+
+DispatchQueue(label: "background").async {
+    autoreleasepool {
+        // Get realm and table instances for this thread
+        let realm = try! Realm()
+
+        // Break up the writing blocks into smaller portions
+        // by starting a new transaction
+        for idx1 in 0..<1000 {
+            realm.beginWrite()
+
+            // Add row via dictionary. Property order is ignored.
+            for idx2 in 0..<1000 {
+                realm.create(Person.self, value: [
+                    "name": "\(idx1)",
+                    "birthdate": Date(timeIntervalSince1970: TimeInterval(idx2))
+                ])
+            }
+
+            // Commit the write transaction
+            // to make this data available to other threads
+            try! realm.commitWrite()
+        }
+    }
+}
+JSON
+Realm没有直接支持JSON，但是可以Object使用输出来从JSON 添加s NSJSONSerialization.JSONObjectWithData(_:options:)。生成的符合KVC的对象可用于Object使用标准API添加/更新s 以创建和更新对象。
+
+// A Realm Object that represents a city
+class City: Object {
+    @objc dynamic var city = ""
+    @objc dynamic var id = 0
+    // other properties left out ...
+}
+
+let data = "{\"name\": \"San Francisco\", \"cityId\": 123}".data(using: .utf8)!
+let realm = try! Realm()
+
+// Insert from Data containing JSON
+try! realm.write {
+    let json = try! JSONSerialization.jsonObject(with: data, options: [])
+    realm.create(City.self, value: json, update: true)
+}
+如果JSON中有嵌套对象或数组，它们将自动映射到一对多关系。有关更多详细信息，请参阅嵌套对象部分。
+
+使用此方法在Realm中插入或更新JSON数据时，请注意Realm期望JSON属性名称和类型与Object属性完全匹配。例如：
+
+float应使用float-backed 初始化属性NSNumbers。
+Date和Data属性不能从字符串自动推断，但应在传递之前转换为适当的类型Realm().create(_:value:update:)。
+如果为必需属性提供了JSON null（ie NSNull），则将引发异常。
+如果在插入时没有为必需属性提供属性，则将引发异常。
+Realm将忽略未定义的JSON中的任何属性Object。
+如果您的JSON架构与Realm对象不完全对齐，我们建议您使用第三方模型映射框架来转换您的JSON。Swift有一组蓬勃发展的主动维护模型映射框架，它与Realm一起工作，其中一些列在realm-cocoa存储库中。
+
+测试和调试配置默认域
+使用和测试Realm应用程序的最简单方法是使用默认的Realm。为了避免在测试之间覆盖应用程序数据或泄漏状态，您只需将默认Realm设置为每个测试的新文件。
+
+import XCTest
+
+// A base class which each of your Realm-using tests should inherit from rather
+// than directly from XCTestCase
+class TestCaseBase: XCTestCase {
+    override func setUp() {
+        super.setUp()
+
+        // Use an in-memory Realm identified by the name of the current test.
+        // This ensures that each test can't accidentally access or modify the data
+        // from other tests or the application itself, and because they're in-memory,
+        // there's nothing that needs to be cleaned up.
+        Realm.Configuration.defaultConfiguration.inMemoryIdentifier = self.name
+    }
+}
+注入Realm实例
+测试与Realm相关的代码的另一种方法是让您要测试的所有方法都接受一个Realm实例作为参数，这样您就可以在运行应用程序和测试时传入不同的Realms。例如，假设您的应用程序具有GET来自JSON API的用户配置文件的方法，并且您希望测试是否正确创建了本地配置文件：
+
+// Application Code
+func updateUserFromServer() {
+    let url = URL(string: "http://myapi.example.com/user")
+    URLSession.shared.dataTask(with: url!) { data, _, _ in
+        let realm = try! Realm()
+        createOrUpdateUser(in: realm, with: data!)
+    }
+}
+
+public func createOrUpdateUser(in realm: Realm, with data: Data) {
+    let object = try! JSONSerialization.jsonObject(with: data) as! [String: String]
+    try! realm.write {
+        realm.create(User.self, value: object, update: true)
+    }
+}
+
+// Test Code
+
+let testRealmURL = URL(fileURLWithPath: "...")
+
+func testThatUserIsUpdatedFromServer() {
+    let config = Realm.Configuration(fileURL: testRealmURL)
+    let testRealm = try! Realm(configuration: config)
+    let jsonData = "{\"email\": \"help@realm.io\"}".data(using: .utf8)!
+    createOrUpdateUser(in: testRealm, with: jsonData)
+    let expectedUser = User()
+    expectedUser.email = "help@realm.io"
+    XCTAssertEqual(testRealm.objects(User.self).first!, expectedUser,
+                   "User was not properly updated from server.")
+}
+调试
+Realm Studio
+Realm Studio是我们的首选开发人员工具，可以轻松管理Realm数据库和Realm平台。使用Realm Studio，您可以打开和编辑本地和同步的域，并管理任何Realm Object Server实例。它支持Mac，Windows和Linux。
+
+
+
+
+
+使用Realm的Swift API调试应用程序必须通过LLDB控制台完成。
+
+请注意，虽然LLDB脚本允许在Xcode的UI中检查Realm变量的内容，但这对Swift来说还不起作用。相反，这些变量将显示不正确的数据。您应该使用LLDB的po命令来检查存储在Realm中的数据的内容。
+
+由于您使用Realm作为动态框架，因此您需要确保您的单元测试目标可以找到Realm。您可以通过将父路径添加RealmSwift.framework到单元测试的“框架搜索路径”来完成此操作。
+
+如果您的测试失败并显示异常消息"Object type 'YourObject' is not managed by the Realm"，则可能是因为您已将Realm框架直接链接到测试目标，这不应该完成。将Realm与测试目标断开连接应解决这个问题。
+
+您还应确保仅在应用程序或框架目标中编译模型类文件; 永远不要将它们添加到您的单元测试目标 否则，在测试时将复制这些类，这可能导致难以调试的问题（有关详细信息，请参阅此问题）。
+
+您需要确保测试所需的所有代码都暴露给您的单元测试目标（使用public访问修饰符或@testable）。有关详细信息，请参阅此Stack Overflow答案。
+
+目前的局限
+这是我们最常见的限制列表。
+
+有关已知问题的更全面列表，请参阅我们的GitHub问题。
+
+一般
+Realm旨在在灵活性和性能之间取得平衡。为了实现这一目标，对在Realm中存储信息的各个方面施加了现实限制。例如：
+
+类名最多限制为57个UTF8字符。
+属性名称限制为最多63个UTF8字符。
+Data和String属性不能容纳超过16MB的数据。要存储大量数据，请将其分解为16MB块或将其直接存储在文件系统中，并在Realm中存储这些文件的路径。如果您的应用尝试在单个属性中存储超过16MB，则会在运行时抛出异常。
+任何单个Realm文件都不能大于允许应用程序在iOS中映射的内存量 - 这会改变每个设备，并取决于该时间点内存空间的碎片程度（关于此问题的雷达是开放的） ：rdar：// 17119975）。如果需要存储更多数据，可以将其映射到多个Realm文件。
+字符串排序和不区分大小写的查询仅支持“Latin Basic”，“Latin Supplement”，“Latin Extended A”，“Latin Extended B”（UTF-8范围0-591）中的字符集。
+主题
+尽管Realm文件可以由多个线程同时访问，但您无法直接在线程之间传递Realms，Realm对象，查询和结果。如果需要在线程之间传递Realm对象，可以使用ThreadSafeReferenceAPI。阅读有关Realm线程的更多信息。
+
+楷模
+Setter和getter：由于Realm会覆盖setter和getter直接由底层数据库返回属性，因此不能在对象上覆盖它们。一个简单的解决方法是创建新的，Realm忽略的属性，可以覆盖其访问器，并可以调用其他setter / getter。
+
+自动递增属性：在生成主键时，Realm没有用于其他数据库中常用的线程安全/进程安全自动递增属性的机制。但是，在需要唯一自动生成值的大多数情况下，不必具有连续的，连续的整数ID。唯一的字符串主键通常就足够了。常见的模式是将默认属性值设置NSUUID().UUIDString为生成唯一的字符串ID。
+
+自动递增属性的另一个常见动机是保持插入顺序。在某些情况下，这可以通过将对象附加到a List或使用createdAt默认值为的属性来实现Date()。
+
+从Objective-C的属性：如果您需要从Objective-C的访问你的境界雨燕车型，List和RealmOptional属性将导致自动生成的Objective-C头（-Swift.h）失败，因为使用泛型的编译。您可以通过注释和属性来解决这个已知的Swift错误，这会将它们隐藏在自动生成的Objective-C标头（）中。ListRealmOptional@nonobjc-Swift.h
+
+Object子类的自定义初始值设定项：创建模型Object子类时，有时可能需要添加自己的自定义初始化方法以增加方便性。
+
+由于Swift内省存在一些限制，这些方法不能被指定为类的初始化器。相反，它们需要使用相同名称的Swift关键字标记为便利初始化程序：
+
+class MyModel: Object {
+    @objc dynamic var myValue = ""
+
+    convenience init(myValue: String) {
+        self.init() //Please note this says 'self' and not 'super'
+        self.myValue = myValue
+    }
+}
+文件大小
+领域读取事务生存期与Realm实例的内存生存期相关联。避免通过使用自动刷新领域“固定”旧的Realm事务，并在显式自动释放池中包含所有使用Realm API的后台线程。
+
+您应该期望Realm数据库在磁盘上占用的空间少于等效的SQLite数据库。如果您的Realm文件比预期的要大得多，可能是因为您有一个Realm指的是数据库中较旧版本的数据。
+
+为了给您一致的数据视图，Realm只更新在运行循环迭代开始时访问的活动版本。这意味着如果您从Realm读取一些数据，然后在其他线程上写入Realm时在长时间运行的操作中阻塞该线程，则该版本永远不会更新，并且Realm必须保留您的数据的中间版本可能实际上并不需要，导致每次写入时文件大小增加。额外的空间最终将被未来的写入重用，或者可能被压缩 - 例如，通过设置shouldCompactOnLaunch或调用Realm().writeCopyToPath(_:encryptionKey:)。为避免此问题，您可以致电invalidate告诉Realm您不再需要到目前为止从Realm中读取的任何对象，这使我们无法跟踪这些对象的中间版本。Realm将在下次访问时更新到最新版本。
+
+使用Grand Central Dispatch访问Realm时，您可能也会看到此问题。当一个Realm在调度队列的自动释放池中结束时会发生这种情况，因为这些池在执行代码后可能不会耗尽一段时间。在Realm取消分配对象之前，不能重用Realm文件中的数据的中间版本。要避免此问题，从分派队列访问Realm时应使用显式自动释放池。
+
+使用Realm API初始化Swift属性
+您的Swift应用程序的类和结构可能使用其值使用Realm API初始化的属性进行定义。例如：
+
+class SomeSwiftType {
+    let persons = try! Realm().objects(Person.self)
+    // ...
+}
+如果您确实定义了具有此类属性的类型，则应注意，如果在完成Realm配置的设置之前调用此类初始化代码，则可能会遇到问题。例如，如果您为默认的Realm配置设置了一个迁移块applicationDidFinishLaunching()，但是您创建了一个SomeSwiftTypebefore applicationDidFinishLaunching()run 实例并且您的Realm需要迁移，那么您将在正确配置之前访问您的Realm。
+
+为了避免此类问题，您可以选择：
+
+在您的应用程序完成其Realm配置设置之后，推迟使用Realm API急切初始化属性的任何类型的实例化。
+使用Swift的lazy关键字定义属性。这允许您在应用程序的生命周期中随时安全地实例化此类类型，只要您的应用程序设置其Realm配置之后才尝试访问您的惰性属性。
+仅使用明确接受用户定义配置的Realm API初始化您的属性。这样，您可以确保在使用配置值打开Realms之前已正确设置它们。
+加密领域和多个进程
+多个进程无法同时访问加密域。这包括iOS扩展程序。要解决此问题，请使用未加密的域，这些域可以跨进程共享。您可以使用Security和CommonCrypto系统框架来加密和解密存储在NSDataRealm对象上的属性中的数据。
+
+我们正在追踪Realm Cocoa问题跟踪器（＃1693）和Realm Core问题跟踪器（＃1845）中的这一限制。
+
+食谱
+我们已经汇总了一些显示如何使用Realm来完成一些特定任务的方法。我们会定期添加更多食谱，因此请经常查看。如果您想看一个例子，请在GitHub上打开一个问题。
+
+使用Realm构建待办事项应用程序
+测试领​​域应用程序
+使用Realm在WatchKit和您的应用程序之间共享数据
+在Swift中构建iOS集群地图视图
+在Swift中构建iOS搜索控制器
+使用UICollectionView和Realm Swift构建网格布局
+Swift中的单向数据流
+常问问题如何查找和查看我的Realm文件的内容？
+这个SO问题描述了在哪里找到您的Realm文件。然后，您可以使用我们的Realm Studio查看内容。
+
+Realm基础库有多大？
+Realm应该只为你的应用程序的下载大小增加大约5到8 MB。我们发布的版本要大得多，因为它们包括对iOS，watchOS和tvOS模拟器，一些调试符号和bitcode的支持，所有这些都会在下载应用程序时自动被App Store剥离。
+
+Realm开源吗？
+是! Realm的内部C ++存储引擎及其上的语言SDK完全是开源的，并在Apache 2.0下获得许可。Realm还可选择包含闭源同步组件，但不需要将Realm用作嵌入式数据库。
+
+我在运行应用程序时看到了对Mixpanel的网络调用
+当您的应用程序在附加调试器的情况下运行或在模拟器中运行时，Realm会收集匿名分析。这些分析完全是匿名的，可以通过标记Realm，iOS，macOS或您定位的语言版本以及我们可以弃用的版本来帮助我们改进产品。当您的应用程序正在生产中，或在您的用户设备上运行时，此调用不会在您的模拟器内部或附加调试器时运行。您可以在我们的源代码中查看我们收集的内容以及我们如何收集它们以及这样做的理由。
+
+为什么Realm不支持Swift结构作为模型？
+Realm目前不支持结构作为模型的原因有很多。
+
+最重要的是，Realm是围绕“实时”对象设计的，这个概念从根本上与值类型结构不兼容。Realm提供了许多与这些语义不兼容的功能：数据的活跃性，API的反应性，数据的低内存占用，操作性能，对部分数据的懒惰和廉价访问，缺乏数据序列化/反序列化，保持可能复杂的对象图同步等
+
+话虽如此，从对象Realm中分离对象有时很有用。不幸的是，这通常需要解决我们库中的临时限制，而不是理想的设计决策（例如线程限制）。这就是为什么我们努力确保独立/分离的Realm对象的行为与普通的旧NSObject完全相同。我们支持通过暴露通过KVC复制持久化对象属性创建独立对象的初始化程序来制作Realm对象的“内存中副本”。例如：
+
+let standaloneModelObject = MyModel(value: persistedModelObject)
+故障排除崩溃报告
+我们鼓励您在应用程序中使用崩溃报告器。许多Realm操作可能在运行时失败（与任何其他磁盘I / O一样），因此从应用程序收集崩溃报告将有助于确定您（或我们）可以改进错误处理和修复崩溃错误的区域。
+
+大多数商业崩溃记者都可以选择收集日志。我们强烈建议您启用此功能。在抛出异常和不可恢复的情况时，Realm会记录元数据信息（但没有用户数据），这些消息可以在出现问题时帮助调试。
+
+报告领域问题
+如果您发现Realm存在问题，请在GitHub上提交问题或发送电子邮件至help@realm.io，尽可能多地了解我们以了解并重现您的问题。
+
+以下信息对我们非常有用：
+
+目标。
+预期成绩。
+实际结果。
+重现步骤。
+突出问题的代码示例（我们可以编译的完整Xcode项目是理想的）。
+Realm / Xcode / macOS的版本。
+涉及的依赖管理器的版本（CocoaPods / Carthage）。
+发生错误的平台，操作系统版本和体系结构（例如64位iOS 8.1）。
+崩溃日志和堆栈跟踪。有关详情，请参阅上面的崩溃报告。
+依赖管理者
+如果您通过CocoaPods或Carthage安装了Realm并且遇到了构建错误，那么您可能正在使用该依赖项管理器的不受支持的版本，Realm与项目的集成未成功，或者您的构建的一部分工具有过时的缓存。如果是这种情况，请尝试删除依赖关系管理器创建的文件夹并重新安装。
+
+您还可以尝试删除派生数据并清除Xcode中的构建文件夹 ; 这可以解决更新构建工具版本或更改项目设置（例如添加新目标，共享目标之间的依赖关系等）所导致的问题。
+
+要清理构建文件夹，请在打开“产品”菜单时按住“选项”键，然后选择“清除构建文件夹...”。您还可以在Xcode帮助搜索菜单中键入“Clean”，并在搜索结果中显示“Clean Build Folder ...”菜单项时选择它。
+
+的CocoaPods
+可以通过CocoaPods 0.39.0或更高版本安装Realm。
+
+如果您的CocoaPods集成存在问题，则可能有助于重置集成状态。要实现这一点，只需在项目目录中的Terminal中运行以下命令：
+
+pod cache clean Realm
+pod cache clean RealmSwift
+pod deintegrate || rm -rf Pods
+pod install --verbose
+rm -rf ~/Library/Developer/Xcode/DerivedData
+您也可以使用cocoapods-deintegrate而不是删除Pods目录。使用CocoaPods 1.0，这是预装的插件。如果您使用的是旧版本，则可以考虑安装它gem install cocoapods-deintegrate。你可以运行它pod deintegrate。这将从Xcode项目中删除所有CocoaPods的痕迹。
+
+迦太基
+可以通过Carthage 0.9.2或更高版本安装Realm。
+
+要从项目中删除所有Carthage管理的依赖项，只需在项目目录的Terminal中运行以下命令：
+
+rm -rf Carthage
+rm -rf ~/Library/Developer/Xcode/DerivedData
+carthage update
+Realm Core二进制文件无法下载
+在构建Realm时，该过程的一部分包括将核心库作为静态二进制文件下载并将其集成到realm-cocoa项目中。据报道，在某些情况下，核心二进制文件无法下载，并出现以下错误：
+
+Downloading core failed. Please try again once you have an Internet connection.
+由于以下任何原因可能会发生此错误：
+
+您的IP地址范围来自美国禁运列表中的区域。为了遵守美国法律，尚未在该地区提供Realm。有关更多信息，请参阅我们的许可证。
+您位于中国大陆，由于全国范围的防火墙目前无法正常访问CloudFlare或Amazon AWS S3服务。有关更多信息，请参阅此Realm-Cocoa问题。
+Amazon AWS S3可能遇到服务问题。请查看AWS Service Health仪表板，稍后再试。
+以低内存限制运行
+如果您想在具有少量可用内存的上下文中使用Realm，例如watchOS应用程序或App Extension，我们建议您明确指定要由Realm管理的类，以避免代价高昂的调用objc_copyClassList()：
+
+let config = Realm.Configuration(objectTypes: [Dog.self, Person.self])
+let realm = try! Realm(configuration: config)
+获得帮助
+需要帮助您的代码？ 在StackOverflow上询问。我们积极监控并回答有关SO的问题！
+有错误报告？ 在我们的回购中打开一个问题。如果可能，请包括Realm版本，完整日志，Realm文件以及显示问题的项目。
+有功能要求吗？ 在我们的回购中打开一个问题。告诉我们该功能应该做什么，以及为什么要使用该功能。
+如果您正在使用崩溃记者（如Crashlytics或HockeyApp），请确保启用日志收集。在抛出异常和不可恢复的情况时，Realm会记录元数据信息（但没有用户数据），这些消息可以在出现问题时帮助调试。
+
+Search the docs
+领域平台 文档 领域数据库 Java Swift
+先决条件
+安装
+入门
+使用Realm框架
+三界
+楷模
+使用Realm对象
+集合
+关系
+写
+查询
+迁移
+通知
+加密
+使用同步领域
+穿线
+JSON
+测试和调试
+目前的局限
+食谱
+常问问题
+故障排除
+获得帮助
+API参考
+ Objective-C JavaScript .NET
+有一个问题？ 在Realm论坛上询问Stack Overflow上的问题提交问题
+制品 
+
+平台
+数据库
+工作室
+
+价钱
+
+
+解决方案 
+
+实时协作
+API动员
+离线第一
+附加组件
+文件 
+
+领域平台
+Java的
+迅速
+Objective-C的
+JavaScript的
+。净
+
+支持 
+
+资源
+概观
+论坛
+博客
+
+热门邮票
+
+宣布Realm Cloud
+使用GraphQL进行领域扩展
+2017年境界世界巡回演唱会
+
+学院
+
+热门文章
+
+了解境界
+构建离线优先
+是什么让境界与众不同？
+
+境界报告
+
+公司 
+
+关于
+顾客
+工作
+按
+支持
+法律
+联系
+更快地建立更好的应用 
+© Realm 2014-2019，保留所有权利。
+给我们留言！
+对不起，我们所有的代理商都很忙。请＃给我们留言＃我们会尽快给您回复
+
+姓名*
+电邮*
+留言*

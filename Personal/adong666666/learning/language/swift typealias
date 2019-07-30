@@ -1,0 +1,65 @@
+Swift - typealias
+2018年04月26日 09:14:19 Andyjicw 阅读数：417
+typealias用来为已存在的类型重新定义名称的。
+
+通过命名，可以使代码变得更加清晰。使用的语法也很简单，使用 typealias 关键字像普通的赋值语句一样，可以将某个在已经存在的类型赋值为新的名字。
+重新定义闭包类型或者说 block 
+Swift的闭包书写虽然好看了不少，但是如果大批量的书写闭包还是很累的而且还影响可读性和美观，所以不妨试试 typealias。
+// 声明
+typealias sendValueClosure = (sendString: String) -> Void
+// 持有
+var callBackString: sendValueClosure?
+// 调用
+self.callBackString!(sendString: self.nameString)
+
+typealias DownSuccess = (json: NSURLResponse, filePath: String?) -> ()
+1
+这样我们在使用它的时候只需要：
+
+func Post(url:String? , parameter:NSDictionary , success: DownSuccess)
+1
+protocol组合 
+protocol在Swift中强大了不少，多种不同的protocol可以组合成一个然后用typealias重新命名
+protocol changeName {
+  func changeNameTo(name:String)
+}
+protocol changeSex {
+  func changeSexTo(sex:SEX)
+}
+typealias changeProtocol = protocol <changeName, changeSex>
+
+struct Persion:changeProtocol {
+  func changeNameTo(name:String) {
+    //
+  }
+  func changeSexTo(sex:SEX) {
+    //
+  }
+}
+
+基本类型 
+这种用法在Swift api中应用很广泛
+public typealias AnyClass = AnyObject.Type
+public typealias NSInteger = Int
+
+自定义类型 
+在实际项目过程中，如果有OC和Swift混编的情况，不免以后会对OC进行Swift化，而OC和Swift的命名系统相差很大，所以在重构之后不免要对整个项目进行 搜索-查找-替换 这是项非常耗时耗力的工作，而利用 
+typealias 可以巧妙的规避这个问题
+// OC中项目里有个类
+#import "OCClass.h"
+
+// swift重构之后
+impot SwfitClass
+
+typealias OCClass = SwfitClass
+
+tableview 中的使用
+typealias MyFollowerDelegate = MyFollowerViewController
+extension MyFollowerDelegate:UITableViewDelegate {
+    // tableView的 delegate 方法
+}
+
+typealias MyFollowerDataSouce = MyFollowerViewController
+extension MyFollowerDataSouce:UITableViewDataSource {
+    // tableview 的 dataSource 方法
+}

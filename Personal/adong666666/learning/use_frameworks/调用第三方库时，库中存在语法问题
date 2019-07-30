@@ -1,0 +1,10 @@
+//调用第三方库时，库中存在语法问题
+
+//解决了众多的语法问题，无非就是将新的代入，根据提示摸索、猜测、有时候纯属碰运气将第三方库的语法改对了，今天遇到的这个，试了好久才解决
+    open var font: UIFont = UIFont.systemFont(ofSize: 15, weight: UIFontWeightMedium) {
+        didSet {
+            updateLabelsFont(with: font)
+        }
+    }
+其中UIFontWeightMedium有问题，类似这种问题解决起来挺尴尬的，毕竟语法一直在更新，其实别人之前写的挺正确的哈。这然后就靠关键词UIFont摸索
+weight和medium用的没有font那么频繁，试了半天，最终是UIFont.Weight.Medium,多了两个点，看完结果当然觉得简单，有时真不一定想得到。

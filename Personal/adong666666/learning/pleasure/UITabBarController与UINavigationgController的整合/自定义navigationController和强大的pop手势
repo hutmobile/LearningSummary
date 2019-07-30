@@ -1,0 +1,66 @@
+先给出我写的代码
+
+//  Created by adong666666 on 2018/8/28. Copyright © 2018年 adong666666. All rights reserved.
+
+import UIKit
+
+class MyNavigationController: UINavigationController {
+    
+    override func viewDidLoad() { allthings() }
+}
+extension MyNavigationController{
+    func allthings(){
+        super.viewDidLoad()
+        pop()
+    }
+}
+extension MyNavigationController{
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        viewController.hidesBottomBarWhenPushed = false
+        super.pushViewController(viewController, animated: animated)
+    }
+}
+extension MyNavigationController{
+    func pop(){
+        guard let systemGes = interactivePopGestureRecognizer else { return }
+        guard let gesView = systemGes.view else { return }
+        let targets = systemGes.value(forKey: "_targets") as? [NSObject]
+        guard let targetObjc = targets?.first else { return }
+        guard let target = targetObjc.value(forKey: "target") else { return }
+        let action = Selector(("handleNavigationTransition:"))
+        let panGes = UIPanGestureRecognizer()
+        gesView.addGestureRecognizer(panGes)
+        panGes.addTarget(target, action: action)
+    }
+}
+
+
+
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        viewController.hidesBottomBarWhenPushed = false
+        super.pushViewController(viewController, animated: animated)
+    }
+    
+    
+    这里是用来重写pushViewController这个方法的
+    
+    重点是    
+    func pop(){
+        guard let systemGes = interactivePopGestureRecognizer else { return }
+        guard let gesView = systemGes.view else { return }
+        let targets = systemGes.value(forKey: "_targets") as? [NSObject]
+        guard let targetObjc = targets?.first else { return }
+        guard let target = targetObjc.value(forKey: "target") else { return }
+        let action = Selector(("handleNavigationTransition:"))
+        let panGes = UIPanGestureRecognizer()
+        gesView.addGestureRecognizer(panGes)
+        panGes.addTarget(target, action: action)
+    }
+    
+    
+    这个方法就很神奇了，直接改造系统所提供的pop手势,让每个界面的返回键形同虚设，哈哈，每个子页面直接左滑就可以了，用得很开心哈
+    
+    
+    
+    
+    

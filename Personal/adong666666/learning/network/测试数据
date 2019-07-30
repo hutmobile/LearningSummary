@@ -1,0 +1,15 @@
+    static func TestData(URLString: String, type: MethodType, parameters: [String: Any]? = nil, finishedCallback: @escaping (_ result: Any)->()){
+        let method = type == .get ? HTTPMethod.get : HTTPMethod.post
+        
+        Alamofire.request(URLString, method: method, parameters: parameters).responseJSON{ response in
+            if let json = response.result.value{
+                let json2 = JSON(json)
+                print(json2)
+            }
+            guard let result = response.result.value else{
+                print(response.result.error ?? 0)
+                return
+            }
+            finishedCallback(result)
+        }
+    }

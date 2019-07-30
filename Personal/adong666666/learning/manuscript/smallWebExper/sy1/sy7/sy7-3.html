@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>消息对话框综合应用</title>
+		<script type="text/javascript">
+			function $(id){return document.getElementById(id)}
+			function show(nname){
+				if(nname.value == null||nname.value == undefined ||nname.value == ''){
+					alert("请你输入姓名")
+				}else{
+					alert("你的姓名是："+nname.value)
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<form style="text-align: center;background-color: #ADFF2F;">
+			<fieldset style="border: 20px solid darkblue;">
+			<legend style="text-align: center;">消息对话框综合应用</legend>
+			你的姓名：<br />
+			<input type="text"/ name="nname"><br />
+			<input type="button" value="输入姓名" onclick="show(nname)"/>
+			<input type="reset" value="清空" />
+
+		</form>
+	</body>
+</html>

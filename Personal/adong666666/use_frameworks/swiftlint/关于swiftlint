@@ -1,9 +1,0 @@
-我上传了一张关于swiftlint的截图，里面的内容还不错
-swift可以帮助我们矫正写代码的风格和方式，大大提高所写代码的可读性，能让多数人理解，对我们的面试，竞赛等帮助很大
-关于swiftlint，我想留下它的最关键的语句,有它和没它之间只是差了成千上万个警告而已啦！
-
-if which swiftlint >/dev/null; then
-swiftlint
-else
-echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-fi

@@ -1,0 +1,25 @@
+//viewDidload的简明使用
+//我认为以下的写代码方式十分出色，没有多的赘余，将核心部分表现得淋漓尽致
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.addSubview(imgView)
+        self.view.addSubview(btn)
+        self.view.addSubview(btn1)
+        self.view.addSubview(btn2)
+        self.view.addSubview(btn3)
+        self.view.addSubview(btn4)
+        self.view.addSubview(Label)
+        self.view.addSubview(Label2)
+        self.view.addSubview(Label3)
+        self.view.addSubview(Label4)
+        self.view.addSubview(Label5)
+        self.view.addSubview(Label6)
+        self.view.addSubview(Label7)
+        self.view.addSubview(Label8)
+        self.view.addSubview(Label9)
+        self.view.addSubview(TextField)
+        self.view.addSubview(TextField1)
+        self.view.addSubview(ProgressView)
+        self.view.addSubview(ProgressView1)
+    }

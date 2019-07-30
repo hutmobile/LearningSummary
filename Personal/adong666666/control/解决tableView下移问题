@@ -1,9 +1,0 @@
-        tableView.snp.makeConstraints {
-           $0.top.equalTo(view).offset(64)
-           $0.left.right.equalTo(view)
-           $0.bottom.equalTo(view)
-        }
-        tableView.contentInset = UIEdgeInsets(top: -64, left: 0, bottom: 0, right: 0)
-        
-        
-        先约束tableView距离顶部64，再设置其contentInset,让其上移

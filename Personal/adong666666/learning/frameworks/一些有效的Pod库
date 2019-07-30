@@ -1,0 +1,60 @@
+一些有效的Pod库
+
+platform :ios, '7.0'
+
+#大型综合库
+pod 'AFNetworking'
+pod 'SDWebImage'
+pod 'Masonry'
+pod 'ReactiveCocoa'
+pod 'FMDB'
+#pod 'YYKit' #综合
+
+#模型与刷新
+pod 'JSONModel'
+pod 'MJRefresh'
+pod 'DZNEmptyDataSet'
+
+#其它
+pod 'Bugly' #Crash Report 统计，腾讯出品
+pod 'JSONKit-NoWarning'
+pod 'UIViewController+HUD'
+pod 'ZipArchive', '~> 1.4.0'
+pod 'CocoaLumberjack'
+pod 'JNKeychain'
+pod 'NSTimer-Blocks'
+#pod 'TextFieldEffects'
+#pod 'NetworkEye' #流量之眼，摇一摇手机即可开始监控App网络请求
+pod 'Reachability'
+
+#小工具
+#pod 'EBPhotoPages' #图片浏览器
+#pod 'BEMCheckBox' #选择框
+pod 'SSKeychain' #钥匙串
+pod 'GXSlideSegmentController' #滚动切换视图控制器
+#pod 'RKDropdownAlert' # 上部的警告框，确切讲是提示框
+pod 'CDSParticleFilter'
+pod 'ABMenuTableViewCell' #Cell右侧多操作（如删除、关注）
+#pod 'DAContextMenuTableViewController' #同上,如（删除、更多）
+#pod 'FEPopupMenuController' #类似于QQ右上角"+"弹出的垂直菜单
+#pod 'DTKDropdownMenu' #同上
+pod 'DropdownMenu' #收藏量1500,导航栏上的
+pod 'ASJDropDownMenu' #类似百度搜索的DropDownMenu
+#pod 'JYDropDownMenu' #很酷带动画的DropDownMenu
+#pod 'MKDropdownMenu' #非常屌炸天，可以弄颜色/线宽等
+#pod 'ZHDropDownMenu' #非常好的表单选择输入工具
+pod 'XYDropDownMenu' #表单选择输入工具
+#pod 'BTNavigationDropdownMenu' #navigation DropDownMenu
+pod 'DOPDropDownMenu-Enhanced' #类似美团的DropDownMenu，非常好，就用它啦
+
+pod 'BSNumbersView' #一个可以冻结某列的表格（Excel）
+pod 'SDCycleScrollView' #iOS图片、文字轮播器
+
+
+# 地图方面
+pod 'AMap3DMap' #3D地图SDK
+pod 'AMap2DMap' #2D地图SDK(2D地图和3D地图不能同时使用)
+pod 'AMapSearch' #搜索服务SDK
+pod 'AMapLocation' #定位SDK
+
+pod 'BaiduMapKit' #百度地图SDK

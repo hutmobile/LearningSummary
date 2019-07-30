@@ -1,0 +1,58 @@
+
+最近老想简便，就自己将网络请求需要的参数写入了url,真是不要不要的，bug一直都改不掉，烦得我，以后尽量都把参数放到外面，
+
+
+看我这个傻傻的写法，尽给自己添麻烦。。。。。
+let string = "https://api.fanyi.baidu.com/api/trans/vip/translate?q=\(aimString)&
+from=\(from)&to=\(to)&appid=\(appid)&salt=\(randomNumber)&sign=\(md5String as String)"
+
+
+
+最好是写成下面这种
+
+把parameters 都写出来，就不会遇到各种请求失败，请求失败的问题啦
+
+let aimString = self.latestPrediction
+                let string = "https://fanyi-api.baidu.com/api/trans/vip/translate"
+                let appid = 20190413000287482
+                let randomNumber = Int(arc4random_uniform(UInt32(INT_MAX)))
+                let key = "oTZWDxHziSM8ZQbA91Lz"
+                let signRaw = String(appid) + aimString + String(randomNumber) + key
+                let cStr = signRaw.cString(using: String.Encoding.utf8)
+                let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: 16)
+                CC_MD5(cStr!, (CC_LONG)(strlen(cStr!)), buffer)
+                let md5String = NSMutableString()
+                for index in 0 ..< 16 {
+                    md5String.appendFormat("%02x", buffer[index])
+                }
+                free(buffer)
+
+let parameters = ["q": aimString,
+                                  "from": "en",
+                                  "to": "zh",
+                                  "appid": appid,
+                                  "salt": randomNumber,
+                                  "sign": md5String] as [String: Any]
+                Alamofire.request(string, method: .get,
+                                  parameters: parameters).responseJSON( completionHandler: {(response) in
+                                    guard let result = response.result.value else {
+                                        print(response.result.error ?? 0)
+                                        return
+                                    }
+                                    guard let resultDict = result as? [String: NSObject] else { return }
+                guard let resultArray = resultDict["trans_result"] as? [[String: NSObject]] else { return }
+                                    if let dst = resultArray[0]["dst"] as? String {
+                                        self.latestPrediction = dst
+                                        let node: SCNNode = self.createNewBubbleParentNode(self.latestPrediction)
+                                        self.arscnView.scene.rootNode.addChildNode(node)
+                                        node.position = worldCoord
+                                    }
+//                                    if let dst = ((response.result.value as? [String: NSObject])?["trans_result"] as?
+//                                        [[String: NSObject]])?[0]["dst"] as? String {
+//                                        self.latestPrediction = dst
+//                                    }
+// if let result = ((response.result.value as? [String: NSObject])?["trans_result"] as?
+//                                        [[String: NSObject]])?[0] {
+//                                        self.translateModel = TranslateModel(dict: result)
+//                                    }
+                                  })

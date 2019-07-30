@@ -1,0 +1,183 @@
+1.定义控件
+
+先举一个纯文本的实例
+
+let tags = ["理财","转让","预约"] as [Any]
+let segmented = UISegmentedControl(items: tags)
+segmented.layer.position = CGPoint(x: self.view.bounds.size.width/2, y: 100)
+segmented.selectedSegmentIndex = 0//默认第一个被选中
+        
+self.view.addSubview(segmented)
+定义控件
+
+再举一个纯图片的例子，当然图片和文本可以一起用
+
+let tags = [UIImage(named: "voice-")!,UIImage(named: "voice")!,UIImage(named: "voice+")!] as [Any]
+图片items
+2.添加事件
+
+segmented.addTarget(self, action: #selector(segmentDidchange(_:)), for: .valueChanged)
+
+@objc func segmentDidchange(_ sender: UISegmentedControl){
+        print("index:\(sender.selectedSegmentIndex); title:\(sender.titleForSegment(at: sender.selectedSegmentIndex))")
+    }
+添加事件
+3.添加和删除选项
+
+let tags = ["理财","转让","预约"] as [Any]
+let segmented = UISegmentedControl(items: tags)
+segmented.layer.position = CGPoint(x: self.view.bounds.size.width/2, y: 100)
+segmented.selectedSegmentIndex = 0//默认第一个被选中
+segmented.addTarget(self, action: #selector(segmentDidchange(_:)), for: .valueChanged)
+        
+//添加文字选项
+segmented.insertSegment(withTitle: "借款", at: 2, animated: true)
+//添加图片选项
+segmented.insertSegment(with: UIImage(named:"alarm")!, at: 3, animated: true)
+//删除选项
+segmented.removeSegment(at: 0, animated: true)
+        
+self.view.addSubview(segmented)
+增删选项
+4.修改选项文字和颜色
+
+let tags = ["理财","转让","预约"] as [Any]
+let segmented = UISegmentedControl(items: tags)
+segmented.layer.position = CGPoint(x: self.view.bounds.size.width/2, y: 100)
+segmented.selectedSegmentIndex = 0//默认第一个被选中
+segmented.addTarget(self, action: #selector(segmentDidchange(_:)), for: .valueChanged)
+        
+//添加图片选项
+segmented.insertSegment(with: UIImage(named:"alarm")!, at: 3, animated: true)
+segmented.tintColor = UIColor.red
+segmented.setTitle("理财", forSegmentAt: 1)
+    
+self.view.addSubview(segmented)
+修改选项样式
+5.保留图片颜色
+
+上面一步操作图片的颜色也一起被设置成了红色（原本蓝色），大多数情况是不希望图片颜色被修改，可以通过下面的方法保留图片原来的颜色
+
+segmented.setImage(UIImage(named:"alarm")?.withRenderingMode(.alwaysOriginal), forSegmentAt: 3)
+保留图片原色
+6.修改选项文本偏移量
+
+segmented.setContentOffset(CGSize(width:3, height:2), forSegmentAt: 1)
+修改偏移量
+
+可以把值设置为负数
+
+segmented.setContentOffset(CGSize(width:-3, height:2), forSegmentAt: 1)
+修改偏移量1
+使用Segmented Control实现多个View切换
+
+1.实现原理
+
+通过不同view的偏移量来实现view的切换
+
+2.先定义两个简单的view
+
+FirstView.swift
+
+import UIKit
+class FirstView: UIView {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = UIColor.green
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+        label.text = "第一个Segment"
+        label.textColor = UIColor.black
+        self.addSubview(label)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+SecondView.swift
+
+import UIKit
+class SecondView: UIView {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = UIColor.yellow
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+        label.text = "第二个Segment"
+        self.addSubview(label)
+        
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+3.实现view加载
+
+import UIKit
+
+class ViewController: UIViewController, UIScrollViewDelegate {
+
+    var segmented: UISegmentedControl!
+    var scrollView: UIScrollView!
+    
+    var firstView : FirstView!
+    var secondView: SecondView!
+    
+    var width: CGFloat!
+    var height: CGFloat!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+       let tags = ["理财","转让"] as [Any]
+        width = self.view.bounds.size.width
+        height = self.view.bounds.size.height
+        segmented = UISegmentedControl(items: tags)
+        segmented.layer.position = CGPoint(x: self.view.bounds.size.width/2, y: 50)
+        segmented.selectedSegmentIndex = 0//默认第一个被选中
+        segmented.addTarget(self, action: #selector(segmentDidchange(_:)), for: .valueChanged)
+        self.view.addSubview(segmented)
+        
+        scrollView = UIScrollView(frame: CGRect(x: 0, y: 80, width: width, height: height - 80 ))
+        scrollView.delegate = self
+        scrollView.isPagingEnabled = true
+        scrollView.contentSize = CGSize(width: width * 2, height: height - 80 )
+        self.view.addSubview(scrollView)
+        
+        firstView = FirstView(frame: CGRect(x: 0, y: 0, width: width, height: height - 80))
+        scrollView.addSubview(firstView)
+        //第二个view的x坐标是从屏幕的宽度开始
+        secondView = SecondView(frame: CGRect(x: width, y: 0, width: width, height: height - 80))
+        scrollView.addSubview(secondView)
+        
+    }
+    
+    @objc func segmentDidchange(_ sender: UISegmentedControl){
+        if sender.selectedSegmentIndex == 0 {
+            scrollView.contentOffset.x = 0
+        }else{
+            scrollView.contentOffset.x = width
+        }
+    }
+   
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
+        
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.x >= width {
+            segmented.selectedSegmentIndex = 1
+        }else{
+            segmented.selectedSegmentIndex = 0
+        }
+    }
+}
+用例
+上面实现的效果也可以通过滑动底部的view来切换view，截屏的时候忘了演示
+
+上面讲述了UISegmented Control基本的用法，以及其在具体应用中的一个实例，当然上面的例子这种实现方式只是此类功能的一种实现思路，小伙伴们可以搜集一些资料，寻找一些功能性更强，效果更优美的实现方式。
+
+作者：古川不爱笑
+链接：https://www.jianshu.com/p/64fdcd295191
+來源：简书
+简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。

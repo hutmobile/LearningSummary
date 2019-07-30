@@ -1,0 +1,7 @@
+NotificationCenter.default.post(name: NSNotification.Name(rawValue: MyPresentationControllerDismiss), object: nil)
+
+NotificationCenter.default.addObserver(self, selector: #selector(dismissPresentedViewController), name: NSNotification.Name(rawValue: MyPresentationControllerDismiss), object: nil)
+
+@objc func dismissPresentedViewController() {
+        presentedViewController.dismiss(animated: false, completion: nil)
+}

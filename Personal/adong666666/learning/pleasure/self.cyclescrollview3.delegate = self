@@ -1,0 +1,49 @@
+self.cyclescrollview3.delegate = self
+
+
+
+对于这一句，我只想说成也代理，败也代理，
+
+
+
+留下下面的语句吧，回忆啊！
+
+
+if cycleScrollView == self.cyclescrollview3{
+                        //print(index)
+                        if index == 0{
+                            self.label24.text = llll
+                            self.label11.textColor = UIColor.green
+                            self.label12.textColor = UIColor.black
+                        }else{
+                            self.label24.text = mmmm
+                            self.label11.textColor = UIColor.black
+                            self.label12.textColor = UIColor.green
+                        }
+                    }else{}
+                    if cycleScrollView == self.cyclescrollview4{
+                        //print(index+10)
+                        if index == 0{
+                            self.label26.text = pppp
+                           // print(self.label25.text ?? 0)
+                            self.label19.textColor = UIColor.green
+                            self.label20.textColor = UIColor.black
+                        }else{
+                            self.label26.text = qqqq
+                            //print(self.label25.text ?? 0)
+                            self.label19.textColor = UIColor.black
+                            self.label20.textColor = UIColor.green
+                        }
+                    }else {}
+                    if cycleScrollView == self.cyclescrollview5{
+                        //print(index+20)
+                        if index == 0{
+                            self.label25.text = nnnn
+                            self.label15.textColor = UIColor.green
+                            self.label16.textColor = UIColor.black
+                        }else{
+                            self.label25.text = oooo
+                            self.label15.textColor = UIColor.black
+                            self.label16.textColor = UIColor.green
+                        }
+                    }else{}

@@ -1,0 +1,54 @@
+pod install时遇到“[!] Attempt to read non existent folder '/Users/xxx' ”该如何解决。(路径不能有中文)
+2018年04月26日 17:58:32 denggun12345 阅读数：164
+当我们拿到一个集成了Cocoapods的项目时，往往需要通过pod install来安装Podfile里面的框架，此时若报如下错误：
+
+[!] Attempt to read non existent folder '/Users/xxx'
+
+（首先检查一下上述报错路径中是否包含中文，如果有请更改为全英文路径再重新pod install）
+
+
+
+该如何解决呢？我尝试过多种办法，通过pod update来更新Cocoapods repo master、将Podfile及相关文件删除并重新集成、甚至卸载Cocoapods重新安装，均无法解决；
+
+在此我分享一个很好的办法：
+
+在终端输入：sudo -- sh -c "echo '117.18.237.29   ocsp.digicert.com' >> /etc/hosts"
+
+按回车键后，删除工程项目中的Pod、Podfile、Podfilelock等Pod相关文件
+
+
+
+接在通过：Pod init  来创建Podfile
+
+  Pod install 重新安装插件即可
+
+
+
+最后推荐一下Cocoapods.app，下载安装后使用快捷键 Command + O 找到工程中的Podfile，编辑好以后直接install即可，方便快捷。
+
+当我们拿到一个集成了Cocoapods的项目时，往往需要通过pod install来安装Podfile里面的框架，此时若报如下错误：
+
+[!] Attempt to read non existent folder '/Users/xxx'
+
+（首先检查一下上述报错路径中是否包含中文，如果有请更改为全英文路径再重新pod install）
+
+
+
+该如何解决呢？我尝试过多种办法，通过pod update来更新Cocoapods repo master、将Podfile及相关文件删除并重新集成、甚至卸载Cocoapods重新安装，均无法解决；
+
+在此我分享一个很好的办法：
+
+在终端输入：sudo -- sh -c "echo '117.18.237.29   ocsp.digicert.com' >> /etc/hosts"
+
+按回车键后，删除工程项目中的Pod、Podfile、Podfilelock等Pod相关文件
+
+
+
+接在通过：Pod init  来创建Podfile
+
+  Pod install 重新安装插件即可
+
+
+
+最后推荐一下Cocoapods.app，下载安装后使用快捷键 Command + O 找到工程中的Podfile，编辑好以后直接install即可，方便快捷。
+

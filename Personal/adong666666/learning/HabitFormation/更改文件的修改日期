@@ -1,0 +1,2 @@
+touch -t YYYYMMMMhhmm 文件路径
+eg. touch -t 201906031114 /Users/adong666666/Desktop/Dreamlike

@@ -1,0 +1,322 @@
+//  Created by adong666 on 2018/8/18.  Copyright © 2018年 adong666666. All rights reserved.
+
+import UIKit
+
+class head_img : NSObject {
+    var slider_url: String = ""
+    init(dict : [String : Any]) {
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forKey key: String) {}
+}
+class show_list_before : NSObject{
+    var title_id : String = ""
+    var headline : String = ""
+    var subhead : String = ""
+    var bindBaseList : BindBaseList?
+    var bind_base_list : [String: NSObject]?{
+        didSet{
+            guard let bind_base_list = bind_base_list else{ return }
+            bindBaseList = BindBaseList(dict: bind_base_list)
+        }
+    }
+    init(dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forKey key: String) {}
+}
+class sshow : NSObject{
+    var location_href : String = ""
+    var img_url : String = ""
+    init(dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forKey key: String) {}
+}
+class show_list_after : NSObject{
+    var title_id : String = ""
+    var headline : String = ""
+    var subhead : String = ""
+    var bindBaseList : BindBaseList?
+    var bind_base_list : [String: NSObject]?{
+        didSet{
+            guard let bind_base_list = bind_base_list else{ return }
+            bindBaseList = BindBaseList(dict: bind_base_list)
+        }
+    }
+    init(dict:[String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forKey key: String) {}
+}
+class vvideo : NSObject{
+    var img_url : String = ""
+    var video_url : String = ""
+    init(dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forKey key: String) {}
+}
+class BindBaseList: NSObject{
+    var subhead : String = ""
+    var base_id : String = ""
+    var base_city : String = ""
+    var img_url : String = ""
+    var min_price : String = ""
+    
+    init (dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forKey key: String) {}
+}
+
+
+//  Created by adong666666 on 2018/8/18. Copyright © 2018年 adong666666. All rights reserved.
+
+extension shouyeViewController{
+    fileprivate func loadData(){
+        Networktools.requestData(URLString: home_url, type: .get){ (result : Any) in
+            print(result)
+            guard let resultDict = result as? [String: Any] else { return }
+            if let dataArray = resultDict["head_img"] as? [[String: NSObject]] {
+            for dict in dataArray{
+                self.headImg.append(head_img(dict: dict))
+            }
+            }
+            print(self.headImg)
+            if let dataArray1 = resultDict["show_list_before"] as? [[String: NSObject]]{
+            for dict in dataArray1{
+                self.showListBefore.append(show_list_before(dict: dict))
+            }
+            }
+            print(self.showListBefore)
+            if let dataArray2 = resultDict["page_show"] as? [[String: NSObject]] {
+            for dict in dataArray2{
+                self.ssshow.append(sshow(dict: dict))
+            }
+            }
+            print(self.ssshow)
+            if let dataArray3 = resultDict["show_list_after"] as? [[String: NSObject]] {
+            for dict in dataArray3{
+                self.showListAfter.append(show_list_after(dict: dict))
+            }
+            }
+            print(self.showListAfter)
+            if let dataArray4 = resultDict["page_video"] as? [String: Any] {
+                self.vvvideo.append(vvideo(dict: dataArray4))
+            }
+            print(self.vvvideo)
+            }
+    }
+}
+
+
+//  Created by adong666666 on 2018/8/18. Copyright © 2018年 adong666666. All rights reserved.
+
+import Foundation
+import Alamofire
+
+
+enum MethodType {
+    case get
+    case post
+}
+
+class Networktools{
+    class func requestData(URLString: String, type: MethodType, parameters: [String: Any]? = nil, finishedCallback: @escaping (_ result: Any)->()) {
+        let method = type == .get ? HTTPMethod.get : HTTPMethod.post
+        
+        Alamofire.request(home_url, method: method, parameters: parameters).responseJSON( completionHandler: {(response) in
+            guard let result = response.result.value else{
+                print(response.result.error ?? 0)
+                return
+            }
+            finishedCallback(result)
+            //print(result)
+        })
+        
+    }
+}
+
+
+
+
+
+张某踩坑无数，今日终于寻得问题所在，痛啊
+
+
+
+
+先来举个例子
+
+
+
+网络请求数据后，解析json数据，得到模型对象 使用Swift4.0，通过setValuesForKeys保存字典数据，无法存储 
+代码如下
+
+class BaseGameModel: NSObject {
+
+
+    // MARK:- 定义属性
+   var tag_name : String = ""
+   var icon_url : String = ""
+
+    // MARK:- 自定义构造函数
+    override init() {
+
+    }
+
+    init(dict : [String : Any]) {
+        super.init()
+        setValuesForKeys(dict)
+    }
+
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {
+        print(key)
+    }
+}
+明明有tag_name、icon_url 属性，依然会走 override func setValue(_ value: Any?, forUndefinedKey key: String) { 
+print(key) 
+}方法，并打印出key，值为tag_name、icon_url
+
+原因
+
+在swift3中，编译器自动推断@objc，换句话说，它自动添加@objc 
+在swift4中，编译器不再自动推断，你必须显式添加@objc
+
+解决
+
+    // MARK:- 定义属性
+   @objc var tag_name : String = ""
+   @objc  var icon_url : String = ""
+
+
+添加@objc ,使其能够调用objc 的特性，所以上面的json转模型是swift3的经典
+
+
+在swift4中使用，我们必须添加@objc
+
+
+代码改成如下
+
+
+
+//  Created by adong666 on 2018/8/18.  Copyright © 2018年 adong666666. All rights reserved.
+
+import UIKit
+
+class head_img : NSObject {
+    @objc var slider_url: String = ""
+    init(dict : [String : Any]) {
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
+}
+class show_list_before : NSObject{
+    @objc var title_id : String = ""
+    @objc var headline : String = ""
+    @objc var subhead : String = ""
+    @objc var bindBaseList : BindBaseList?
+    var bind_base_list : [String: NSObject]?{
+        didSet{
+            guard let bind_base_list = bind_base_list else{ return }
+            bindBaseList = BindBaseList(dict: bind_base_list)
+        }
+    }
+    init(dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
+}
+class sshow : NSObject{
+    @objc var location_href : String = ""
+    @objc var img_url : String = ""
+    init(dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
+}
+class show_list_after : NSObject{
+    @objc var title_id : String = ""
+    @objc var headline : String = ""
+    @objc var subhead : String = ""
+    @objc var bindBaseList : BindBaseList?
+    var bind_base_list : [String: NSObject]?{
+        didSet{
+            guard let bind_base_list = bind_base_list else{ return }
+            bindBaseList = BindBaseList(dict: bind_base_list)
+        }
+    }
+    init(dict:[String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
+}
+class vvideo : NSObject{
+    @objc var img_url : String = ""
+    @objc var video_url : String = ""
+    init(dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forKey key: String) {}
+}
+class BindBaseList: NSObject{
+    @objc var subhead : String = ""
+    @objc var base_id : String = ""
+    @objc var base_city : String = ""
+    @objc var img_url : String = ""
+    @objc var min_price : String = ""
+    
+    init (dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
+}
+
+
+
+好了，终于可以了，多么痛的领悟
+
+
+注意到
+
+    var bind_base_list : [String: NSObject]?{
+        didSet{
+            guard let bind_base_list = bind_base_list else{ return }
+            bindBaseList = BindBaseList(dict: bind_base_list)
+        }
+    }
+    
+这里是一个集合，他有一个子集，如下
+class BindBaseList: NSObject{
+    @objc var subhead : String = ""
+    @objc var base_id : String = ""
+    @objc var base_city : String = ""
+    @objc var img_url : String = ""
+    @objc var min_price : String = ""
+    
+    init (dict: [String: Any]){
+        super.init()
+        setValuesForKeys(dict)
+    }
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
+}
+
+
+其变量都有@objc 
+而我们用到的不是父集合，，另外会显得非常冗余，所以这里就不要@objc 了哈
+  
+
+

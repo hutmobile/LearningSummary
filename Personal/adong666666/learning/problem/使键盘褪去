@@ -1,0 +1,29 @@
+//子类编辑结束，键盘消失，就是这么轻松，常用于func中
+//最好将整个屏幕作为一个按钮，这样按钮按哪里都能将键盘隐去
+self.view.endEditing(true)
+
+
+
+
+
+
+
+二、    遵守协议，
+       class occupantinfoViewController: UIViewController,UITextFieldDelegate     
+
+
+       设置代理
+       ttextField.delegate = self
+       ttextField1.delegate = self
+       ttextField2.delegate = self
+
+       用这个方法
+       func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+       textField.resignFirstResponder()
+       return true
+       }
+        
+       
+        
+        
+        

@@ -1,0 +1,205 @@
+Swift 网络请求 : Moya使用理解
+
+Github : Moya
+
+Moya版本 : 11.0.2
+Swift版本 : 4.1
+
+Moya入口
+/// MoyaProvider类的对象遵循MoyaProviderType协议类型
+open class MoyaProvider<Target: TargetType>: MoyaProviderType {
+
+    /// 自定义的block
+    public typealias EndpointClosure = (Target) -> Endpoint
+    public typealias RequestResultClosure = (Result<URLRequest, MoyaError>) -> Void
+    public typealias RequestClosure = (Endpoint, @escaping RequestResultClosure) -> Void
+    public typealias StubClosure = (Target) -> Moya.StubBehavior
+
+    /// 定义闭包对象
+    open let endpointClosure: EndpointClosure
+    open let requestClosure: RequestClosure
+    open let stubClosure: StubClosure
+
+    /// 定义会话对象
+    open let manager: Manager
+
+    /// 传播到Alamofire作为回调队列。 如果为nil - 将使用Alamofire默认（从2017年的API - 主队列）。
+    let callbackQueue: DispatchQueue?
+
+    /// 初始化 provider.
+    public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
+                requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
+                stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
+                callbackQueue: DispatchQueue? = nil,
+                manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
+                plugins: [PluginType] = [],
+                trackInflights: Bool = false) {
+
+        self.endpointClosure = endpointClosure
+        self.requestClosure = requestClosure
+        self.stubClosure = stubClosure
+        self.manager = manager
+        self.plugins = plugins
+        self.trackInflights = trackInflights
+        self.callbackQueue = callbackQueue
+    }
+这个是Moya的provider初始化的定义.对应传入的参数,基本上都是包含了默认参数.所以一般我们创建只需要是
+
+let provider = MoyaProvider< Target >()
+看上面的定义 : open class MoyaProvider<Target: TargetType>: MoyaProviderType
+注意两个地方 :
+==> TargetType类型
+==> 遵从 MoyaProviderType协议
+1.TargetType
+/// The protocol used to define the specifications necessary for a `MoyaProvider`.
+public protocol TargetType {
+    /// 基础请求地址
+    var baseURL: URL { get }
+    ///请求地址路径, path会拼接在baseURL后面组成一个完整的请求地址
+    var path: String { get }
+    /// 请求方法 POST/GET/PUT/DELETE.....
+    var method: Moya.Method { get }
+    /// 提供用于测试的存根数据。(可能使用到的次数不多)
+    var sampleData: Data { get }
+    /// 请求任务,相当于URLSessionTask
+    var task: Task { get }
+    /// 要对请求执行的验证类型。 默认为`.none`。(可能使用到的次数不多)
+    var validationType: ValidationType { get }
+    /// 要在请求中使用的标头。
+    var headers: [String: String]? { get }
+}
+2.MoyaProviderType
+看上面的定义 : open class MoyaProvider<Target: TargetType>: MoyaProviderType
+
+///MoyaProvider接口的协议。
+public protocol MoyaProviderType: AnyObject {
+    //Target对象
+    associatedtype Target: TargetType
+    //网路请求
+    func request(_ target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> Cancellable
+}
+简单粗暴的理解就是,我们要创建一个TargetType类型的对象,然后实现MoyaProviderType协议方法.
+第一步 : 创建一个TargetType类型的对象
+//请求方法
+enum MoyaApi {
+    case login(account: String, password : String)
+    case getNews(pageNum : Int , pageSize : Int)
+}
+//通过扩展遵循协议 : 当一个类型已经符合了某个协议中的所有要求，却还没有声明遵循该协议时，可以通过空扩展体的扩展来遵循该协议：
+//从现在起，targetTypeDemo的实例可以作为 TargetType 类型使用：
+extension MoyaApi : TargetType {
+    var baseURL: URL {
+        return URL.init(string: "http://api-gateway.100bue.com")!
+    }
+
+    var path: String {
+        switch self {
+        case .login:
+            return "/usercenter/i/signin"
+        case .getNews:
+            return "/product-center/v1/product/app/list"
+        }
+    }
+    
+    var method: Moya.Method {
+        switch self {
+        case .login:
+            return .post
+        case .getNews:
+            return .get
+        }
+    }
+        
+    var sampleData: Data {return Data(base64Encoded: "just for test")!}
+    var task: Task {
+        switch self {
+        case let .login(account, password):
+            return .requestData(jsonToData(jsonDic: ["userName":account  ,"passWord":password])!) //参数放在HttpBody中
+            
+        case let .getNews(pageNum, pageSize):
+            return .requestParameters(parameters: ["pageNum":pageNum,"pageSize":pageSize], encoding: URLEncoding.default)   //参数放在请求的url中
+        }
+    } // 请求任务
+
+    var headers: [String : String]?{ return ["Content-type" : "application/json"] }
+}
+第二步 : 实现MoyaProviderType协议方法
+let provider = MoyaProvider<MoyaApi>()
+        provider.request(MoyaApi.login(account: "15876450119", password: "123123qwe"), callbackQueue: nil, progress: { (response) in
+            print("response = \(response)")
+        }) { (result) in
+            switch result {
+            case let .success(result):
+                do {
+                    try print("result.mapJSON() = \(result.mapJSON())")
+                } catch {
+                    print("MoyaError.jsonMapping(result) = \(MoyaError.jsonMapping(result))")
+                }
+            default:
+                break
+            }
+            print("result = \(result.description)")
+        }
+打印结果 :
+Json Str:{"userName":"15811112222","passWord":"a123456"}
+response = ProgressResponse(response: nil, progressObject: Optional(<NSProgress: 0x1c0130360> : Parent: 0x0 / Fraction completed: 0.0000 / Completed: 189 of -1  ))
+response = ProgressResponse(response: Optional(Status Code: 200, Data Length: 189), progressObject: Optional(<NSProgress: 0x1c0130360> : Parent: 0x0 / Fraction completed: 0.0000 / Completed: 189 of -1  ))
+result.mapJSON() = {
+    code = 0;
+    data = "eyJhbGciOiJIUzI1NiIsInxxxxxRdszB624sV0cj4PxxxxSlF05CwAXjBYE";
+    msg = success;
+}
+PS :
+所有的请求设置在extension MoyaApi : TargetType{}中完成
+对应的所有POST,GET,PUT请求都放在 var task: Task 中设置
+重要 :
+我这里面的测试代码是只是一个POST请求,对应的还有GET请求,都通过设置task就好了.这里的demo是简单的版本,因为最开始的时候需要通过设置httpbody来请求.
+参考了别人iOS 使用Moya网络请求的设置头部信息的方法.都是以 [String: Any]的字典格式,不满足自己的需要.还是需要认真研究下Moya的源文档,再百度.
+Demo中的GET请求只是一个简单的样式.请求是不成功的,拿不到数据的.换成自己项目上的试试就好
+关于var task: Task
+
+/// Represents an HTTP task.
+public enum Task {
+    /// 没有其他数据的请求。
+    case requestPlain
+    ///设置httpBody数据。
+    case requestData(Data)
+    /// 请求体设置为`Encodable`类型
+    case requestJSONEncodable(Encodable)
+    /// 请求体设置为`Encodable`类型和自定义编码器
+    case requestCustomJSONEncodable(Encodable, encoder: JSONEncoder)
+    /// 请求具有编码参数的主体集。
+    case requestParameters(parameters: [String: Any], encoding: ParameterEncoding)
+    /// 请求主体设置数据，并结合url参数。
+    case requestCompositeData(bodyData: Data, urlParameters: [String: Any])
+    /// 请求使用编码参数和url参数组合的主体集。
+    case requestCompositeParameters(bodyParameters: [String: Any], bodyEncoding: ParameterEncoding, urlParameters: [String: Any])
+    ///文件上载任务。
+    case uploadFile(URL)
+    /// A "multipart/form-data" upload task.
+    case uploadMultipart([MultipartFormData])
+    /// A "multipart/form-data" upload task  结合url参数。
+    case uploadCompositeMultipart([MultipartFormData], urlParameters: [String: Any])
+    /// 到目的地的文件下载任务。
+    case downloadDestination(DownloadDestination)
+    /// 使用给定编码的具有额外参数的目标的文件下载任务。
+    case downloadParameters(parameters: [String: Any], encoding: ParameterEncoding, destination: DownloadDestination)
+}
+公共方法 :
+
+//------------------------
+//字典转Data
+private func jsonToData(jsonDic:Dictionary<String, Any>) -> Data? {
+    if (!JSONSerialization.isValidJSONObject(jsonDic)) {
+        print("is not a valid json object")
+        return nil
+    }
+    //利用自带的json库转换成Data
+    //如果设置options为JSONSerialization.WritingOptions.prettyPrinted，则打印格式更好阅读
+    let data = try? JSONSerialization.data(withJSONObject: jsonDic, options: [])
+    //Data转换成String打印输出
+    let str = String(data:data!, encoding: String.Encoding.utf8)
+    //输出json字符串
+    print("Json Str:\(str!)")
+    return data
+}

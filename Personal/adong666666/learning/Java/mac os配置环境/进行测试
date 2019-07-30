@@ -1,0 +1,3 @@
+使用 source .bash_profile_for_java使得配置生效
+使用命令javac Hello.java测试编译是否成功
+使用命令java Hello.java测试运行是否成功

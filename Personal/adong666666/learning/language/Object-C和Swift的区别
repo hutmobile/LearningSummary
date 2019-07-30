@@ -1,0 +1,155 @@
+Object-C和Swift的区别
+
+1.Swift和Objective-C的联系
+Swift和Objective-C共用一套运行时环境，Swift的类型可以桥接到Objective-C（下面我简称OC），反之亦然。
+
+其次就是，OC之前积累的很多类库，在Swift中大部分依然可以直接使用，当然，Swift3之后，一些语法改变了很多，不过还是有迹可循的。OC出现过的绝大多数概念，比如引用计数、ARC、属性、协议、接口、初始化、扩展类、命名参数、匿名函数等，在Swift中继续有效（可能最多换个术语）。Swift大多数概念与OC一样。当然Swift也多出了一些新兴概念，这些在OC中是没有的，比如范型、元组等。
+
+2. Swift比Objective-C有什么优势
+1、Swift容易阅读，语法和文件结构简易化。
+
+2、Swift更易于维护，文件分离后结构更清晰。
+
+3、Swift更加安全，它是类型安全的语言。
+
+4、Swift代码更少，简洁的语法，可以省去大量冗余代码
+
+5、Swift速度更快，运算性能更高。
+
+3. Swift目前存在的缺点
+1、版本不稳定，之前升级Swift3大动刀，苦了好多人，swift4目前还未知
+
+2、使用人数比例偏低，目前还是OC的天下
+
+3、社区的开源项目偏少，毕竟OC独大好多年，很多优秀的类库都不支持Swift，不过这种状况正在改变，现在有好多优秀的Swift的开源类库了
+
+4、公司使用的比例不高，很多公司以稳为主，还是在使用OC开发，很少一些在进行混合开发，更少一些是纯Swift开发。
+
+5、偶尔开发中遇到的一些问题，很难查找到相关资料，这是一个弊端。
+
+6、纯Swift的运行时和OC有本质区别，一些OC中运行时的强大功能，在纯Swift中变无效了。
+
+7、对于不支持Swift的一些第三方类库，如果非得使用，只能混合编程，利用桥接文件实现。
+
+4. Swift其他功能说明
+4.1 Swift的内存管理
+Swift使用自动引用计数（ARC）来简化内存管理，与OC一致。
+
+4.2 Swift的可选项类型（Optionals）介绍
+Swift引入了可选项类型，用于处理变量值不存在的情况。Optionals类似于OC中指向nil的指针，但是适用于所有数据类型，而非仅仅局限于类，Optionals相比于OC中的nil指针，更加安全和简明，并且也是Swift诸多最强大功能的核心。
+
+4.3 Swift中的 ！和 ？
+这两个符号是用来标记这个变量的值是否可选，！表示可选变量必须保证转换能够成功，否则报错，但定义的变量可以直接使用；？表示可选变量即使转换不成功也不会报错，变量值为nil，如果转换成功，要使用该变量时，后面需要加！进行修饰。
+
+4.4 Swift中范型的简单说明
+范型是用来使代码能安全工作，swift中的范型可以在函数数据和普通数据类型中使用，例如类、结构体或枚举。范型可以解决代码复用的问题，
+
+4.5 Swift的访问权限变更
+swift新增了两种访问权限，权限更细化。具体查看这里：
+访问权限由大到小依次为：open，public，internal（默认），fileprivate，private
+
+4.5.1 fileprivate
+在原有的swift中的 private其实并不是真正的私有，如果一个变量定义为private，在同一个文件中的其他类依然是可以访问到的。这个场景在使用extension的时候很明显。
+
+这样带来了两个问题：
+(1)当我们标记为private时，意为真的私有还是文件内可共享呢？
+(2)当我们如果意图为真正的私有时，必须保证这个类或者结构体在一个单独的文件里。否则可能同文件里其他的代码访问到。
+
+由此，在swift 3中，新增加了一个 fileprivate来显式的表明，这个元素的访问权限为文件内私有。
+
+过去的private对应现在的fileprivate。现在的private则是真正的私有，离开了这个类或者结构体的作用域外面就无法访问。
+所以fileprivate > private .
+
+4.5.2 open
+open则是弥补public语义上的不足。
+
+现在的pubic有两层含义：
+(1)这个元素可以在其他作用域被访问
+(2)这个元素可以在其他作用域被继承或者override
+
+继承是一件危险的事情。尤其对于一个framework或者module的设计者而言。在自身的module内，类或者属性对于作者而言是清晰的，能否被继承或者override都是可控的。但是对于使用它的人，作者有时会希望传达出这个类或者属性不应该被继承或者修改。这个对应的就是 final。
+
+final的问题在于在标记之后，在任何地方都不能override。而对于lib的设计者而言，希望得到的是在module内可以被override，在被import到其他地方后其他用户使用的时候不能被override。
+
+通俗的理解public和open就是：
+
+public：可以被任何人访问，但其他module中不可以被override和继承，而在本module内可以被override和继承。
+
+open：可以被任何人使用，包括override和继承。
+4.5.3 internal
+internal是系统默认访问级别，internal修饰符可写可不写。
+
+(1)internal访问级别所修饰的属性或方法在源代码所在的整个模块都可以访问。
+(2)如果是框架或者库代码，则在整个框架内部都可以访问，框架由外部代码所引用时，则不可以访问。
+(3)如果是App代码，也是在整个App代码，也是在整个App内部可以访问。
+
+5. Swift Foundation框架
+为了方便使用，Swift的基本类型都可以无缝转换到 Foundation 框架中的对应类型。
+
+因为 Cocoa 框架所接受和返回的基本数据类型都是自身框架内的类型，也就是 Foundation 中所定义的像 NSString，NSNumber，NSArray 等这些东西。而脱离 Cocoa 框架进行 app 开发是不可能的事情。因此我们在使用 Swift 开发 app 时无法避免地需要在 Swift 类型和 Foundation 类型间进行转换。如果需要每次显式地书写转换的话，大概就没人会喜欢用 Swift 了。还好 Swift 与 Foundation 之间的类型转换是可以自动完成的，这使得通过 Swift 使用 Cocoa 时顺畅了很多。
+
+而且这个转换不仅是自动的，而且是双向的，而且无论何时只要有可能，转换的结果会更倾向于使用 Swift 类型。也就是说，只要你不写明类型是需要 NS 开头的类型的时候，你都会得到一个 Swift 类型。
+
+Swift中的类型和OC的类型对应关系
+
+String - NSString
+Int, Float, Double, Bool 以及其他与数字有关的类型 - NSNumber
+Array - NSArray
+Dictionary - NSDictionary
+6. Swift便捷的函数式编程
+Swift提供了Map、FlatMap、Filter、Reduce等函数方法，能够大大方便我们对对象处理。
+
+Map
+
+var results = [1,3,5,7]
+let results = values.map ({ (element) -> Int in
+    return element * 2
+})
+//"[2, 6, 10, 14]"
+Filter：
+
+var values = [1,3,5,7,9]
+let flattenResults = values.filter{ $0 % 3 == 0}
+//[3, 9]
+Reduce：
+
+var values = [1,3,5]
+let initialResult = 0
+var reduceResult = values.reduce(initialResult, combine: { (tempResult, element) -> Int in
+    return tempResult + element
+})
+print(reduceResult)
+//9
+7. 其他补充 - swift独有
+7.1 范围运算符
+a...b 表示 [a,b] 包括a和b 。 （如3...5  就是范围取3，4，5）
+a..<b 表示 [a,b) 包括a，不包括b 。 （如3...5  就是范围取3，4）
+常见的如for循环：for i in 0...9{}
+7.2 独有的元组类型
+元组(tuples)把多个值组合成一个复合值。元组内的值可以使任意类型,并不要求是相同类型
+
+var value = (Int,String) = (x:15,y:"abc")
+7.3 swift中使用let定义常量,var定义变量
+使用常量,更加安全,不能够被修改,在需要对对象进行修改的时候 只能用var修饰.
+7.4 if let 、 guard let 的用法
+缩减代码量，安全处理数据逻辑。
+8. 细节使用区别
+1、swift不分.h和.m文件 ，一个类只有.swift一个文件，所以整体的文件数量比起OC有一定减少。
+
+2、swift句尾不需要分号 ，除非你想在一行中写三行代码就加分号隔开。
+
+3、swift数据类型都会自动判断 ， 只区分变量var 和常量let
+
+4、强制类型转换格式不同   OC强转：(int)a      Swift强转：Int(a)
+
+5、关于BOOL类型更加严格 ，Swift不再是OC的非0就是真，而是true才是真false才是假 
+
+6、swift的 循环语句中必须加{} 就算只有一行代码也必须要加 
+
+7、swift的switch语句后面可以跟各种数据类型了 ，如Int、字符串都行，并且里面不用写break（OC好像不能字符串）
+
+8、swift  if后的括号可以省略:  if a>b {}，而OC里 if后面必须写括号。
+
+9、swift打印  用print("")    打印变量时可以  print("\(value)")，不用像OC那样记很多%@，d%等。
+
+10、Swift3的【Any】可以代表任何类型的值，无论是类、枚举、结构体还是任何其他Swift类型，这个对应OC中的【id】类型。

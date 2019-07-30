@@ -1,0 +1,123 @@
+
+
+Object-C
+
+一:默认是左图片右边文字
+
+二:左文字右图片(直接拷贝代码到项目即可)
+
+
+    [btn setTitleEdgeInsets:UIEdgeInsetsMake(0, -btn.imageView.size.width, 0, btn.imageView.size.width)];
+    [btn setImageEdgeInsets:UIEdgeInsetsMake(0, btn.titleLabel.bounds.size.width, 0, -btn.titleLabel.bounds.size.width)];
+
+三:上图片下文字(直接拷贝代码到项目即可)
+
+
+ btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;//使图片和文字水平居中显示  
+    [btn setTitleEdgeInsets:UIEdgeInsetsMake(btn.imageView.frame.size.height ,-btn.imageView.frame.size.width, 0.0,0.0)];//文字距离上边框的距离增加imageView的高度，距离左边框减少imageView的宽度，距离下边框和右边框距离不变  
+    [btn setImageEdgeInsets:UIEdgeInsetsMake(0.0, 0.0,0.0, -btn.titleLabel.bounds.size.width)];//图片距离右边框距离减少图片的宽度，其它不边  
+
+
+
+
+
+
+
+swift
+
+
+
+btn.titleEdgeInsets = UIEdgeInsetsMake(0, -btn.imageView?.size.width, 0, btn.imageView?.size.width)
+btn.imageEdgeInsets = UIEdgeInsetsMake(0, btn.titleLabel?.bounds.size.width, 0, -(btn.titleLabel?.bounds.size.width ?? 0.0))
+
+
+
+
+
+btn.contentHorizontalAlignment = .center
+//使图片和文字水平居中显示  
+btn.titleEdgeInsets = UIEdgeInsetsMake(btn.imageView?.frame.size.height, -(btn.imageView?.frame.size.width ?? 0.0), 0.0, 0.0)
+//文字距离上边框的距离增加imageView的高度，距离左边框减少imageView的宽度，距离下边框和右边框距离不变  
+btn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, -(btn.titleLabel?.bounds.size.width ?? 0.0))
+//图片距离右边框距离减少图片的宽度，其它不变 
+
+
+
+
+
+
+
+
+iOS中如何把UIButton中的图片和文字上下对齐
+
+我们都知道在UIButton中可以设置图片和文字，也经常见到同时设置有图片和下方提示文字的按钮，但是当我自己去对图片按钮添加提示文字的时候，
+却发现这并不是想象中的那么简单。
+
+设置图片和文字
+
+如示例代码：
+
+func initView() -> Void {
+var button:UIButton = UIButton(frame: CGRectMake(100, 200, 100, 100))
+
+button.setImage(UIImage(named: "button.png"), forState: UIControlState.Normal)
+button.setTitle("按钮", forState: UIControlState.Normal)
+button.backgroundColor = UIColor.blueColor()
+
+self.view.addSubview(button)
+}
+我们可以通过UIButton的setTitle和setImage方法分别为按钮设置图片和文字信息，但是会发现设置完成以后我们的图片和文字并没有重合排列，
+也没有上下排列，而是一个左右排列的样子。
+
+设置图片和文字
+说到这里，肯定会有人想到设置图片和文字的frame来进行处理，而且我们也确实可以通过UIButton的对象获取到对应的imageView和titleLabel，
+但是如果经过测试的话，你就会发现这是一个trike的方法，而且是不生效的。
+
+func initView() -> Void {
+var button:UIButton = UIButton(frame: CGRectMake(100, 200, 100, 100))
+
+button.setImage(UIImage(named: "button.png"), forState: UIControlState.Normal)
+button.setTitle("按钮", forState: UIControlState.Normal)
+button.backgroundColor = UIColor.blueColor()
+button.titleLabel?.frame = CGRectMake(20, 0, 30, 30)
+button.imageView?.frame = CGRectMake(0, 0, 20, 20)
+
+self.view.addSubview(button)
+}
+修改为这样以后，运行程序，会发现对应的视图没有任何变化。
+
+添加frame设置
+UIEdgeInsets
+
+查看UIButton的属性，我们会找到titleEdgeInsets和imageEdgeInsets两个属性。修改这两个属性，可以实现我们想要的效果。
+titleEdgeInsets和imageEdgeInsets都是UIEdgeInsets的对象，我们先说一下UIEdgeInsets的几个属性的具体效果。
+我们知道，UIEdgeInsets有top，left，bottom，right几个属性，但是通过测试，就会发现设置了top以后自己的y坐标并没有增加响应的距离，
+而是增加了1/2，那么它们到底应该如何计算呢？
+当设置了top以后，其实就是相当于view的上边缘向下移动了相应的距离。用在title中，如果titleLabel的frame(50, 50, 24, 24);
+那么Button的上下边缘应该分别是0和124，因为正常情况下titleLabel必然处于Button的中间位置。当设置了titleEdgeInsets的top为10以后，
+相当于button的上下坐标为10，124，则titleLabel的坐标就变成了(50, 55, 24, 24)，也就是上下边缘变为了55和79， 向下移动了5个点。
+
+经过计算可以得出，如果要将文字移动到图片的下方，需要设置titleEdgeInsets和imageEdgeInsets，且分别设置为
+若titleLabel为 w1,h1, imageView为w2,h2, 上下间距为space
+titleEdgeInsets = (h2 + space, - w2, 0, 0)
+imageEdgeInsets = (-h1 - space, w1)
+如上述例子若改为：
+
+func initView() -> Void {
+var button:UIButton = UIButton(frame: CGRectMake(100, 200, 100, 100))
+
+button.setImage(UIImage(named: "button.png"), forState: UIControlState.Normal)
+button.setTitle("按钮", forState: UIControlState.Normal)
+button.backgroundColor = UIColor.blueColor()
+
+var imageSize:CGSize = button.imageView!.frame.size
+var titleSize:CGSize = button.titleLabel!.frame.size
+button.titleEdgeInsets = UIEdgeInsets(top: 0, left:-imageSize.width, bottom: -imageSize.height - 5, right: 0)
+button.imageEdgeInsets = UIEdgeInsets(top: -titleSize.height - 5, left: 0, bottom: 0, right: -titleSize.width)
+self.view.addSubview(button)
+}
+则可实现我们要求的效果：
+
+设置insets
+注意：如果设置了button的frame，而且button的宽度不足以同时显示图片和文字的大小的话，titleLabel的size将会获取错误。所以如果需要设置frame，
+建议先将button的宽度设置为frame.size.width * 2, 等titleEdgeInsets和imageEdgeInsets全部设置完成以后再重新设置frame。

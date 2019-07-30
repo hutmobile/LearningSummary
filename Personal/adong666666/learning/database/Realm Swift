@@ -1,0 +1,134 @@
+iOS开发swift -- Realm入门
+
+一 关于Realm
+1、Realm 是一个跨平台的移动数据库引擎，为移动应用的数据持久化而生。其目的是要取代 Core Data 和 SQLite。
+2、特点：
+（1）使用简单，大部分常用的功能（比如插入、查询等）都可以用一行简单的代码轻松完成，易学习。
+（2）Realm 不是基于 Core Data，也不是基于 SQLite 封装构建的。它有自己的数据库存储引擎。
+（3）Realm 具有良好的跨平台特性，可以在 iOS 和 Android 平台上共同使用。代码可以使用 Swift 、 Objective-C 以及 Java 语言来编写。
+（4）Realm 还提供了一个轻量级的数据库查看工具（Realm Browser）。你也可以用它进行一些简单的编辑操作（比如插入和删除操作）
+
+中文文档
+英文文档
+
+二 sdk集成 CocoaPods
+$ cd/你的项目地址
+$ open -e Podfile
+
+target '你的app' do
+    pod 'RealmSwift'
+end
+
+$ pod install
+三 数据类型
+（1）Realm支持以下的属性类型：Bool、Int8、Int16、Int32、Int64、Double、Float、String、NSDate 、以及NSData.CGFloat 属性被取消了，因为它的类型不依赖于平台。
+String、NSDate以及 NSData类型的属性都可以添加可选值。Object
+类型的属性必须设置为可选。存储可空数字可以通过 Realm 可选值来实现。
+（2）关系
+Object 能够借助 Object以及 List属性来和另一个 Object建立联系。 List 的接口和 Array非常类似，在 List中的对象能够通过索引下标(indexed subscripting)进行访问。 与 Array所不同的是，List其中只能存放简单的 Object子类类型。
+
+//Realm数据模型是基于标准 Swift 类来进行定义的，使用属性来完成模型的具体定义。通过简单的继承 Object 或者一个已经存在的模型类，您就可以创建一个新的 Realm 数据模型对象。
+//由于 Realm 中定义的所有模型在程序启动时就会被解析，所以即使代码中没有调用，它们都需要被初始化。在 Swift 中使用 Realm 的时候，Swift.reflect(_:)函数可用于确定您模型中的信息，这需要确保 init()已被成功调用。这意味着所有非可选的属性必须添加一个默认值。
+
+import RealmSwift
+
+//类型
+class ConsumeType:Object {
+    //类型名
+    dynamic var name = ""
+}
+
+//详情
+class ConsumeItem:Object {
+    //条目名
+    dynamic var name = ""
+    //金额
+    dynamic var cost = 0.00
+    //时间
+    dynamic var date = Date()
+    //所属消费类别
+    dynamic var type:ConsumeType?
+}
+
+四 创建数据库
+        //使用默认数据库
+        let realm = try! Realm()
+    
+        //使用其他数据库
+        let config = Realm.Configuration(
+            // 获取需要打包文件的 URL 路径
+            fileURL: Bundle.main.url(forResource: "MyBundledData", withExtension: "realm"),
+            // 以只读模式打开文件，因为应用数据包并不可写
+            readOnly: true)
+        let realm = try! Realm(configuration: config)
+        //内存数据库 通常情况下，Realm 数据库是存储在硬盘中的，但是您能够通过设置 inMemoryIdentifier 而不是设置Realm.Configuration 中的 fileURL 属性，以创建一个完全在内存中运行的数据库。内存数据库在每次程序运行期间都不会保存数据。但是，这不会妨碍到 Realm 的其他功能，包括查询、关系以及线程安全
+        let realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "MyInMemoryRealm"))
+五 数据增删改查
+    func addCilck(){
+        let type1 = ConsumeType()
+        type1.name = "衣服"
+        let type2 = ConsumeType()
+        type2.name = "饮食"
+        
+        //创建数据记录 可使用数组创建
+        let item1 = ConsumeItem(value: ["水果",5999.00,Date(),type1]) 
+        
+        let item2 = ConsumeItem()
+        item2.name = "电影"
+        item2.cost = 30.00
+        item2.date = Date(timeIntervalSinceNow: -36000)
+        item2.type = type2
+       
+        // * 三次处理事物 会发送三次通知
+        
+        //增加
+        try! realm?.write({
+            realm?.add(item1)
+            realm?.add(item2)
+        })
+        
+        //更新
+        try! realm?.write({
+            item3.name = "dog"
+        })
+        
+        //查询
+        let item4 = realm?.objects(ConsumeItem.self).filter("cost = 5999")
+
+        //删除
+        try!realm?.write({
+            realm?.delete(item4!)
+        })
+    }
+六 通知
+    var token : NotificationToken? = nil
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        //集合通知
+        let result = realm?.objects(ConsumeItem.self)
+        token = result?.addNotificationBlock({ (changes: RealmCollectionChange) in
+            switch changes {
+            case .initial:
+                //Results 现在已经填充完毕，可以不需要阻塞 UI 就可以被访问
+                debugPrint("initial initial")
+                break
+            case .update(_, deletions: _, insertions: _, modifications: _):
+                //数据库发生更改（增删改）调用
+                debugPrint("update update")
+                break
+            default:
+                break  
+            } 
+        })
+        
+        //打印出数据库地址
+        print(Realm.Configuration.defaultConfiguration.fileURL ?? "nil")        
+    }
+
+    deinit {
+        token?.stop()
+    }
+如有不妥，请多多指教:)
+

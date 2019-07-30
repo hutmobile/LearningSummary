@@ -1,0 +1,53 @@
+
+浅谈#ifndef,#define,#endif的作用和用法
+
+文件中的#ifndef.#define, #endif 很关键，是为了避免多重包含，比如如果两个C文件同时包含同一头文件，那么就会出现问题，所以使用这种方法可以有效避免这种情况。
+
+一般用法：
+
+以add.h为例
+
+#ifndef  _ADD_H_
+#define _ADD_H_
+ 
+//在这里包含add.h的类定义及变量和函数的声明
+比如函数声明：int add(int a ,int b);  //分号是必须加上的
+ 
+#endif  //_ADD_H_
+编写add.cpp文件
+
+#include"add.h"
+int add(int a , int b)
+{
+  return a+b;  
+}
+主函数main.cpp文件
+
+#include <iostream>
+#include "add.h"
+using namespace std;
+ 
+int main()
+{    
+    int a ;
+    a = add(2,3);
+    cout<<a<<endl;
+    return 0;
+}
+1.程序中_ADD_H_为预处理器变量，书写格式一般是头文件名大写，前后加下划线，“.”用下划线代替。比如stdio.h表示为_STDIO_H_.
+
+2.预处理器变量一般有两种状态：已定义或未定义。
+
+　　#ifndef 指示检测指定的预处理器变量是否未定义，如果未定义，那么跟在后面的所有指示被处理，直到出现#endif；如果已定义，那么#ifndef测试为假，该指示和#endif指示间的代码都被忽略。
+
+　　#define 指示接受一个名字并定义该名字为预处理器变量。
+
+3.在调用该头文件时一般用#include "add.h".
+
+ 
+
+4.头文件的使用：
+
+　　如果头文件名包含在<>中，那么认为该头文件是标准头文件。编译器将会在预定义的位置集查找该头文件，这些预定义的位置可以通过设置查找路径环境变量或者通过命令行选项来修改。
+
+　　如果头文件名包含在"  "中，那么认为它是非系统文件，非系统文件的查找通常开始于源文件所在的路径。

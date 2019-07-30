@@ -1,0 +1,106 @@
+    
+    这里举个例子，tablewView 由于是在试图控制器中创建，或者有些人在一些视图中创建，那么，视图控制器或视图对这个tableview就有个强引用
+    
+    
+    对所创建的对象其实基本上都是强引用，所以这个时候就要注意一个循环引用的问题了
+    
+    
+    fileprivate lazy var tableView : UITableView = {[unowned self] in
+        let tableView = UITableView()
+        tableView.frame = CGRect(x: 0.fitScreen, y: 0.fitHeight, width: 414.fitScreen, height: 600.fitHeight)
+        tableView.register(histroicalorderTableViewCell.self, forCellReuseIdentifier: CellID)
+        tableView.separatorColor = UIColor.clear
+        return tableView
+    }()
+    
+    
+    
+    
+    tableView.register(histroicalorderTableViewCell.self, forCellReuseIdentifier: CellID)
+    
+    
+    这一句里有个.self，这就意味着它就可能对视图控制器或视图有一个强引用，而后者对它已经有强引用了，两个互相强引用，可是会引起循环引用的，内存就
+    释放不掉了，一直占着内存不放，显然是不合理的，因为这里循环引用，那里循环引用，这个程序 说不定什么时候崩！！！！！
+    
+    
+    所以存储属性，只要调用了self, 就要注意解决循环引用的问题
+    
+    
+        
+    fileprivate lazy var tableView : UITableView = {[unowned self] in
+        let tableView = UITableView()
+        tableView.frame = self.view.bounds
+        tableView.separatorColor = UIColor.clear
+        return tableView
+    }()
+    
+    
+    
+    就像下面这样
+    tableView.frame = self.view.bounds
+    
+    只要带了个self, 或者这个self的实际名称，如ViewController, View.....
+    都有可能引起循环引用的，所以注意了，下面我们来看看如何解决循环引用
+    
+    weak var owner : Person?
+    
+    这就可以表示一个弱引用，我们xib或storyboard拖动的时候，老是有一个@IBOutlet weak var ...
+    就是这个道理，为了防止循环引用
+    
+    然后还有下面这种，
+    unowned var owner : Person = Person()
+    
+    
+   但我不推荐使用这种，因为它容易产生一个野指针的错误，而weak self 就不会，并且它不能修饰可选类型，所以可选类型只能用weak
+   
+   
+   
+  推荐使用weak,因为unowned 太危险，没有百分百的把握就不要用unowned 
+  
+  
+   
+  这里是直接定义变量，我个人比较习惯用的是在闭包里使用
+  
+   这里可以这样写
+      fileprivate lazy var tableView : UITableView = {[unowned self] in
+        let tableView = UITableView()
+        tableView.frame = CGRect(x: 0.fitScreen, y: 0.fitHeight, width: 414.fitScreen, height: 480.fitHeight)
+        //tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "kHomeCellID")  //xib
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: kHomeCellID)
+        tableView.separatorColor = UIColor.clear
+        return tableView
+    }()
+    可以这样写
+    fileprivate lazy var tableView : UITableView = {[weak self]  () in
+        let tableView = UITableView()
+        tableView.frame = CGRect(x: 0.fitScreen, y: 0.fitHeight, width: 414.fitScreen, height: 480.fitHeight)
+        //tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "kHomeCellID")  //xib
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: kHomeCellID)
+        tableView.separatorColor = UIColor.clear
+        return tableView
+    }()
+    还可以这样写
+          fileprivate lazy var tableView : UITableView = {[unowned self] () in
+        let tableView = UITableView()
+        tableView.frame = CGRect(x: 0.fitScreen, y: 0.fitHeight, width: 414.fitScreen, height: 480.fitHeight)
+        //tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "kHomeCellID")  //xib
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: kHomeCellID)
+        tableView.separatorColor = UIColor.clear
+        return tableView
+    }()
+   fileprivate lazy var tableView : UITableView = {[weak self] in
+        let tableView = UITableView()
+        tableView.frame = CGRect(x: 0.fitScreen, y: 0.fitHeight, width: 414.fitScreen, height: 480.fitHeight)
+        //tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "kHomeCellID")  //xib
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: kHomeCellID)
+        tableView.separatorColor = UIColor.clear
+        return tableView
+    }()
+    
+    加了个[weak self]或[unowned self] 后面就务必加个in ,这是语法，in下面就是 一个void ,整个就是个() -> void,即() in void 的闭包
+    
+    
+    千万注意，修饰可选类型只能用weak , 好了，就说这么多哈
+    
+    
+    

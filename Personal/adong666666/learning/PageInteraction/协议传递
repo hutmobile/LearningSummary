@@ -1,0 +1,132 @@
+
+下面是一个协议
+public protocol RecognizeDelegate: class {
+    func show(notice: String, color: UIColor?)
+    func recognize(_ albums: [Album], current: Int, max: Int)
+    func reload(_ albums: [Album])
+}
+
+类RecognizeManager中将协议作为内部成员
+
+public class RecognizeManager: RealmHelper {
+    public weak var delegate: RecognizeDelegate?
+}
+
+
+并且在RecognizeManager的extension中有调用delegate中的方法，如下
+            self.delegate?.reload(self.albums.map { $0.value })
+            self.delegate?.show(notice: "已经创建成功", color: nil)
+
+
+这里调用的是RecognizDelegate中的方法，可是它可以暂时是不用具体实现
+func show(notice: String, color: UIColor?)
+    func recognize(_ albums: [Album], current: Int, max: Int)
+    func reload(_ albums: [Album])
+
+而可以放到遵循协议的类中实现，如下
+
+
+
+extension WFClassifyViewController: RecoginizeDelegate {
+    public func show(notice: String, color: UIColor?) {
+        guard let color = color else {
+            NoticeHelper.showNotice(notice)
+            return
+        }
+        NoticeHelper.showNotice(notice, color: color)
+    }
+    public func recognize(_ albums: [Album], current: Int, max: Int) {
+        DispatchQueue.main.async {
+            self.navigationItem.title = "分类(\(current)/\(max))"
+        }
+        let isNumberOK = current%100 == 0 || (current==1) || (current%20==0&&current<100)
+        guard (isNumberOK && isReloading == false) || max <= current else { return }
+        if max == 0 { self.finishLoad = true }
+        self.albums = albums.sorted(by: {
+            guard let aCreate = $0.createTime else { return false }
+            guard let bCreate = $1.createTime else { return true }
+            return aCreate > bCreate
+        })
+        DispatchQueue.main.async {
+            self.isReloading = true
+            if max <= current { self.navigationItem.title = "分类" }
+            self.wFCollectionView.reloadData()
+        }
+        DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + 1) {
+            self.isReloading = false
+        }
+    }
+    public func reload(_ albums: [Album]) {
+        self.albums = albums.sorted(by: {
+            guard let aCreate = $0.createTime else { return false }
+            guard let bCreate = $1.createTime else { return true }
+            return aCreate > bCreate
+        })
+        DispatchQueue.main.async {
+            self.wFCollectionView.reloadData()
+        }
+    }
+}
+
+
+
+
+
+
+在WFClassifyViewController中有一个内部成员：
+
+    var recognize: RecognizeManager
+
+
+    public init(_ recognize: RecognizeManager) {
+        self.recognize = recognize
+        super.init(nibName: nil, bundle: nil)
+        self.recognize.delegate = self
+    }
+
+
+在构造的时候便可以初始化，并设置代理
+
+在适宜的时候            self.delegate?.reload(self.albums.map { $0.value })
+            self.delegate?.show(notice: "已经创建成功", color: nil)
+
+这些方法会调用WFClassifyViewController中的方法
+
+public func show(notice: String, color: UIColor?) {
+        guard let color = color else {
+            NoticeHelper.showNotice(notice)
+            return
+        }
+        NoticeHelper.showNotice(notice, color: color)
+    }
+    public func recognize(_ albums: [Album], current: Int, max: Int) {
+        DispatchQueue.main.async {
+            self.navigationItem.title = "分类(\(current)/\(max))"
+        }
+        let isNumberOK = current%100 == 0 || (current==1) || (current%20==0&&current<100)
+        guard (isNumberOK && isReloading == false) || max <= current else { return }
+        if max == 0 { self.finishLoad = true }
+        self.albums = albums.sorted(by: {
+            guard let aCreate = $0.createTime else { return false }
+            guard let bCreate = $1.createTime else { return true }
+            return aCreate > bCreate
+        })
+        DispatchQueue.main.async {
+            self.isReloading = true
+            if max <= current { self.navigationItem.title = "分类" }
+            self.wFCollectionView.reloadData()
+        }
+        DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + 1) {
+            self.isReloading = false
+        }
+    }
+    public func reload(_ albums: [Album]) {
+        self.albums = albums.sorted(by: {
+            guard let aCreate = $0.createTime else { return false }
+            guard let bCreate = $1.createTime else { return true }
+            return aCreate > bCreate
+        })
+        DispatchQueue.main.async {
+            self.wFCollectionView.reloadData()
+        }
+    }

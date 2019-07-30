@@ -1,0 +1,34 @@
+
+Required Device Capabilities
+
+
+
+Declaring the Required Device Capabilities
+
+If your application requires device-related features in order to run, you must add a list of required capabilities to your application. At runtime, iOS will not launch your application unless those capabilities are present on the device. Further, the App Store requires this information so that it can generate a list of requirements for user devices and prevent users from downloading applications that they cannot run.
+
+如果你想你的APP限制在具有某种特性条件的设备上运行时，可以在info.plist中添加Required Device Capabilities参数，进行设置。
+
+比如在info.plist中设置如下，那么只有具有wifi、电话功能和麦克风（内置的或附件所带的麦克风功能）的ios设备才能运行该程序。
+
+
+
+
+
+除了wifi和telephony项，还有很多项代表各种设备功能，如下：
+
+sms	应用程序需要Messages应用程序或者使用sms://URL
+still-camera	应用程序需要使用照相机模式作为图像选取器的控制器
+auto-focus-camera	应用程序需要使用更多的聚焦功能以进行微距摄影或者拍摄特别清晰的图像以进行图像内数据检测
+video-camera	应用程序需要使用视频模式作为图像选取器的控制器
+accelerometer	应用程序需要特定于加速计的反馈而不知是简单的UIViewController方向事件
+location-services	应用程序需要使用Core Location
+gps	应用程序需要使用Core Location并需要更加精确的gps定位
+magnetometer	应用程序需要使用Core Location并需要与前进方向相关的事件，即行进的方向（通过磁力计获得）
+peer-peer	应用程序需要使用GameKit通过蓝牙（3.1或更高版本）进行对等连接
+opengles-1	应用程序需要OpenGL ES 1.1
+opengles-2	应用程序需要OpenGL ES 2.0
+armv-6	应用程序仅针对armv6指令集（3.1或更高版本）编译
+armv-7	应用程序仅针对armv7指令集（3.1或更高版本）编译
+peer-peer	
+应用程序需要和其他终端通过蓝牙连接。

@@ -1,0 +1,16 @@
+# System-wide .profile for sh(1)
+
+if [ -x /usr/libexec/path_helper ]; then
+        eval `/usr/libexec/path_helper -s`
+fi
+
+if [ "${BASH-no}" != "no" ]; then
+        [ -r /etc/bashrc ] && . /etc/bashrc
+fi
+
+JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-12.0.2.jdk/Contents/Home/"
+CLASSPATH="$JAVA_HOME/lib"
+PATH=".:$PATH:$JAVA_HOME/bin"
+export JAVA_HOME
+export PATH
+export CLASSPATH
